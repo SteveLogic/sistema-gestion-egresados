@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Gestión de escuelas académicas de la Universidad CENFOTEC"
+    >
+
+    <title>Gestión de escuelas | CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral del personal de Registro -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+
+                <a
+                    href="dashboard-registro.html"
+                    class="marca marca-panel"
+                >
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Personal de Registro</p>
+
+            </div>
+
+            <nav aria-label="Menú del personal de Registro">
+
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-registro.html"
+                            class="enlace-panel"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="titulos.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de títulos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="carreras.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de carreras
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="escuelas.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Gestión de escuelas
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="menu-lateral-pie">
+
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <header class="encabezado-sistema">
+
+                <div>
+
+                    <p class="texto-secundario">
+                        Administración académica
+                    </p>
+
+                    <h1>Gestión de escuelas</h1>
+
+                </div>
+
+                <div class="informacion-usuario">
+
+                    <div>
+                        <strong>María Rodríguez</strong>
+                        <p>Personal de Registro</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        MR
+                    </div>
+
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Introducción -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Administración de escuelas académicas</h2>
+
+                        <p>
+                            Consulta y administra las escuelas académicas
+                            asociadas con las carreras y los títulos.
+                        </p>
+
+                    </div>
+
+                    <aside class="mensaje-informativo">
+
+                        <h2>Organización académica</h2>
+
+                        <p>
+                            Cada carrera y cada título académico deben
+                            estar asociados a una escuela académica.
+                        </p>
+
+                    </aside>
+
+                </section>
+
+                <!-- Navegación interna -->
+                <nav
+                    class="navegacion-interna"
+                    aria-label="Secciones de gestión de escuelas"
+                >
+
+                    <a
+                        href="#consultar-escuelas"
+                        class="boton boton-secundario"
+                    >
+                        Consultar escuelas
+                    </a>
+
+                    <a
+                        href="#registrar-escuela"
+                        class="boton boton-secundario"
+                    >
+                        Registrar escuela
+                    </a>
+
+                    <a
+                        href="#carreras-por-escuela"
+                        class="boton boton-secundario"
+                    >
+                        Carreras asociadas
+                    </a>
+
+                </nav>
+
+                <!-- Consulta de escuelas -->
+                <section id="consultar-escuelas" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Consultar escuelas</h2>
+
+                        <p>
+                            Utiliza los filtros para localizar escuelas
+                            académicas registradas.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="get">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="filtro-nombre-escuela">
+                                    Nombre de la escuela
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-nombre-escuela"
+                                    name="nombreEscuela"
+                                    placeholder="Ejemplo: Escuela de Computación"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-codigo-escuela">
+                                    Código
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-codigo-escuela"
+                                    name="codigoEscuela"
+                                    placeholder="Ejemplo: ESC-COMP"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-responsable-escuela">
+                                    Persona responsable
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-responsable-escuela"
+                                    name="responsable"
+                                    placeholder="Nombre de la persona responsable"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-estado-escuela">
+                                    Estado
+                                </label>
+
+                                <select
+                                    id="filtro-estado-escuela"
+                                    name="estado"
+                                >
+
+                                    <option value="">
+                                        Todos los estados
+                                    </option>
+
+                                    <option value="activa">
+                                        Activa
+                                    </option>
+
+                                    <option value="inactiva">
+                                        Inactiva
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar filtros
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Buscar escuelas
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Tabla de escuelas -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+
+                            <h2>Escuelas registradas</h2>
+
+                            <p>
+                                Lista de escuelas académicas disponibles
+                                en la plataforma.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="#registrar-escuela"
+                            class="boton boton-primario"
+                        >
+                            Registrar escuela
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Escuelas académicas registradas
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Responsable</th>
+                                    <th>Correo de contacto</th>
+                                    <th>Carreras asociadas</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>ESC-COMP</td>
+
+                                    <td>Escuela de Computación</td>
+
+                                    <td>Laura Jiménez</td>
+
+                                    <td>computacion@ucenfotec.ac.cr</td>
+
+                                    <td>8</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activa
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>ESC-CIBER</td>
+
+                                    <td>Escuela de Ciberseguridad</td>
+
+                                    <td>Roberto Vargas</td>
+
+                                    <td>ciberseguridad@ucenfotec.ac.cr</td>
+
+                                    <td>5</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activa
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>ESC-DATOS</td>
+
+                                    <td>Escuela de Ciencia de Datos</td>
+
+                                    <td>Andrea Solano</td>
+
+                                    <td>datos@ucenfotec.ac.cr</td>
+
+                                    <td>3</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activa
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>ESC-GEST</td>
+
+                                    <td>Escuela de Gestión Tecnológica</td>
+
+                                    <td>Daniel Mora</td>
+
+                                    <td>gestion@ucenfotec.ac.cr</td>
+
+                                    <td>2</td>
+
+                                    <td>
+                                        <span class="estado estado-inactivo">
+                                            Inactiva
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-escuela"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p class="nota-demostracion">
+                        En este avance los botones solamente representan
+                        las operaciones de consultar, editar y eliminar.
+                    </p>
+
+                </section>
+
+                <!-- Detalle de escuela -->
+                <section id="detalle-escuela" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Detalle de la escuela</h2>
+
+                        <p>
+                            Información completa de una escuela académica.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="cuadricula-detalle">
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Código
+                                </span>
+
+                                <p>ESC-COMP</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Nombre
+                                </span>
+
+                                <p>Escuela de Computación</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Persona responsable
+                                </span>
+
+                                <p>Laura Jiménez</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Correo de contacto
+                                </span>
+
+                                <p>computacion@ucenfotec.ac.cr</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Teléfono
+                                </span>
+
+                                <p>4000-5000</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Estado
+                                </span>
+
+                                <p>
+                                    <span class="estado estado-activo">
+                                        Activa
+                                    </span>
+                                </p>
+
+                            </div>
+
+                            <div class="detalle-completo">
+
+                                <span class="etiqueta-detalle">
+                                    Descripción
+                                </span>
+
+                                <p>
+                                    Escuela académica encargada de programas
+                                    relacionados con programación, desarrollo
+                                    de software, tecnologías de información
+                                    y arquitectura de sistemas.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- Formulario de registro -->
+                <section id="registrar-escuela" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Registrar escuela académica</h2>
+
+                        <p>
+                            Completa la información necesaria para registrar
+                            una nueva escuela.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="codigo-escuela">
+                                    Código de la escuela *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="codigo-escuela"
+                                    name="codigo"
+                                    placeholder="Ejemplo: ESC-COMP"
+                                    minlength="3"
+                                    maxlength="20"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="nombre-escuela">
+                                    Nombre de la escuela *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="nombre-escuela"
+                                    name="nombre"
+                                    placeholder="Nombre completo de la escuela"
+                                    minlength="3"
+                                    maxlength="120"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="responsable-escuela">
+                                    Persona responsable *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="responsable-escuela"
+                                    name="responsable"
+                                    placeholder="Nombre completo"
+                                    minlength="3"
+                                    maxlength="100"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="correo-escuela">
+                                    Correo de contacto *
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="correo-escuela"
+                                    name="correo"
+                                    placeholder="escuela@ucenfotec.ac.cr"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="telefono-escuela">
+                                    Teléfono de contacto
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="telefono-escuela"
+                                    name="telefono"
+                                    placeholder="4000-0000"
+                                    pattern="[0-9]{4}-?[0-9]{4}"
+                                    title="Ingrese ocho números, con o sin guion"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="estado-escuela">
+                                    Estado *
+                                </label>
+
+                                <select
+                                    id="estado-escuela"
+                                    name="estado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="activa">
+                                        Activa
+                                    </option>
+
+                                    <option value="inactiva">
+                                        Inactiva
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="descripcion-escuela">
+                                    Descripción *
+                                </label>
+
+                                <textarea
+                                    id="descripcion-escuela"
+                                    name="descripcion"
+                                    minlength="10"
+                                    maxlength="500"
+                                    placeholder="Descripción general de la escuela académica"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar escuela
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <p class="nota-demostracion">
+                        Los campos marcados con * son obligatorios.
+                        La información todavía no se almacenará.
+                    </p>
+
+                </section>
+
+                <!-- Carreras asociadas -->
+                <section id="carreras-por-escuela" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Carreras asociadas a una escuela</h2>
+
+                        <p>
+                            Ejemplo de las carreras pertenecientes a la
+                            Escuela de Computación.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="encabezado-perfil-academico">
+
+                            <div>
+
+                                <h3>Escuela de Computación</h3>
+
+                                <p class="texto-secundario">
+                                    Código: ESC-COMP
+                                </p>
+
+                            </div>
+
+                            <span class="estado estado-activo">
+                                3 carreras mostradas
+                            </span>
+
+                        </div>
+
+                        <div class="contenedor-tabla">
+
+                            <table class="tabla">
+
+                                <caption>
+                                    Carreras de la Escuela de Computación
+                                </caption>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Carrera</th>
+                                        <th>Tipo de programa</th>
+                                        <th>Estado</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>BISOFT</td>
+                                        <td>Ingeniería del Software</td>
+                                        <td>Bachillerato</td>
+                                        <td>
+                                            <span class="estado estado-activo">
+                                                Activa
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>TIDES</td>
+                                        <td>Técnico en Desarrollo de Software</td>
+                                        <td>Técnico</td>
+                                        <td>
+                                            <span class="estado estado-activo">
+                                                Activa
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>MAST-SOFT</td>
+                                        <td>Maestría en Ingeniería de Software</td>
+                                        <td>Maestría</td>
+                                        <td>
+                                            <span class="estado estado-activo">
+                                                Activa
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

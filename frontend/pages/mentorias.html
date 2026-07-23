@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Gestión de mentorías para egresados de la Universidad CENFOTEC"
+    >
+
+    <title>Gestión de mentorías | CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral de Bienestar Estudiantil -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+
+                <a
+                    href="dashboard-bienestar.html"
+                    class="marca marca-panel"
+                >
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Bienestar Estudiantil</p>
+
+            </div>
+
+            <nav aria-label="Menú de Bienestar Estudiantil">
+
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-bienestar.html"
+                            class="enlace-panel"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html#consultar-egresados"
+                            class="enlace-panel"
+                        >
+                            Consulta de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="actividades.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de actividades
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="comunidades.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de comunidades
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="mentorias.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Gestión de mentorías
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="oportunidades.html"
+                            class="enlace-panel"
+                        >
+                            Oportunidades laborales
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="comunicados.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de comunicados
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="menu-lateral-pie">
+
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <header class="encabezado-sistema">
+
+                <div>
+
+                    <p class="texto-secundario">
+                        Bienestar Estudiantil
+                    </p>
+
+                    <h1>Gestión de mentorías</h1>
+
+                </div>
+
+                <div class="informacion-usuario">
+
+                    <div>
+                        <strong>Daniela Vargas</strong>
+                        <p>Bienestar Estudiantil</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        DV
+                    </div>
+
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Introducción -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Programa de mentorías</h2>
+
+                        <p>
+                            Consulta personas mentoras, administra solicitudes
+                            y registra las mentorías asignadas.
+                        </p>
+
+                    </div>
+
+                    <aside class="mensaje-informativo">
+
+                        <h2>Administración del módulo</h2>
+
+                        <p>
+                            Bienestar Estudiantil será responsable de revisar
+                            las solicitudes y asignar personas mentoras a las
+                            oportunidades de mentoría.
+                        </p>
+
+                    </aside>
+
+                </section>
+
+                <!-- Navegación interna -->
+                <nav
+                    class="navegacion-interna"
+                    aria-label="Secciones de gestión de mentorías"
+                >
+
+                    <a
+                        href="#consultar-mentorias"
+                        class="boton boton-secundario"
+                    >
+                        Consultar mentorías
+                    </a>
+
+                    <a
+                        href="#mentores-registrados"
+                        class="boton boton-secundario"
+                    >
+                        Mentores
+                    </a>
+
+                    <a
+                        href="#solicitar-mentoria"
+                        class="boton boton-secundario"
+                    >
+                        Solicitar mentoría
+                    </a>
+
+                    <a
+                        href="#solicitudes-mentoria"
+                        class="boton boton-secundario"
+                    >
+                        Solicitudes
+                    </a>
+
+                    <a
+                        href="#registrar-mentoria"
+                        class="boton boton-secundario"
+                    >
+                        Registrar mentoría
+                    </a>
+
+                </nav>
+
+                <!-- Resumen -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Resumen del programa</h2>
+
+                        <p>
+                            Estado general de las mentorías registradas.
+                        </p>
+
+                    </div>
+
+                    <div class="cuadricula-resumen">
+
+                        <article class="tarjeta tarjeta-resumen">
+
+                            <p class="etiqueta-resumen">
+                                Mentores disponibles
+                            </p>
+
+                            <p class="numero-resumen">
+                                24
+                            </p>
+
+                            <a href="#mentores-registrados">
+                                Consultar mentores
+                            </a>
+
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+
+                            <p class="etiqueta-resumen">
+                                Solicitudes pendientes
+                            </p>
+
+                            <p class="numero-resumen">
+                                6
+                            </p>
+
+                            <a href="#solicitudes-mentoria">
+                                Revisar solicitudes
+                            </a>
+
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+
+                            <p class="etiqueta-resumen">
+                                Mentorías activas
+                            </p>
+
+                            <p class="numero-resumen">
+                                11
+                            </p>
+
+                            <a href="#consultar-mentorias">
+                                Consultar mentorías
+                            </a>
+
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+
+                            <p class="etiqueta-resumen">
+                                Mentorías finalizadas
+                            </p>
+
+                            <p class="numero-resumen">
+                                32
+                            </p>
+
+                            <a href="#consultar-mentorias">
+                                Ver historial
+                            </a>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- Consulta de mentorías -->
+                <section id="consultar-mentorias" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Consultar mentorías</h2>
+
+                        <p>
+                            Utiliza los filtros para localizar mentorías
+                            registradas en la plataforma.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="get">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="filtro-participante">
+                                    Participante
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-participante"
+                                    name="participante"
+                                    placeholder="Nombre del mentor o egresado"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-area-mentoria">
+                                    Área profesional
+                                </label>
+
+                                <select
+                                    id="filtro-area-mentoria"
+                                    name="areaProfesional"
+                                >
+
+                                    <option value="">
+                                        Todas las áreas
+                                    </option>
+
+                                    <option value="software">
+                                        Desarrollo de software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Ciencia de datos
+                                    </option>
+
+                                    <option value="redes">
+                                        Redes y telecomunicaciones
+                                    </option>
+
+                                    <option value="empleabilidad">
+                                        Empleabilidad
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-estado-mentoria">
+                                    Estado
+                                </label>
+
+                                <select
+                                    id="filtro-estado-mentoria"
+                                    name="estado"
+                                >
+
+                                    <option value="">
+                                        Todos los estados
+                                    </option>
+
+                                    <option value="pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="activa">
+                                        Activa
+                                    </option>
+
+                                    <option value="finalizada">
+                                        Finalizada
+                                    </option>
+
+                                    <option value="cancelada">
+                                        Cancelada
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-fecha-inicio">
+                                    Fecha de inicio
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="filtro-fecha-inicio"
+                                    name="fechaInicio"
+                                >
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar filtros
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Buscar mentorías
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Tabla de mentorías -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+
+                            <h2>Mentorías registradas</h2>
+
+                            <p>
+                                Lista general de mentorías administradas
+                                por Bienestar Estudiantil.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="#registrar-mentoria"
+                            class="boton boton-primario"
+                        >
+                            Registrar mentoría
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Mentorías registradas en el sistema
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Egresado</th>
+                                    <th>Mentor</th>
+                                    <th>Área</th>
+                                    <th>Fecha de inicio</th>
+                                    <th>Fecha de finalización</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>Ana Martínez López</td>
+
+                                    <td>Roberto Jiménez Mora</td>
+
+                                    <td>Desarrollo de software</td>
+
+                                    <td>01/07/2026</td>
+
+                                    <td>30/09/2026</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activa
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Cancelar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Carlos Ramírez Mora</td>
+
+                                    <td>Laura Solano Vega</td>
+
+                                    <td>Ciberseguridad</td>
+
+                                    <td>10/06/2026</td>
+
+                                    <td>10/08/2026</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activa
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Cancelar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Sofía Hernández Vega</td>
+
+                                    <td>Pendiente de asignación</td>
+
+                                    <td>Ciencia de datos</td>
+
+                                    <td>Sin definir</td>
+
+                                    <td>Sin definir</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Pendiente
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#solicitudes-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Asignar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Cancelar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Daniel Castro Rojas</td>
+
+                                    <td>María González Arias</td>
+
+                                    <td>Empleabilidad</td>
+
+                                    <td>01/02/2026</td>
+
+                                    <td>30/04/2026</td>
+
+                                    <td>
+                                        <span class="estado estado-inactivo">
+                                            Finalizada
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-mentoria"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p class="nota-demostracion">
+                        Las acciones reales de edición, asignación y
+                        cancelación se programarán en avances posteriores.
+                    </p>
+
+                </section>
+
+                <!-- Detalle de mentoría -->
+                <section id="detalle-mentoria" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Detalle de la mentoría</h2>
+
+                        <p>
+                            Información completa de una mentoría seleccionada.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="encabezado-perfil-academico">
+
+                            <div>
+
+                                <h3>Mentoría en desarrollo de software</h3>
+
+                                <p class="texto-secundario">
+                                    Orientación para crecimiento profesional
+                                    y fortalecimiento técnico.
+                                </p>
+
+                            </div>
+
+                            <span class="estado estado-activo">
+                                Activa
+                            </span>
+
+                        </div>
+
+                        <div class="cuadricula-detalle">
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Persona egresada
+                                </span>
+
+                                <p>Ana Martínez López</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Persona mentora
+                                </span>
+
+                                <p>Roberto Jiménez Mora</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Área profesional
+                                </span>
+
+                                <p>Desarrollo de software</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Fecha de inicio
+                                </span>
+
+                                <p>1 de julio de 2026</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Fecha de finalización
+                                </span>
+
+                                <p>30 de septiembre de 2026</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Modalidad
+                                </span>
+
+                                <p>Virtual</p>
+
+                            </div>
+
+                            <div class="detalle-completo">
+
+                                <span class="etiqueta-detalle">
+                                    Objetivo
+                                </span>
+
+                                <p>
+                                    Recibir orientación sobre buenas prácticas
+                                    de desarrollo, arquitectura de software
+                                    y crecimiento profesional.
+                                </p>
+
+                            </div>
+
+                            <div class="detalle-completo">
+
+                                <span class="etiqueta-detalle">
+                                    Observaciones
+                                </span>
+
+                                <p>
+                                    Se acordó realizar una reunión virtual
+                                    cada dos semanas durante tres meses.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- Mentores registrados -->
+                <section id="mentores-registrados" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Personas mentoras registradas</h2>
+
+                        <p>
+                            Personas egresadas que se registraron
+                            voluntariamente como mentoras.
+                        </p>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Personas mentoras disponibles
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Área de experiencia</th>
+                                    <th>Especialidades</th>
+                                    <th>Años de experiencia</th>
+                                    <th>Disponibilidad</th>
+                                    <th>Estado</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>Roberto Jiménez Mora</td>
+
+                                    <td>Desarrollo de software</td>
+
+                                    <td>
+                                        Arquitectura, backend y buenas prácticas
+                                    </td>
+
+                                    <td>10 años</td>
+
+                                    <td>Martes y jueves por la noche</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Disponible
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Laura Solano Vega</td>
+
+                                    <td>Ciberseguridad</td>
+
+                                    <td>
+                                        Seguridad de redes y certificaciones
+                                    </td>
+
+                                    <td>8 años</td>
+
+                                    <td>Sábados por la mañana</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Disponible
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>María González Arias</td>
+
+                                    <td>Empleabilidad</td>
+
+                                    <td>
+                                        Currículum, entrevistas y liderazgo
+                                    </td>
+
+                                    <td>12 años</td>
+
+                                    <td>Miércoles por la tarde</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Asignada
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <!-- Ejemplo de registro como mentor -->
+                <section id="registro-mentor" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Información de una persona mentora</h2>
+
+                        <p>
+                            Ejemplo visual de los datos requeridos para
+                            registrarse voluntariamente como mentor.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="nombre-mentor">
+                                    Persona egresada *
+                                </label>
+
+                                <select
+                                    id="nombre-mentor"
+                                    name="egresado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una persona
+                                    </option>
+
+                                    <option value="roberto">
+                                        Roberto Jiménez Mora
+                                    </option>
+
+                                    <option value="laura">
+                                        Laura Solano Vega
+                                    </option>
+
+                                    <option value="maria">
+                                        María González Arias
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="area-experiencia">
+                                    Área de experiencia *
+                                </label>
+
+                                <select
+                                    id="area-experiencia"
+                                    name="areaExperiencia"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un área
+                                    </option>
+
+                                    <option value="software">
+                                        Desarrollo de software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Ciencia de datos
+                                    </option>
+
+                                    <option value="redes">
+                                        Redes y telecomunicaciones
+                                    </option>
+
+                                    <option value="empleabilidad">
+                                        Empleabilidad
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="anios-experiencia">
+                                    Años de experiencia *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="anios-experiencia"
+                                    name="aniosExperiencia"
+                                    min="1"
+                                    max="60"
+                                    placeholder="Ejemplo: 8"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="disponibilidad-mentor">
+                                    Disponibilidad *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="disponibilidad-mentor"
+                                    name="disponibilidad"
+                                    placeholder="Ejemplo: martes por la noche"
+                                    maxlength="150"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="especialidades-mentor">
+                                    Especialidades *
+                                </label>
+
+                                <textarea
+                                    id="especialidades-mentor"
+                                    name="especialidades"
+                                    placeholder="Conocimientos y especialidades principales"
+                                    minlength="10"
+                                    maxlength="500"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="modalidad-mentor">
+                                    Modalidad preferida *
+                                </label>
+
+                                <select
+                                    id="modalidad-mentor"
+                                    name="modalidad"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una modalidad
+                                    </option>
+
+                                    <option value="virtual">
+                                        Virtual
+                                    </option>
+
+                                    <option value="presencial">
+                                        Presencial
+                                    </option>
+
+                                    <option value="hibrida">
+                                        Híbrida
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="estado-mentor">
+                                    Estado *
+                                </label>
+
+                                <select
+                                    id="estado-mentor"
+                                    name="estado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="disponible">
+                                        Disponible
+                                    </option>
+
+                                    <option value="asignado">
+                                        Asignado
+                                    </option>
+
+                                    <option value="inactivo">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar mentor
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+                <!-- Solicitud de mentoría -->
+<section id="solicitar-mentoria" class="seccion">
+
+    <div class="encabezado-seccion">
+
+        <h2>Solicitar mentoría</h2>
+
+        <p>
+            Completa la información para solicitar acompañamiento
+            en un área profesional de tu interés.
+        </p>
+
+    </div>
+
+    <form class="formulario" action="#" method="post">
+
+        <div class="cuadricula-formulario">
+
+            <div class="campo campo-completo">
+
+                <label for="objetivo-solicitud-mentoria">
+                    Objetivo de la mentoría *
+                </label>
+
+                <textarea
+                    id="objetivo-solicitud-mentoria"
+                    name="objetivoMentoria"
+                    rows="5"
+                    minlength="10"
+                    maxlength="600"
+                    placeholder="Describe qué deseas alcanzar mediante la mentoría"
+                    required
+                ></textarea>
+
+            </div>
+
+            <div class="campo campo-completo">
+
+                <label for="oportunidad-solicitud-mentoria">
+                    Oportunidad de mentoría *
+                </label>
+
+                <select
+                    id="oportunidad-solicitud-mentoria"
+                    name="oportunidadMentoria"
+                    required
+                >
+
+                    <option value="">
+                        Seleccione una oportunidad
+                    </option>
+
+                    <option value="desarrollo-software">
+                        Desarrollo de software
+                    </option>
+
+                    <option value="ciberseguridad">
+                        Ciberseguridad
+                    </option>
+
+                    <option value="ciencia-datos">
+                        Ciencia de datos
+                    </option>
+
+                    <option value="redes">
+                        Redes y telecomunicaciones
+                    </option>
+
+                    <option value="empleabilidad">
+                        Preparación para el empleo
+                    </option>
+
+                    <option value="liderazgo">
+                        Liderazgo y crecimiento profesional
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="campo campo-completo">
+
+                <label for="comentarios-solicitud-mentoria">
+                    Comentarios adicionales
+                </label>
+
+                <textarea
+                    id="comentarios-solicitud-mentoria"
+                    name="comentariosAdicionales"
+                    rows="4"
+                    maxlength="500"
+                    placeholder="Agrega información adicional que pueda ayudar a comprender tu solicitud"
+                ></textarea>
+
+            </div>
+
+            <div class="acciones-formulario">
+
+                <button
+                    type="reset"
+                    class="boton boton-secundario"
+                >
+                    Limpiar formulario
+                </button>
+
+                <button
+                    type="submit"
+                    class="boton boton-primario"
+                >
+                    Enviar solicitud
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <p class="nota-demostracion">
+        En este primer avance la solicitud se representa visualmente,
+        pero todavía no se almacenará.
+    </p>
+
+</section>
+
+                <!-- Solicitudes de mentoría -->
+                <section id="solicitudes-mentoria" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Solicitudes de mentoría</h2>
+
+                        <p>
+                            Solicitudes que deben ser revisadas por
+                            Bienestar Estudiantil.
+                        </p>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Solicitudes de mentoría registradas
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Egresado</th>
+                                    <th>Oportunidad de mentoría</th>
+                                    <th>Objetivo</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>Sofía Hernández Vega</td>
+
+                                    <td>Portafolio de ciencia de datos</td>
+
+                                    <td>
+                                        Recibir orientación para crear proyectos
+                                        y mejorar su portafolio profesional.
+                                    </td>
+
+                                    <td>15/07/2026</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Pendiente
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#asignar-mentor"
+                                                class="boton-tabla"
+                                            >
+                                                Asignar mentor
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Rechazar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Esteban Vargas Rojas</td>
+
+                                    <td>Preparación para entrevistas técnicas</td>
+
+                                    <td>
+                                        Prepararse para procesos de selección
+                                        en empresas de tecnología.
+                                    </td>
+
+                                    <td>13/07/2026</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Pendiente
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#asignar-mentor"
+                                                class="boton-tabla"
+                                            >
+                                                Asignar mentor
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Rechazar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <!-- Asignación de mentor -->
+                <section id="asignar-mentor" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Asignar persona mentora</h2>
+
+                        <p>
+                            Selecciona una persona mentora para una solicitud
+                            pendiente.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="solicitud-asignacion">
+                                    Solicitud *
+                                </label>
+
+                                <select
+                                    id="solicitud-asignacion"
+                                    name="solicitud"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una solicitud
+                                    </option>
+
+                                    <option value="sofia-datos">
+                                        Sofía Hernández — Ciencia de datos
+                                    </option>
+
+                                    <option value="esteban-empleabilidad">
+                                        Esteban Vargas — Empleabilidad
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="mentor-asignado">
+                                    Persona mentora *
+                                </label>
+
+                                <select
+                                    id="mentor-asignado"
+                                    name="mentor"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una persona mentora
+                                    </option>
+
+                                    <option value="roberto">
+                                        Roberto Jiménez — Software
+                                    </option>
+
+                                    <option value="laura">
+                                        Laura Solano — Ciberseguridad
+                                    </option>
+
+                                    <option value="maria">
+                                        María González — Empleabilidad
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="observaciones-asignacion">
+                                    Observaciones
+                                </label>
+
+                                <textarea
+                                    id="observaciones-asignacion"
+                                    name="observaciones"
+                                    maxlength="500"
+                                    placeholder="Observaciones relacionadas con la asignación"
+                                ></textarea>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Confirmar asignación
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Registro de mentoría -->
+                <section id="registrar-mentoria" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Registrar mentoría</h2>
+
+                        <p>
+                            Completa la información de una mentoría
+                            asignada o programada.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="egresado-mentoria">
+                                    Persona egresada *
+                                </label>
+
+                                <select
+                                    id="egresado-mentoria"
+                                    name="egresado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una persona
+                                    </option>
+
+                                    <option value="ana">
+                                        Ana Martínez López
+                                    </option>
+
+                                    <option value="carlos">
+                                        Carlos Ramírez Mora
+                                    </option>
+
+                                    <option value="sofia">
+                                        Sofía Hernández Vega
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="mentor-mentoria">
+                                    Persona mentora *
+                                </label>
+
+                                <select
+                                    id="mentor-mentoria"
+                                    name="mentor"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una persona mentora
+                                    </option>
+
+                                    <option value="roberto">
+                                        Roberto Jiménez Mora
+                                    </option>
+
+                                    <option value="laura">
+                                        Laura Solano Vega
+                                    </option>
+
+                                    <option value="maria">
+                                        María González Arias
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="area-mentoria">
+                                    Área profesional *
+                                </label>
+
+                                <select
+                                    id="area-mentoria"
+                                    name="areaProfesional"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un área
+                                    </option>
+
+                                    <option value="software">
+                                        Desarrollo de software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Ciencia de datos
+                                    </option>
+
+                                    <option value="redes">
+                                        Redes y telecomunicaciones
+                                    </option>
+
+                                    <option value="empleabilidad">
+                                        Empleabilidad
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="modalidad-mentoria">
+                                    Modalidad *
+                                </label>
+
+                                <select
+                                    id="modalidad-mentoria"
+                                    name="modalidad"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una modalidad
+                                    </option>
+
+                                    <option value="virtual">
+                                        Virtual
+                                    </option>
+
+                                    <option value="presencial">
+                                        Presencial
+                                    </option>
+
+                                    <option value="hibrida">
+                                        Híbrida
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="fecha-inicio-mentoria">
+                                    Fecha de inicio *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="fecha-inicio-mentoria"
+                                    name="fechaInicio"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="fecha-final-mentoria">
+                                    Fecha de finalización *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="fecha-final-mentoria"
+                                    name="fechaFinalizacion"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="estado-mentoria">
+                                    Estado *
+                                </label>
+
+                                <select
+                                    id="estado-mentoria"
+                                    name="estado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="activa">
+                                        Activa
+                                    </option>
+
+                                    <option value="finalizada">
+                                        Finalizada
+                                    </option>
+
+                                    <option value="cancelada">
+                                        Cancelada
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="objetivo-mentoria">
+                                    Objetivo de la mentoría *
+                                </label>
+
+                                <textarea
+                                    id="objetivo-mentoria"
+                                    name="objetivo"
+                                    placeholder="Objetivo principal de la mentoría"
+                                    minlength="10"
+                                    maxlength="700"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="observaciones-mentoria">
+                                    Observaciones
+                                </label>
+
+                                <textarea
+                                    id="observaciones-mentoria"
+                                    name="observaciones"
+                                    placeholder="Información adicional"
+                                    maxlength="700"
+                                ></textarea>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar mentoría
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <p class="nota-demostracion">
+                        Los campos marcados con * son obligatorios.
+                        La información todavía no se almacenará.
+                    </p>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

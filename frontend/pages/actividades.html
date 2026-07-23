@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Gestión de actividades institucionales para egresados de CENFOTEC"
+    >
+
+    <title>Gestión de actividades | CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral de Bienestar Estudiantil -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+
+                <a
+                    href="dashboard-bienestar.html"
+                    class="marca marca-panel"
+                >
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Bienestar Estudiantil</p>
+
+            </div>
+
+            <nav aria-label="Menú de Bienestar Estudiantil">
+
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-bienestar.html"
+                            class="enlace-panel"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html#consultar-egresados"
+                            class="enlace-panel"
+                        >
+                            Consulta de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="actividades.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Gestión de actividades
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="comunidades.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de comunidades
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="mentorias.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de mentorías
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="oportunidades.html"
+                            class="enlace-panel"
+                        >
+                            Oportunidades laborales
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="comunicados.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de comunicados
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="menu-lateral-pie">
+
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <header class="encabezado-sistema">
+
+                <div>
+
+                    <p class="texto-secundario">
+                        Bienestar Estudiantil
+                    </p>
+
+                    <h1>Gestión de actividades</h1>
+
+                </div>
+
+                <div class="informacion-usuario">
+
+                    <div>
+                        <strong>Daniela Vargas</strong>
+                        <p>Bienestar Estudiantil</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        DV
+                    </div>
+
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Introducción -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Actividades institucionales</h2>
+
+                        <p>
+                            Consulta, registra y administra actividades
+                            dirigidas a la comunidad de personas egresadas.
+                        </p>
+
+                    </div>
+
+                    <aside class="mensaje-informativo">
+
+                        <h2>Información del módulo</h2>
+
+                        <p>
+                            Las actividades pueden realizarse de forma
+                            presencial, virtual o híbrida.
+                        </p>
+
+                    </aside>
+
+                </section>
+
+                <!-- Navegación interna -->
+                <nav
+                    class="navegacion-interna"
+                    aria-label="Secciones de gestión de actividades"
+                >
+
+                    <a
+                        href="#consultar-actividades"
+                        class="boton boton-secundario"
+                    >
+                        Consultar actividades
+                    </a>
+
+                    <a
+                        href="#registrar-actividad"
+                        class="boton boton-secundario"
+                    >
+                        Registrar actividad
+                    </a>
+
+                    <a
+                        href="#detalle-actividad"
+                        class="boton boton-secundario"
+                    >
+                        Ver detalle
+                    </a>
+
+                </nav>
+
+                <!-- Consulta de actividades -->
+                <section id="consultar-actividades" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Consultar actividades</h2>
+
+                        <p>
+                            Utiliza los filtros para localizar actividades
+                            institucionales.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="get">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="filtro-titulo-actividad">
+                                    Título
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-titulo-actividad"
+                                    name="titulo"
+                                    placeholder="Nombre de la actividad"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-modalidad-actividad">
+                                    Modalidad
+                                </label>
+
+                                <select
+                                    id="filtro-modalidad-actividad"
+                                    name="modalidad"
+                                >
+
+                                    <option value="">
+                                        Todas las modalidades
+                                    </option>
+
+                                    <option value="presencial">
+                                        Presencial
+                                    </option>
+
+                                    <option value="virtual">
+                                        Virtual
+                                    </option>
+
+                                    <option value="hibrida">
+                                        Híbrida
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-fecha-actividad">
+                                    Fecha
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="filtro-fecha-actividad"
+                                    name="fecha"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-publico-actividad">
+                                    Público objetivo
+                                </label>
+
+                                <select
+                                    id="filtro-publico-actividad"
+                                    name="publicoObjetivo"
+                                >
+
+                                    <option value="">
+                                        Todos los públicos
+                                    </option>
+
+                                    <option value="todos">
+                                        Todos los egresados
+                                    </option>
+
+                                    <option value="software">
+                                        Área de software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Área de ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Área de ciencia de datos
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-estado-actividad">
+                                    Estado
+                                </label>
+
+                                <select
+                                    id="filtro-estado-actividad"
+                                    name="estado"
+                                >
+
+                                    <option value="">
+                                        Todos los estados
+                                    </option>
+
+                                    <option value="borrador">
+                                        Borrador
+                                    </option>
+
+                                    <option value="publicada">
+                                        Publicada
+                                    </option>
+
+                                    <option value="finalizada">
+                                        Finalizada
+                                    </option>
+
+                                    <option value="cancelada">
+                                        Cancelada
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar filtros
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Buscar actividades
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Tabla de actividades -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+
+                            <h2>Actividades registradas</h2>
+
+                            <p>
+                                Lista de actividades institucionales
+                                disponibles en la plataforma.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="#registrar-actividad"
+                            class="boton boton-primario"
+                        >
+                            Registrar actividad
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Actividades institucionales registradas
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Modalidad</th>
+                                    <th>Ubicación</th>
+                                    <th>Cupo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>Tendencias en desarrollo web</td>
+
+                                    <td>20/08/2026</td>
+
+                                    <td>6:00 p. m.</td>
+
+                                    <td>Virtual</td>
+
+                                    <td>Microsoft Teams</td>
+
+                                    <td>100</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Publicada
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Encuentro de egresados</td>
+
+                                    <td>28/08/2026</td>
+
+                                    <td>5:00 p. m.</td>
+
+                                    <td>Presencial</td>
+
+                                    <td>Auditorio principal</td>
+
+                                    <td>150</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Publicada
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Taller de empleabilidad</td>
+
+                                    <td>05/09/2026</td>
+
+                                    <td>10:00 a. m.</td>
+
+                                    <td>Híbrida</td>
+
+                                    <td>Aula 204 y Zoom</td>
+
+                                    <td>60</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Borrador
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Introducción a la ciberseguridad</td>
+
+                                    <td>12/06/2026</td>
+
+                                    <td>6:30 p. m.</td>
+
+                                    <td>Virtual</td>
+
+                                    <td>Zoom</td>
+
+                                    <td>80</td>
+
+                                    <td>
+                                        <span class="estado estado-inactivo">
+                                            Finalizada
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-actividad"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p class="nota-demostracion">
+                        Los botones de editar y eliminar se programarán
+                        durante los siguientes avances.
+                    </p>
+
+                </section>
+
+                <!-- Detalle de actividad -->
+                <section id="detalle-actividad" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Detalle de la actividad</h2>
+
+                        <p>
+                            Información completa de una actividad
+                            institucional seleccionada.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="encabezado-perfil-academico">
+
+                            <div>
+
+                                <h3>Tendencias en desarrollo web</h3>
+
+                                <p class="texto-secundario">
+                                    Actividad dirigida a personas egresadas
+                                    del área tecnológica.
+                                </p>
+
+                            </div>
+
+                            <span class="estado estado-activo">
+                                Publicada
+                            </span>
+
+                        </div>
+
+                        <div class="cuadricula-detalle">
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Fecha
+                                </span>
+
+                                <p>20 de agosto de 2026</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Hora
+                                </span>
+
+                                <p>6:00 p. m.</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Modalidad
+                                </span>
+
+                                <p>Virtual</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Ubicación o plataforma
+                                </span>
+
+                                <p>Microsoft Teams</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Público objetivo
+                                </span>
+
+                                <p>Todos los egresados</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Cupo máximo
+                                </span>
+
+                                <p>100 participantes</p>
+
+                            </div>
+
+                            <div>
+
+                                <span class="etiqueta-detalle">
+                                    Personas inscritas
+                                </span>
+
+                                <p>64 participantes</p>
+
+                            </div>
+
+                            <div class="detalle-completo">
+
+                                <span class="etiqueta-detalle">
+                                    Descripción
+                                </span>
+
+                                <p>
+                                    Conversatorio sobre tecnologías,
+                                    herramientas y metodologías actuales
+                                    utilizadas en el desarrollo de
+                                    aplicaciones web.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- Registro de actividad -->
+                <section id="registrar-actividad" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Registrar actividad</h2>
+
+                        <p>
+                            Completa la información necesaria para publicar
+                            una actividad institucional.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo campo-completo">
+
+                                <label for="titulo-actividad">
+                                    Título de la actividad *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="titulo-actividad"
+                                    name="titulo"
+                                    placeholder="Nombre de la actividad"
+                                    minlength="5"
+                                    maxlength="120"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="descripcion-actividad">
+                                    Descripción *
+                                </label>
+
+                                <textarea
+                                    id="descripcion-actividad"
+                                    name="descripcion"
+                                    placeholder="Descripción general de la actividad"
+                                    minlength="10"
+                                    maxlength="1000"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="fecha-actividad">
+                                    Fecha *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="fecha-actividad"
+                                    name="fecha"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="hora-actividad">
+                                    Hora *
+                                </label>
+
+                                <input
+                                    type="time"
+                                    id="hora-actividad"
+                                    name="hora"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="modalidad-actividad">
+                                    Modalidad *
+                                </label>
+
+                                <select
+                                    id="modalidad-actividad"
+                                    name="modalidad"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una modalidad
+                                    </option>
+
+                                    <option value="presencial">
+                                        Presencial
+                                    </option>
+
+                                    <option value="virtual">
+                                        Virtual
+                                    </option>
+
+                                    <option value="hibrida">
+                                        Híbrida
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="ubicacion-actividad">
+                                    Ubicación o plataforma *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="ubicacion-actividad"
+                                    name="ubicacion"
+                                    placeholder="Auditorio, aula, Zoom o Teams"
+                                    maxlength="150"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="publico-actividad">
+                                    Público objetivo *
+                                </label>
+
+                                <select
+                                    id="publico-actividad"
+                                    name="publicoObjetivo"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione el público
+                                    </option>
+
+                                    <option value="todos">
+                                        Todos los egresados
+                                    </option>
+
+                                    <option value="software">
+                                        Área de software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Área de ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Área de ciencia de datos
+                                    </option>
+
+                                    <option value="mentores">
+                                        Personas mentoras
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="cupo-actividad">
+                                    Cupo máximo *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="cupo-actividad"
+                                    name="cupo"
+                                    min="1"
+                                    max="1000"
+                                    placeholder="Ejemplo: 100"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="estado-actividad">
+                                    Estado *
+                                </label>
+
+                                <select
+                                    id="estado-actividad"
+                                    name="estado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="borrador">
+                                        Borrador
+                                    </option>
+
+                                    <option value="publicada">
+                                        Publicada
+                                    </option>
+
+                                    <option value="finalizada">
+                                        Finalizada
+                                    </option>
+
+                                    <option value="cancelada">
+                                        Cancelada
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="responsable-actividad">
+                                    Persona responsable *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="responsable-actividad"
+                                    name="responsable"
+                                    placeholder="Nombre de la persona responsable"
+                                    minlength="3"
+                                    maxlength="100"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="enlace-actividad">
+                                    Enlace de acceso o información
+                                </label>
+
+                                <input
+                                    type="url"
+                                    id="enlace-actividad"
+                                    name="enlace"
+                                    placeholder="https://ejemplo.com/actividad"
+                                >
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar actividad
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <p class="nota-demostracion">
+                        Los campos marcados con * son obligatorios.
+                        En este avance la actividad todavía no se almacenará.
+                    </p>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

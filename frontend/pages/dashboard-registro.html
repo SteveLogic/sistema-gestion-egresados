@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Panel principal del personal de Registro del Sistema de Gestión de Egresados"
+    >
+
+    <title>Panel de Registro | Egresados CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+                <a href="dashboard-registro.html" class="marca marca-panel">
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Personal de Registro</p>
+            </div>
+
+            <nav aria-label="Menú del personal de Registro">
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-registro.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="titulos.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de títulos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="carreras.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de carreras
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="escuelas.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de escuelas
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="menu-lateral-pie">
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <!-- Encabezado superior -->
+            <header class="encabezado-sistema">
+
+                <div>
+                    <p class="texto-secundario">
+                        Sistema de Gestión de Egresados
+                    </p>
+
+                    <h1>Panel de Registro</h1>
+                </div>
+
+                <div class="informacion-usuario">
+                    <div>
+                        <strong>María Rodríguez</strong>
+                        <p>Personal de Registro</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        MR
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Bienvenida -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+                        <h2>Bienvenida, María</h2>
+
+                        <p>
+                            Desde este panel puedes administrar la información
+                            académica de las personas egresadas.
+                        </p>
+                    </div>
+
+                </section>
+
+                <!-- Resumen general -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Resumen general</h2>
+
+                        <p>
+                            Información general registrada actualmente en
+                            la plataforma.
+                        </p>
+                    </div>
+
+                    <div class="cuadricula-resumen">
+
+                        <article class="tarjeta tarjeta-resumen">
+                            <p class="etiqueta-resumen">
+                                Egresados registrados
+                            </p>
+
+                            <p class="numero-resumen">
+                                1 248
+                            </p>
+
+                            <a href="egresados.html">
+                                Consultar egresados
+                            </a>
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+                            <p class="etiqueta-resumen">
+                                Títulos registrados
+                            </p>
+
+                            <p class="numero-resumen">
+                                1 563
+                            </p>
+
+                            <a href="titulos.html">
+                                Consultar títulos
+                            </a>
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+                            <p class="etiqueta-resumen">
+                                Carreras activas
+                            </p>
+
+                            <p class="numero-resumen">
+                                18
+                            </p>
+
+                            <a href="carreras.html">
+                                Consultar carreras
+                            </a>
+                        </article>
+
+                        <article class="tarjeta tarjeta-resumen">
+                            <p class="etiqueta-resumen">
+                                Escuelas académicas
+                            </p>
+
+                            <p class="numero-resumen">
+                                5
+                            </p>
+
+                            <a href="escuelas.html">
+                                Consultar escuelas
+                            </a>
+                        </article>
+
+                    </div>
+                </section>
+
+                <!-- Acciones rápidas -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Acciones rápidas</h2>
+
+                        <p>
+                            Accede directamente a las tareas más frecuentes.
+                        </p>
+                    </div>
+
+                    <div class="cuadricula">
+
+                        <article class="tarjeta">
+                            <h3>Registrar egresado</h3>
+
+                            <p>
+                                Agrega manualmente una nueva persona egresada
+                                al sistema.
+                            </p>
+
+                            <br>
+
+                            <a
+                                href="egresados.html#registrar-egresado"
+                                class="boton boton-primario"
+                            >
+                                Registrar egresado
+                            </a>
+                        </article>
+
+                        <article class="tarjeta">
+                            <h3>Importar archivo CSV</h3>
+
+                            <p>
+                                Accede a la sección de importación masiva
+                                de personas egresadas.
+                            </p>
+
+                            <br>
+
+                            <a
+                                href="egresados.html#importar-csv"
+                                class="boton boton-secundario"
+                            >
+                                Importar CSV
+                            </a>
+                        </article>
+
+                        <article class="tarjeta">
+                            <h3>Registrar título</h3>
+
+                            <p>
+                                Asocia un nuevo título académico a una
+                                persona egresada.
+                            </p>
+
+                            <br>
+
+                            <a
+                                href="titulos.html#registrar-titulo"
+                                class="boton boton-secundario"
+                            >
+                                Registrar título
+                            </a>
+                        </article>
+
+                    </div>
+                </section>
+
+                <!-- Registros recientes -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+                            <h2>Egresados registrados recientemente</h2>
+
+                            <p>
+                                Últimos registros agregados a la plataforma.
+                            </p>
+                        </div>
+
+                        <a
+                            href="egresados.html"
+                            class="boton boton-secundario"
+                        >
+                            Ver todos
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Últimas personas egresadas registradas
+                            </caption>
+
+                            <thead>
+                                <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre completo</th>
+                                    <th>Correo</th>
+                                    <th>Fecha de registro</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1-1111-1111</td>
+                                    <td>Ana Martínez López</td>
+                                    <td>ana.martinez@correo.com</td>
+                                    <td>15/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activo
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>2-2222-2222</td>
+                                    <td>Carlos Ramírez Mora</td>
+                                    <td>carlos.ramirez@correo.com</td>
+                                    <td>14/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activo
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>3-3333-3333</td>
+                                    <td>Sofía Hernández Vega</td>
+                                    <td>sofia.hernandez@correo.com</td>
+                                    <td>13/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Pendiente
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

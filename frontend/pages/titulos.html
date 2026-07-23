@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Gestión de títulos académicos de las personas egresadas de CENFOTEC"
+    >
+
+    <title>Gestión de títulos | CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral del personal de Registro -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+
+                <a
+                    href="dashboard-registro.html"
+                    class="marca marca-panel"
+                >
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Personal de Registro</p>
+
+            </div>
+
+            <nav aria-label="Menú del personal de Registro">
+
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-registro.html"
+                            class="enlace-panel"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="titulos.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Gestión de títulos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="carreras.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de carreras
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="escuelas.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de escuelas
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="menu-lateral-pie">
+
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <header class="encabezado-sistema">
+
+                <div>
+                    <p class="texto-secundario">
+                        Administración académica
+                    </p>
+
+                    <h1>Gestión de títulos</h1>
+                </div>
+
+                <div class="informacion-usuario">
+
+                    <div>
+                        <strong>María Rodríguez</strong>
+                        <p>Personal de Registro</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        MR
+                    </div>
+
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Introducción -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Administración de títulos académicos</h2>
+
+                        <p>
+                            Registra, consulta y administra los títulos
+                            académicos asociados a las personas egresadas.
+                        </p>
+
+                    </div>
+
+                    <aside class="mensaje-informativo">
+
+                        <h2>Información importante</h2>
+
+                        <p>
+                            Una misma persona egresada puede tener varios
+                            títulos académicos registrados en la universidad.
+                        </p>
+
+                    </aside>
+
+                </section>
+
+                <!-- Navegación interna -->
+                <nav
+                    class="navegacion-interna"
+                    aria-label="Secciones de gestión de títulos"
+                >
+
+                    <a
+                        href="#consultar-titulos"
+                        class="boton boton-secundario"
+                    >
+                        Consultar títulos
+                    </a>
+
+                    <a
+                        href="#registrar-titulo"
+                        class="boton boton-secundario"
+                    >
+                        Registrar título
+                    </a>
+
+                    <a
+                        href="#titulos-egresado"
+                        class="boton boton-secundario"
+                    >
+                        Títulos por egresado
+                    </a>
+
+                </nav>
+
+                <!-- Consulta de títulos -->
+                <section id="consultar-titulos" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Consultar títulos</h2>
+
+                        <p>
+                            Utiliza los filtros para localizar títulos
+                            académicos registrados.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="get">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+
+                                <label for="filtro-egresado-titulo">
+                                    Persona egresada
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-egresado-titulo"
+                                    name="egresado"
+                                    placeholder="Nombre o identificación"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-tipo-programa">
+                                    Tipo de programa
+                                </label>
+
+                                <select
+                                    id="filtro-tipo-programa"
+                                    name="tipoPrograma"
+                                >
+
+                                    <option value="">
+                                        Todos los tipos
+                                    </option>
+
+                                    <option value="tecnico">
+                                        Técnico
+                                    </option>
+
+                                    <option value="bachillerato">
+                                        Bachillerato
+                                    </option>
+
+                                    <option value="maestria">
+                                        Maestría
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-carrera-titulo">
+                                    Carrera
+                                </label>
+
+                                <select
+                                    id="filtro-carrera-titulo"
+                                    name="carrera"
+                                >
+
+                                    <option value="">
+                                        Todas las carreras
+                                    </option>
+
+                                    <option value="software">
+                                        Ingeniería del Software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ingeniería en Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Ciencia de Datos
+                                    </option>
+
+                                    <option value="tecnologias">
+                                        Tecnologías de Información
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-escuela-titulo">
+                                    Escuela académica
+                                </label>
+
+                                <select
+                                    id="filtro-escuela-titulo"
+                                    name="escuela"
+                                >
+
+                                    <option value="">
+                                        Todas las escuelas
+                                    </option>
+
+                                    <option value="computacion">
+                                        Escuela de Computación
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Escuela de Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Escuela de Ciencia de Datos
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-anio-titulo">
+                                    Año de graduación
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="filtro-anio-titulo"
+                                    name="anioGraduacion"
+                                    min="1990"
+                                    max="2100"
+                                    placeholder="Ejemplo: 2026"
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="filtro-estado-titulo">
+                                    Estado
+                                </label>
+
+                                <select
+                                    id="filtro-estado-titulo"
+                                    name="estado"
+                                >
+
+                                    <option value="">
+                                        Todos los estados
+                                    </option>
+
+                                    <option value="registrado">
+                                        Registrado
+                                    </option>
+
+                                    <option value="revision">
+                                        En revisión
+                                    </option>
+
+                                    <option value="inactivo">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar filtros
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Buscar títulos
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Tabla de títulos -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+
+                            <h2>Títulos registrados</h2>
+
+                            <p>
+                                Lista de títulos académicos registrados
+                                en la plataforma.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="#registrar-titulo"
+                            class="boton boton-primario"
+                        >
+                            Registrar título
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Títulos académicos registrados
+                            </caption>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Egresado</th>
+                                    <th>Identificación</th>
+                                    <th>Programa</th>
+                                    <th>Carrera</th>
+                                    <th>Escuela</th>
+                                    <th>Año</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>Ana Martínez López</td>
+
+                                    <td>1-1111-1111</td>
+
+                                    <td>Bachillerato</td>
+
+                                    <td>Ingeniería del Software</td>
+
+                                    <td>Escuela de Computación</td>
+
+                                    <td>2024</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Registrado
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Ana Martínez López</td>
+
+                                    <td>1-1111-1111</td>
+
+                                    <td>Técnico</td>
+
+                                    <td>Desarrollo de Software</td>
+
+                                    <td>Escuela de Computación</td>
+
+                                    <td>2021</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Registrado
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Carlos Ramírez Mora</td>
+
+                                    <td>2-2222-2222</td>
+
+                                    <td>Maestría</td>
+
+                                    <td>Ciberseguridad</td>
+
+                                    <td>Escuela de Ciberseguridad</td>
+
+                                    <td>2025</td>
+
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            En revisión
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>Sofía Hernández Vega</td>
+
+                                    <td>3-3333-3333</td>
+
+                                    <td>Bachillerato</td>
+
+                                    <td>Ciencia de Datos</td>
+
+                                    <td>Escuela de Ciencia de Datos</td>
+
+                                    <td>2026</td>
+
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Registrado
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        <div class="acciones-tabla">
+
+                                            <a
+                                                href="#detalle-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-titulo"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p class="nota-demostracion">
+                        Las acciones de editar y eliminar se programarán
+                        en los siguientes avances.
+                    </p>
+
+                </section>
+
+                <!-- Detalle de título -->
+                <section id="detalle-titulo" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Detalle del título</h2>
+
+                        <p>
+                            Información completa de un título académico
+                            seleccionado.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="cuadricula-detalle">
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Persona egresada
+                                </span>
+
+                                <p>Ana Martínez López</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Identificación
+                                </span>
+
+                                <p>1-1111-1111</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Tipo de programa
+                                </span>
+
+                                <p>Bachillerato</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Carrera
+                                </span>
+
+                                <p>Ingeniería del Software</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Escuela académica
+                                </span>
+
+                                <p>Escuela de Computación</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Año de graduación
+                                </span>
+
+                                <p>2024</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Estado
+                                </span>
+
+                                <p>
+                                    <span class="estado estado-activo">
+                                        Registrado
+                                    </span>
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- Formulario de registro -->
+                <section id="registrar-titulo" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Registrar título académico</h2>
+
+                        <p>
+                            Selecciona una persona egresada y completa
+                            la información del título.
+                        </p>
+
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo campo-completo">
+
+                                <label for="egresado-titulo">
+                                    Persona egresada *
+                                </label>
+
+                                <select
+                                    id="egresado-titulo"
+                                    name="egresado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una persona egresada
+                                    </option>
+
+                                    <option value="ana-martinez">
+                                        Ana Martínez López — 1-1111-1111
+                                    </option>
+
+                                    <option value="carlos-ramirez">
+                                        Carlos Ramírez Mora — 2-2222-2222
+                                    </option>
+
+                                    <option value="sofia-hernandez">
+                                        Sofía Hernández Vega — 3-3333-3333
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="tipo-programa">
+                                    Tipo de programa *
+                                </label>
+
+                                <select
+                                    id="tipo-programa"
+                                    name="tipoPrograma"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un tipo
+                                    </option>
+
+                                    <option value="tecnico">
+                                        Técnico
+                                    </option>
+
+                                    <option value="bachillerato">
+                                        Bachillerato
+                                    </option>
+
+                                    <option value="maestria">
+                                        Maestría
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="carrera-titulo">
+                                    Carrera *
+                                </label>
+
+                                <select
+                                    id="carrera-titulo"
+                                    name="carrera"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una carrera
+                                    </option>
+
+                                    <option value="desarrollo-software">
+                                        Desarrollo de Software
+                                    </option>
+
+                                    <option value="ingenieria-software">
+                                        Ingeniería del Software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ingeniería en Ciberseguridad
+                                    </option>
+
+                                    <option value="ciencia-datos">
+                                        Ciencia de Datos
+                                    </option>
+
+                                    <option value="tecnologias-informacion">
+                                        Tecnologías de Información
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="escuela-titulo">
+                                    Escuela académica *
+                                </label>
+
+                                <select
+                                    id="escuela-titulo"
+                                    name="escuela"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione una escuela
+                                    </option>
+
+                                    <option value="computacion">
+                                        Escuela de Computación
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Escuela de Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Escuela de Ciencia de Datos
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="anio-graduacion">
+                                    Año de graduación *
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="anio-graduacion"
+                                    name="anioGraduacion"
+                                    min="1990"
+                                    max="2100"
+                                    placeholder="Ejemplo: 2026"
+                                    required
+                                >
+
+                            </div>
+
+                            <div class="campo">
+
+                                <label for="estado-titulo">
+                                    Estado del título *
+                                </label>
+
+                                <select
+                                    id="estado-titulo"
+                                    name="estado"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="registrado">
+                                        Registrado
+                                    </option>
+
+                                    <option value="revision">
+                                        En revisión
+                                    </option>
+
+                                    <option value="inactivo">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="campo campo-completo">
+
+                                <label for="observaciones-titulo">
+                                    Observaciones
+                                </label>
+
+                                <textarea
+                                    id="observaciones-titulo"
+                                    name="observaciones"
+                                    maxlength="500"
+                                    placeholder="Información adicional relacionada con el título"
+                                ></textarea>
+
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar título
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <p class="nota-demostracion">
+                        Los campos marcados con * son obligatorios.
+                        En este avance la información todavía no se almacena.
+                    </p>
+
+                </section>
+
+                <!-- Ejemplo de varios títulos por egresado -->
+                <section id="titulos-egresado" class="seccion">
+
+                    <div class="encabezado-seccion">
+
+                        <h2>Títulos asociados a una persona egresada</h2>
+
+                        <p>
+                            Ejemplo de una persona que ha obtenido varios
+                            títulos en la institución.
+                        </p>
+
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="encabezado-perfil-academico">
+
+                            <div>
+
+                                <h3>Ana Martínez López</h3>
+
+                                <p class="texto-secundario">
+                                    Identificación: 1-1111-1111
+                                </p>
+
+                            </div>
+
+                            <span class="estado estado-activo">
+                                2 títulos registrados
+                            </span>
+
+                        </div>
+
+                        <div class="contenedor-tabla">
+
+                            <table class="tabla">
+
+                                <caption>
+                                    Historial académico de Ana Martínez López
+                                </caption>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Programa</th>
+                                        <th>Carrera</th>
+                                        <th>Escuela</th>
+                                        <th>Año</th>
+                                        <th>Estado</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>Técnico</td>
+                                        <td>Desarrollo de Software</td>
+                                        <td>Escuela de Computación</td>
+                                        <td>2021</td>
+                                        <td>
+                                            <span class="estado estado-activo">
+                                                Registrado
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Bachillerato</td>
+                                        <td>Ingeniería del Software</td>
+                                        <td>Escuela de Computación</td>
+                                        <td>2024</td>
+                                        <td>
+                                            <span class="estado estado-activo">
+                                                Registrado
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

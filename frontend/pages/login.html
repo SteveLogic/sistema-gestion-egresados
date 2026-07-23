@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Inicio de sesión del Sistema de Gestión de Egresados de CENFOTEC"
+    >
+
+    <title>Iniciar sesión | Egresados CENFOTEC</title>
+
+    <!-- Como login.html está dentro de pages,
+         debemos retroceder una carpeta con ../ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="pagina-login">
+
+    <header class="encabezado-publico">
+        <div class="contenedor navegacion-publica">
+
+            <a href="../index.html" class="marca">
+                Egresados CENFOTEC
+            </a>
+
+            <nav aria-label="Navegación de inicio de sesión">
+                <ul class="menu-publico">
+                    <li>
+                        <a href="../index.html">
+                            Regresar al inicio
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="contenido-login">
+
+        <section class="contenedor contenedor-login">
+
+            <div class="panel-login">
+
+                <div class="encabezado-seccion">
+                    <p>Acceso a la plataforma</p>
+
+                    <h1>Iniciar sesión</h1>
+
+                    <p>
+                        Ingresa tus datos para acceder al Sistema de Gestión
+                        de Egresados.
+                    </p>
+                </div>
+
+                <!-- El inicio de sesión todavía no será funcional.
+                     El formulario representa visualmente el RF-01. -->
+                <form
+                    class="formulario formulario-login"
+                    action="dashboard-egresado.html"
+                    method="get"
+                >
+
+                    <div class="campo">
+                        <label for="correo">
+                            Correo electrónico
+                        </label>
+
+                        <input
+                            type="email"
+                            id="correo"
+                            name="correo"
+                            placeholder="nombre@correo.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="contrasena">
+                            Contraseña
+                        </label>
+
+                        <input
+                            type="password"
+                            id="contrasena"
+                            name="contrasena"
+                            placeholder="Ingrese su contraseña"
+                            autocomplete="current-password"
+                            minlength="8"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="rol">
+                            Tipo de usuario
+                        </label>
+
+                        <select id="rol" name="rol" required>
+                            <option value="">
+                                Seleccione un rol
+                            </option>
+
+                            <option value="registro">
+                                Personal de Registro
+                            </option>
+
+                            <option value="bienestar">
+                                Bienestar Estudiantil
+                            </option>
+
+                            <option value="egresado">
+                                Egresado
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="opciones-login">
+
+                        <label class="opcion-recordar">
+                            <input
+                                type="checkbox"
+                                name="recordar"
+                            >
+
+                            Recordar mis datos
+                        </label>
+
+                        <a href="#">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="boton boton-primario boton-completo"
+                    >
+                        Iniciar sesión
+                    </button>
+
+                </form>
+
+                <aside class="mensaje-informativo">
+                    <h2>Acceso según el rol</h2>
+
+                    <p>
+                        Las funcionalidades disponibles dependerán del rol
+                        asignado a cada usuario.
+                    </p>
+                </aside>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="pie-pagina">
+        <div class="contenedor">
+
+            <p>
+                Sistema de Gestión de Egresados
+            </p>
+
+            <p>
+                Universidad CENFOTEC
+            </p>
+
+        </div>
+    </footer>
+
+</body>
+</html>

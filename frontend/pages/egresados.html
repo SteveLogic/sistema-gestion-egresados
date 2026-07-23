@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Gestión de personas egresadas de la Universidad CENFOTEC"
+    >
+
+    <title>Gestión de egresados | CENFOTEC</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="estructura-sistema">
+
+        <!-- Menú lateral del personal de Registro -->
+        <aside class="menu-lateral">
+
+            <div class="menu-lateral-encabezado">
+                <a
+                    href="dashboard-registro.html"
+                    class="marca marca-panel"
+                >
+                    Egresados CENFOTEC
+                </a>
+
+                <p>Personal de Registro</p>
+            </div>
+
+            <nav aria-label="Menú del personal de Registro">
+                <ul class="menu-panel">
+
+                    <li>
+                        <a
+                            href="dashboard-registro.html"
+                            class="enlace-panel"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="egresados.html"
+                            class="enlace-panel enlace-activo"
+                            aria-current="page"
+                        >
+                            Gestión de egresados
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="titulos.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de títulos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="carreras.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de carreras
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="escuelas.html"
+                            class="enlace-panel"
+                        >
+                            Gestión de escuelas
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="menu-lateral-pie">
+                <a href="login.html" class="enlace-panel">
+                    Cerrar sesión
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="area-sistema">
+
+            <header class="encabezado-sistema">
+
+                <div>
+                    <p class="texto-secundario">
+                        Administración académica
+                    </p>
+
+                    <h1>Gestión de egresados</h1>
+                </div>
+
+                <div class="informacion-usuario">
+
+                    <div>
+                        <strong>María Rodríguez</strong>
+                        <p>Personal de Registro</p>
+                    </div>
+
+                    <div class="avatar" aria-hidden="true">
+                        MR
+                    </div>
+
+                </div>
+
+            </header>
+
+            <main class="contenido-sistema">
+
+                <!-- Introducción -->
+                <section class="seccion-bienvenida">
+
+                    <div class="encabezado-seccion">
+                        <h2>Administración de egresados</h2>
+
+                        <p>
+                            Registra personas egresadas, importa archivos CSV
+                            y consulta la información almacenada.
+                        </p>
+                    </div>
+
+                </section>
+
+                <!-- Navegación interna -->
+                <nav
+                    class="navegacion-interna"
+                    aria-label="Secciones de gestión de egresados"
+                >
+                    <a
+                        href="#consultar-egresados"
+                        class="boton boton-secundario"
+                    >
+                        Consultar
+                    </a>
+
+                    <a
+                        href="#registrar-egresado"
+                        class="boton boton-secundario"
+                    >
+                        Registrar
+                    </a>
+
+                    <a
+                        href="#importar-csv"
+                        class="boton boton-secundario"
+                    >
+                        Importar CSV
+                    </a>
+                </nav>
+
+                <!-- Consulta y filtros -->
+                <section id="consultar-egresados" class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Consultar egresados</h2>
+
+                        <p>
+                            Utiliza uno o varios filtros para localizar
+                            personas egresadas.
+                        </p>
+                    </div>
+
+                    <form class="formulario" action="#" method="get">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+                                <label for="filtro-nombre">
+                                    Nombre
+                                </label>
+
+                                <input
+                                    type="search"
+                                    id="filtro-nombre"
+                                    name="nombre"
+                                    placeholder="Nombre del egresado"
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="filtro-carrera">
+                                    Carrera
+                                </label>
+
+                                <select
+                                    id="filtro-carrera"
+                                    name="carrera"
+                                >
+                                    <option value="">
+                                        Todas las carreras
+                                    </option>
+
+                                    <option value="software">
+                                        Ingeniería del Software
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Ingeniería en Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Ciencia de Datos
+                                    </option>
+
+                                    <option value="tecnologias">
+                                        Tecnologías de Información
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="campo">
+                                <label for="filtro-escuela">
+                                    Escuela académica
+                                </label>
+
+                                <select
+                                    id="filtro-escuela"
+                                    name="escuela"
+                                >
+                                    <option value="">
+                                        Todas las escuelas
+                                    </option>
+
+                                    <option value="computacion">
+                                        Escuela de Computación
+                                    </option>
+
+                                    <option value="ciberseguridad">
+                                        Escuela de Ciberseguridad
+                                    </option>
+
+                                    <option value="datos">
+                                        Escuela de Ciencia de Datos
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="campo">
+                                <label for="filtro-programa">
+                                    Tipo de programa
+                                </label>
+
+                                <select
+                                    id="filtro-programa"
+                                    name="programa"
+                                >
+                                    <option value="">
+                                        Todos los programas
+                                    </option>
+
+                                    <option value="tecnico">
+                                        Técnico
+                                    </option>
+
+                                    <option value="bachillerato">
+                                        Bachillerato
+                                    </option>
+
+                                    <option value="maestria">
+                                        Maestría
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="campo">
+                                <label for="filtro-anio">
+                                    Año de graduación
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="filtro-anio"
+                                    name="anio"
+                                    min="1990"
+                                    max="2100"
+                                    placeholder="Ejemplo: 2026"
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="filtro-estado">
+                                    Estado
+                                </label>
+
+                                <select
+                                    id="filtro-estado"
+                                    name="estado"
+                                >
+                                    <option value="">
+                                        Todos los estados
+                                    </option>
+
+                                    <option value="activo">
+                                        Activo
+                                    </option>
+
+                                    <option value="pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="inactivo">
+                                        Inactivo
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar filtros
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Buscar egresados
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <!-- Tabla de resultados -->
+                <section class="seccion">
+
+                    <div class="encabezado-seccion encabezado-con-accion">
+
+                        <div>
+                            <h2>Resultados</h2>
+
+                            <p>
+                                Personas egresadas registradas en el sistema.
+                            </p>
+                        </div>
+
+                        <a
+                            href="#registrar-egresado"
+                            class="boton boton-primario"
+                        >
+                            Registrar egresado
+                        </a>
+
+                    </div>
+
+                    <div class="contenedor-tabla">
+
+                        <table class="tabla">
+
+                            <caption>
+                                Lista de personas egresadas
+                            </caption>
+
+                            <thead>
+                                <tr>
+                                    <th>Identificación</th>
+                                    <th>Nombre completo</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Lugar de trabajo</th>
+                                    <th>Registro</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>1-1111-1111</td>
+                                    <td>Ana Martínez López</td>
+                                    <td>ana.martinez@correo.com</td>
+                                    <td>8888-1111</td>
+                                    <td>Empresa Tecnológica CR</td>
+                                    <td>15/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activo
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="acciones-tabla">
+                                            <a
+                                                href="#detalle-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>2-2222-2222</td>
+                                    <td>Carlos Ramírez Mora</td>
+                                    <td>carlos.ramirez@correo.com</td>
+                                    <td>8888-2222</td>
+                                    <td>Soluciones Digitales</td>
+                                    <td>14/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-activo">
+                                            Activo
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="acciones-tabla">
+                                            <a
+                                                href="#detalle-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>3-3333-3333</td>
+                                    <td>Sofía Hernández Vega</td>
+                                    <td>sofia.hernandez@correo.com</td>
+                                    <td>8888-3333</td>
+                                    <td>No registrado</td>
+                                    <td>13/07/2026</td>
+                                    <td>
+                                        <span class="estado estado-pendiente">
+                                            Pendiente
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="acciones-tabla">
+                                            <a
+                                                href="#detalle-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Consultar
+                                            </a>
+
+                                            <a
+                                                href="#registrar-egresado"
+                                                class="boton-tabla"
+                                            >
+                                                Editar
+                                            </a>
+
+                                            <a
+                                                href="#"
+                                                class="boton-tabla boton-tabla-peligro"
+                                            >
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p class="nota-demostracion">
+                        Los botones representan las acciones que se
+                        programarán en los siguientes avances.
+                    </p>
+
+                </section>
+
+                <!-- Detalle del egresado -->
+                <section id="detalle-egresado" class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Detalle del egresado</h2>
+
+                        <p>
+                            Ejemplo de la información disponible al consultar
+                            una persona egresada.
+                        </p>
+                    </div>
+
+                    <article class="tarjeta">
+
+                        <div class="cuadricula-detalle">
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Identificación
+                                </span>
+
+                                <p>1-1111-1111</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Nombre completo
+                                </span>
+
+                                <p>Ana Martínez López</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Correo electrónico
+                                </span>
+
+                                <p>ana.martinez@correo.com</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Teléfono
+                                </span>
+
+                                <p>8888-1111</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Lugar de trabajo
+                                </span>
+
+                                <p>Empresa Tecnológica CR</p>
+                            </div>
+
+                            <div>
+                                <span class="etiqueta-detalle">
+                                    Fecha de registro
+                                </span>
+
+                                <p>15/07/2026</p>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- Registro manual -->
+                <section id="registrar-egresado" class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Registrar egresado</h2>
+
+                        <p>
+                            Complete los datos personales y profesionales
+                            de la persona egresada.
+                        </p>
+                    </div>
+
+                    <form class="formulario" action="#" method="post">
+
+                        <div class="cuadricula-formulario">
+
+                            <div class="campo">
+                                <label for="identificacion">
+                                    Identificación *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="identificacion"
+                                    name="identificacion"
+                                    placeholder="Ejemplo: 1-1111-1111"
+                                    minlength="9"
+                                    maxlength="20"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="nombre-completo">
+                                    Nombre completo *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="nombre-completo"
+                                    name="nombreCompleto"
+                                    placeholder="Nombre y apellidos"
+                                    minlength="3"
+                                    maxlength="100"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="correo-egresado">
+                                    Correo electrónico *
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="correo-egresado"
+                                    name="correo"
+                                    placeholder="nombre@correo.com"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="telefono-egresado">
+                                    Teléfono *
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="telefono-egresado"
+                                    name="telefono"
+                                    placeholder="8888-8888"
+                                    pattern="[0-9]{4}-?[0-9]{4}"
+                                    title="Ingrese ocho números, con o sin guion"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="fecha-registro">
+                                    Fecha de registro *
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="fecha-registro"
+                                    name="fechaRegistro"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="lugar-trabajo">
+                                    Lugar de trabajo
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="lugar-trabajo"
+                                    name="lugarTrabajo"
+                                    placeholder="Empresa u organización actual"
+                                    maxlength="100"
+                                    required
+                                >
+                            </div>
+
+                            <div class="campo">
+                                <label for="estado-egresado">
+                                    Estado *
+                                </label>
+
+                                <select
+                                    id="estado-egresado"
+                                    name="estado"
+                                    required
+                                >
+                                    <option value="">
+                                        Seleccione un estado
+                                    </option>
+
+                                    <option value="activo">
+                                        Activo
+                                    </option>
+
+                                    <option value="pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="inactivo">
+                                        Inactivo
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Limpiar formulario
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Guardar egresado
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <p class="nota-demostracion">
+                        Los campos marcados con * son obligatorios.
+                        El registro todavía no se almacenará.
+                    </p>
+
+                </section>
+
+                <!-- Importación CSV -->
+                <section id="importar-csv" class="seccion">
+
+                    <div class="encabezado-seccion">
+                        <h2>Importar egresados mediante CSV</h2>
+
+                        <p>
+                            Selecciona un archivo CSV que contenga los datos
+                            de las personas egresadas.
+                        </p>
+                    </div>
+
+                    <div class="distribucion-csv">
+
+                        <form
+                            class="formulario"
+                            action="#"
+                            method="post"
+                            enctype="multipart/form-data"
+                        >
+
+                            <div class="campo">
+                                <label for="archivo-csv">
+                                    Archivo CSV *
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="archivo-csv"
+                                    name="archivoCsv"
+                                    accept=".csv,text/csv"
+                                    required
+                                >
+                            </div>
+
+                            <div class="acciones-formulario">
+
+                                <button
+                                    type="reset"
+                                    class="boton boton-secundario"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="boton boton-primario"
+                                >
+                                    Importar archivo
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        <aside class="tarjeta instrucciones-csv">
+
+                            <h3>Requisitos del archivo</h3>
+
+                            <ul class="lista-requisitos">
+                                <li>El archivo debe utilizar formato CSV.</li>
+
+                                <li>
+                                    Debe incluir todos los campos obligatorios.
+                                </li>
+
+                                <li>
+                                    No debe contener identificaciones duplicadas.
+                                </li>
+
+                                <li>
+                                    Los correos deben utilizar un formato válido.
+                                </li>
+                            </ul>
+
+                            <p class="nota-demostracion">
+                                Estas validaciones se programarán con
+                                JavaScript y backend en avances posteriores.
+                            </p>
+
+                        </aside>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+            <footer class="pie-sistema">
+                <p>
+                    Sistema de Gestión de Egresados · Universidad CENFOTEC
+                </p>
+            </footer>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
