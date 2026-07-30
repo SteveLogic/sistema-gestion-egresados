@@ -1,9 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 
+
 const {
     manejarError
 } = require("./middleware/error.middleware");
+
+const carrerasRoutes = require("./routes/carreras.routes");
 
 const app = express();
 
@@ -22,6 +25,8 @@ app.get("/api/salud", (solicitud, respuesta) => {
 });
 
 // Las rutas de los módulos se conectarán aquí.
+
+app.use("/api/carreras", carrerasRoutes);
 
 app.use(manejarError);
 
