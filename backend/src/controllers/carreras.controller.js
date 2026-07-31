@@ -5,17 +5,47 @@ function validarDatosCarrera(datosCarrera) {
     const errores = [];
 
     if (
+        !datosCarrera.codigo ||
+        datosCarrera.codigo.trim() === ""
+    ) {
+        errores.push(
+            "El código de la carrera es obligatorio"
+        );
+    } else {
+        const patronCodigo = /^[A-Za-z0-9-]{2,20}$/;
+
+        if (!patronCodigo.test(datosCarrera.codigo.trim())) {
+            errores.push(
+                "El código debe tener entre 2 y 20 caracteres y solamente puede contener letras, números o guiones"
+            );
+        }
+    }
+
+    if (
         !datosCarrera.nombre ||
         datosCarrera.nombre.trim() === ""
     ) {
-        errores.push("El nombre de la carrera es obligatorio");
+        errores.push(
+            "El nombre de la carrera es obligatorio"
+        );
+    }
+
+    if (
+        !datosCarrera.escuela ||
+        datosCarrera.escuela.trim() === ""
+    ) {
+        errores.push(
+            "La escuela académica es obligatoria"
+        );
     }
 
     if (
         !datosCarrera.descripcion ||
         datosCarrera.descripcion.trim() === ""
     ) {
-        errores.push("La descripción es obligatoria");
+        errores.push(
+            "La descripción es obligatoria"
+        );
     }
 
     const estadosPermitidos = [

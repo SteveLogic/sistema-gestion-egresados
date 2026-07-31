@@ -24,8 +24,7 @@ app.get("/api/salud", (solicitud, respuesta) => {
     });
 });
 
-// Las rutas de los módulos se conectarán aquí.
-
+ 
 app.use("/api/carreras", carrerasRoutes);
 
 app.use(manejarError);
