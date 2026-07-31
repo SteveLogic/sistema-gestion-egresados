@@ -198,7 +198,12 @@
 
                     </div>
 
-                    <form class="formulario" action="#" method="get">
+                    <form
+                        id="formulario-filtros-carreras"
+                        class="formulario"
+                        action="#"
+                        method="get"
+                    >  
 
                         <div class="cuadricula-formulario">
 
@@ -247,15 +252,15 @@
                                         Todas las escuelas
                                     </option>
 
-                                    <option value="computacion">
+                                    <option value="Escuela de Computación">
                                         Escuela de Computación
                                     </option>
 
-                                    <option value="ciberseguridad">
+                                    <option value="Escuela de Ciberseguridad">
                                         Escuela de Ciberseguridad
                                     </option>
 
-                                    <option value="datos">
+                                    <option value="Escuela de Ciencia de Datos">
                                         Escuela de Ciencia de Datos
                                     </option>
 
@@ -278,11 +283,11 @@
                                         Todos los estados
                                     </option>
 
-                                    <option value="activa">
+                                    <option value="Activa">
                                         Activa
                                     </option>
 
-                                    <option value="inactiva">
+                                    <option value="Inactiva">
                                         Inactiva
                                     </option>
 
@@ -359,212 +364,23 @@
 
                             </thead>
 
-                            <tbody>
-
-                                <tr>
-
-                                    <td>BISOFT</td>
-
-                                    <td>Ingeniería del Software</td>
-
-                                    <td>Escuela de Computación</td>
-
-                                    <td>
-                                        Formación en análisis, diseño,
-                                        desarrollo y mantenimiento de software.
-                                    </td>
-
-                                    <td>
-                                        <span class="estado estado-activo">
-                                            Activa
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <div class="acciones-tabla">
-
-                                            <a
-                                                href="#detalle-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Consultar
-                                            </a>
-
-                                            <a
-                                                href="#registrar-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Editar
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                class="boton-tabla boton-tabla-peligro"
-                                            >
-                                                Eliminar
-                                            </a>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>BICIBER</td>
-
-                                    <td>Ingeniería en Ciberseguridad</td>
-
-                                    <td>Escuela de Ciberseguridad</td>
-
-                                    <td>
-                                        Formación para la protección de
-                                        sistemas, redes e información.
-                                    </td>
-
-                                    <td>
-                                        <span class="estado estado-activo">
-                                            Activa
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <div class="acciones-tabla">
-
-                                            <a
-                                                href="#detalle-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Consultar
-                                            </a>
-
-                                            <a
-                                                href="#registrar-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Editar
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                class="boton-tabla boton-tabla-peligro"
-                                            >
-                                                Eliminar
-                                            </a>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>BIDATA</td>
-
-                                    <td>Ciencia de Datos</td>
-
-                                    <td>Escuela de Ciencia de Datos</td>
-
-                                    <td>
-                                        Formación para el análisis,
-                                        procesamiento y visualización de datos.
-                                    </td>
-
-                                    <td>
-                                        <span class="estado estado-activo">
-                                            Activa
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <div class="acciones-tabla">
-
-                                            <a
-                                                href="#detalle-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Consultar
-                                            </a>
-
-                                            <a
-                                                href="#registrar-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Editar
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                class="boton-tabla boton-tabla-peligro"
-                                            >
-                                                Eliminar
-                                            </a>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>TIDES</td>
-
-                                    <td>Técnico en Desarrollo de Software</td>
-
-                                    <td>Escuela de Computación</td>
-
-                                    <td>
-                                        Programa técnico orientado a
-                                        fundamentos y desarrollo de aplicaciones.
-                                    </td>
-
-                                    <td>
-                                        <span class="estado estado-inactivo">
-                                            Inactiva
-                                        </span>
-                                    </td>
-
-                                    <td>
-
-                                        <div class="acciones-tabla">
-
-                                            <a
-                                                href="#detalle-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Consultar
-                                            </a>
-
-                                            <a
-                                                href="#registrar-carrera"
-                                                class="boton-tabla"
-                                            >
-                                                Editar
-                                            </a>
-
-                                            <a
-                                                href="#"
-                                                class="boton-tabla boton-tabla-peligro"
-                                            >
-                                                Eliminar
-                                            </a>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
+                            <tbody id="cuerpo-tabla-carreras">
                             </tbody>
+
+                        
+                            
+
 
                         </table>
 
+                    </div>
+
+                    <div
+                        id="mensaje-carreras"
+                        class="mensaje-informativo"
+                        aria-live="polite"
+                        hidden
+                    >
                     </div>
 
                     <p class="nota-demostracion">
@@ -590,61 +406,48 @@
                     <article class="tarjeta">
 
                         <div class="cuadricula-detalle">
-
                             <div>
+                                <h3>Código</h3>
 
-                                <span class="etiqueta-detalle">
-                                    Código
-                                </span>
+                                <p id="detalle-codigo-carrera">
+                                    Seleccione una carrera
+                                </p>
+                            </div>
+                            <div>
+                                <h3>Nombre</h3>
 
-                                <p>BISOFT</p>
+                                <p id="detalle-nombre-carrera">
+                                    Seleccione una carrera
+                                </p>
+                            </div>
+                            <div>
+                                <h3>Escuela académica</h3>
 
+                                <p id="detalle-escuela-carrera">
+                                    Seleccione una carrera
+                                </p>
                             </div>
 
                             <div>
-
-                                <span class="etiqueta-detalle">
-                                    Nombre
-                                </span>
-
-                                <p>Ingeniería del Software</p>
-
-                            </div>
-
-                            <div>
-
-                                <span class="etiqueta-detalle">
-                                    Escuela académica
-                                </span>
-
-                                <p>Escuela de Computación</p>
-
-                            </div>
-
-                            <div>
-
-                                <span class="etiqueta-detalle">
-                                    Estado
-                                </span>
+                                <h3>Estado</h3>
 
                                 <p>
-                                    <span class="estado estado-activo">
-                                        Activa
+                                    <span
+                                        id="detalle-estado-carrera"
+                                        class="estado"
+                                    >
+                                        Sin seleccionar
                                     </span>
                                 </p>
-
                             </div>
-
                             <div class="detalle-completo">
 
                                 <span class="etiqueta-detalle">
                                     Descripción
                                 </span>
 
-                                <p>
-                                    Carrera orientada al análisis, diseño,
-                                    desarrollo, pruebas y mantenimiento
-                                    de sistemas de software.
+                                <p id="detalle-descripcion-carrera">
+                                    Seleccione una carrera para consultar su información.
                                 </p>
 
                             </div>
@@ -660,16 +463,27 @@
 
                     <div class="encabezado-seccion">
 
-                        <h2>Registrar carrera académica</h2>
+                        <h2 id="titulo-formulario-carrera">
+                             Registrar carrera académica
+                        </h2>
 
-                        <p>
+                        <p id="descripcion-formulario-carrera">
                             Completa los datos necesarios para registrar
                             una nueva carrera.
                         </p>
 
                     </div>
-
-                    <form class="formulario" action="#" method="post">
+                    <form
+                        id="formulario-carrera"
+                        class="formulario"
+                        action="#"
+                        method="post"
+                    >
+                    <input
+                        type="hidden"
+                        id="id-carrera"
+                        name="idCarrera"
+                    >
 
                         <div class="cuadricula-formulario">
 
@@ -679,15 +493,17 @@
                                     Código de la carrera *
                                 </label>
 
-                                <input
-                                    type="text"
-                                    id="codigo-carrera"
-                                    name="codigo"
-                                    placeholder="Ejemplo: BISOFT"
-                                    minlength="2"
-                                    maxlength="15"
-                                    required
-                                >
+                                    <input
+                                        type="text"
+                                        id="codigo-carrera"
+                                        name="codigo"
+                                        placeholder="Ejemplo: BISOFT"
+                                        minlength="2"
+                                        maxlength="20"
+                                        pattern="[A-Za-z0-9-]{2,20}"
+                                        title="Use entre 2 y 20 letras, números o guiones"
+                                        required
+                                    >
 
                             </div>
 
@@ -725,15 +541,15 @@
                                         Seleccione una escuela
                                     </option>
 
-                                    <option value="computacion">
+                                    <option value="Escuela de Computación">
                                         Escuela de Computación
                                     </option>
 
-                                    <option value="ciberseguridad">
+                                    <option value="Escuela de Ciberseguridad">
                                         Escuela de Ciberseguridad
                                     </option>
 
-                                    <option value="datos">
+                                    <option value="Escuela de Ciencia de Datos">
                                         Escuela de Ciencia de Datos
                                     </option>
 
@@ -752,16 +568,15 @@
                                     name="estado"
                                     required
                                 >
-
                                     <option value="">
                                         Seleccione un estado
                                     </option>
 
-                                    <option value="activa">
+                                    <option value="Activa">
                                         Activa
                                     </option>
 
-                                    <option value="inactiva">
+                                    <option value="Inactiva">
                                         Inactiva
                                     </option>
 
@@ -787,9 +602,9 @@
                             </div>
 
                             <div class="acciones-formulario">
-
                                 <button
                                     type="reset"
+                                    id="boton-limpiar-carrera"
                                     class="boton boton-secundario"
                                 >
                                     Limpiar formulario
@@ -797,6 +612,7 @@
 
                                 <button
                                     type="submit"
+                                    id="boton-guardar-carrera"
                                     class="boton boton-primario"
                                 >
                                     Guardar carrera
@@ -808,10 +624,12 @@
 
                     </form>
 
-                    <p class="nota-demostracion">
-                        Los campos marcados con * son obligatorios.
-                        La carrera no se almacenará todavía.
-                    </p>
+                        <p class="nota-demostracion">
+                            Los campos marcados con * son obligatorios.
+                            Los datos se almacenan temporalmente mientras
+                            el servidor permanece encendido.
+                        </p>
+                    
 
                 </section>
 
@@ -828,6 +646,8 @@
         </div>
 
     </div>
+
+<script src="../js/registro/carreras.js"></script>
 
 </body>
 </html>
