@@ -73,6 +73,25 @@ const tituloFormularioCarrera = document.querySelector(
 const descripcionFormularioCarrera = document.querySelector(
     "#descripcion-formulario-carrera"
 );
+const formularioFiltrosCarreras = document.querySelector(
+    "#formulario-filtros-carreras"
+);
+
+const filtroNombreCarrera = document.querySelector(
+    "#filtro-nombre-carrera"
+);
+
+const filtroCodigoCarrera = document.querySelector(
+    "#filtro-codigo-carrera"
+);
+
+const filtroEscuelaCarrera = document.querySelector(
+    "#filtro-escuela-carrera"
+);
+
+const filtroEstadoCarrera = document.querySelector(
+    "#filtro-estado-carrera"
+);
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -412,6 +431,85 @@ async function eliminarCarrera(carrera) {
         );
     }
 }
+function manejarFiltrosCarreras(evento) {
+    evento.preventDefault();
+
+    const nombreBuscado = normalizarTexto(
+        filtroNombreCarrera.value
+    );
+
+    const codigoBuscado = normalizarTexto(
+        filtroCodigoCarrera.value
+    );
+
+    const escuelaSeleccionada =
+        filtroEscuelaCarrera.value;
+
+    const estadoSeleccionado =
+        filtroEstadoCarrera.value;
+
+    const carrerasFiltradas = listaCarreras.filter(
+        (carrera) => {
+            const coincideNombre =
+                nombreBuscado === "" ||
+                normalizarTexto(carrera.nombre).includes(
+                    nombreBuscado
+                );
+
+            const coincideCodigo =
+                codigoBuscado === "" ||
+                normalizarTexto(carrera.codigo).includes(
+                    codigoBuscado
+                );
+
+            const coincideEscuela =
+                escuelaSeleccionada === "" ||
+                carrera.escuela === escuelaSeleccionada;
+
+            const coincideEstado =
+                estadoSeleccionado === "" ||
+                carrera.estado === estadoSeleccionado;
+
+            return (
+                coincideNombre &&
+                coincideCodigo &&
+                coincideEscuela &&
+                coincideEstado
+            );
+        }
+    );
+
+    mostrarCarrerasEnTabla(carrerasFiltradas);
+
+    if (carrerasFiltradas.length === 0) {
+        mostrarMensaje(
+            "No se encontraron carreras con los filtros seleccionados.",
+            "informativo"
+        );
+
+        return;
+    }
+
+    mostrarMensaje(
+        `Se encontraron ${carrerasFiltradas.length} carrera(s).`,
+        "informativo"
+    );
+}
+
+function manejarLimpiezaFiltros() {
+    window.setTimeout(() => {
+        mostrarCarrerasEnTabla(listaCarreras);
+        ocultarMensaje();
+    }, 0);
+}
+
+function normalizarTexto(texto) {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
 
 function manejarClickTabla(evento) {
     const boton = evento.target.closest(
@@ -491,4 +589,14 @@ formularioCarrera.addEventListener(
 botonLimpiarCarrera.addEventListener(
     "click",
     restablecerFormularioCarrera
+);
+
+formularioFiltrosCarreras.addEventListener(
+    "submit",
+    manejarFiltrosCarreras
+);
+
+formularioFiltrosCarreras.addEventListener(
+    "reset",
+    manejarLimpiezaFiltros
 );
