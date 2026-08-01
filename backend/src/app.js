@@ -7,6 +7,8 @@ const {
 } = require("./middleware/error.middleware");
 
 const carrerasRoutes = require("./routes/carreras.routes");
+const escuelasRoutes = require("./routes/escuelas.routes");
+
 
 const app = express();
 
@@ -26,6 +28,7 @@ app.get("/api/salud", (solicitud, respuesta) => {
 
  
 app.use("/api/carreras", carrerasRoutes);
+app.use("/api/escuelas", escuelasRoutes);
 
 app.use(manejarError);
 
