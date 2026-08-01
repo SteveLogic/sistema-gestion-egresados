@@ -30,6 +30,46 @@ const detalleDescripcionCarrera = document.querySelector(
     "#detalle-descripcion-carrera"
 );
 
+const formularioCarrera = document.querySelector(
+    "#formulario-carrera"
+);
+
+const campoIdCarrera = document.querySelector(
+    "#id-carrera"
+);
+
+const campoCodigoCarrera = document.querySelector(
+    "#codigo-carrera"
+);
+
+const campoNombreCarrera = document.querySelector(
+    "#nombre-carrera"
+);
+
+const campoEscuelaCarrera = document.querySelector(
+    "#escuela-carrera"
+);
+
+const campoDescripcionCarrera = document.querySelector(
+    "#descripcion-carrera"
+);
+
+const campoEstadoCarrera = document.querySelector(
+    "#estado-carrera"
+);
+
+const botonGuardarCarrera = document.querySelector(
+    "#boton-guardar-carrera"
+);
+
+const tituloFormularioCarrera = document.querySelector(
+    "#titulo-formulario-carrera"
+);
+
+const descripcionFormularioCarrera = document.querySelector(
+    "#descripcion-formulario-carrera"
+);
+
 document.addEventListener(
     "DOMContentLoaded",
     cargarCarreras
@@ -65,6 +105,86 @@ async function cargarCarreras() {
         cuerpoTablaCarreras.innerHTML = "";
     }
 }
+
+async function manejarEnvioFormularioCarrera(evento) {
+    evento.preventDefault();
+
+    if (!formularioCarrera.checkValidity()) {
+        formularioCarrera.reportValidity();
+        return;
+    }
+
+    const datosCarrera = {
+        codigo: campoCodigoCarrera.value.trim(),
+        nombre: campoNombreCarrera.value.trim(),
+        escuela: campoEscuelaCarrera.value,
+        descripcion:
+            campoDescripcionCarrera.value.trim(),
+        estado: campoEstadoCarrera.value
+    };
+
+    botonGuardarCarrera.disabled = true;
+    botonGuardarCarrera.textContent = "Guardando...";
+
+    try {
+        const respuesta = await fetch(
+            URL_CARRERAS,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datosCarrera)
+            }
+        );
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok || !resultado.exito) {
+            const detalleErrores =
+                Array.isArray(resultado.errores) &&
+                resultado.errores.length > 0
+                    ? `: ${resultado.errores.join(" ")}`
+                    : "";
+
+            throw new Error(
+                `${
+                    resultado.mensaje ||
+                    "No fue posible registrar la carrera"
+                }${detalleErrores}`
+            );
+        }
+
+        listaCarreras.push(resultado.datos);
+
+        mostrarCarrerasEnTabla(listaCarreras);
+        mostrarDetalleCarrera(resultado.datos);
+
+        formularioCarrera.reset();
+        campoIdCarrera.value = "";
+
+        mostrarMensaje(
+            resultado.mensaje,
+            "exito"
+        );
+
+        document
+            .querySelector("#consultar-carreras")
+            ?.scrollIntoView({
+                behavior: "smooth"
+            });
+    } catch (error) {
+        mostrarMensaje(
+            error.message,
+            "error"
+        );
+    } finally {
+        botonGuardarCarrera.disabled = false;
+        botonGuardarCarrera.textContent =
+            "Guardar carrera";
+    }
+}
+
 
 function mostrarCarrerasEnTabla(carreras) {
     cuerpoTablaCarreras.innerHTML = "";
@@ -204,4 +324,9 @@ function ocultarMensaje() {
 cuerpoTablaCarreras.addEventListener(
     "click",
     manejarClickTabla
+);
+
+formularioCarrera.addEventListener(
+    "submit",
+    manejarEnvioFormularioCarrera
 );
