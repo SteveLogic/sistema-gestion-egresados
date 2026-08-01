@@ -283,7 +283,18 @@ function crearFilaCarrera(carrera) {
                     data-id="${carrera.id}"
                 >
                     Editar
+                    
                 </button>
+                
+                <button
+                    type="button"
+                    class="boton boton-peligro"
+                    data-accion="eliminar"
+                    data-id="${carrera.id}"
+                    >
+                    Eliminar
+                </button>
+
             </div>
         </td>
     `;
@@ -353,6 +364,55 @@ function restablecerFormularioCarrera() {
         "Guardar carrera";
 }
 
+async function eliminarCarrera(carrera) {
+    const confirmacion = window.confirm(
+        `¿Desea eliminar la carrera "${carrera.nombre}"?`
+    );
+
+    if (!confirmacion) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(
+            `${URL_CARRERAS}/${carrera.id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok || !resultado.exito) {
+            throw new Error(
+                resultado.mensaje ||
+                "No fue posible eliminar la carrera"
+            );
+        }
+
+        listaCarreras = listaCarreras.filter(
+            (carreraRegistrada) =>
+                carreraRegistrada.id !== carrera.id
+        );
+
+        mostrarCarrerasEnTabla(listaCarreras);
+
+        if (campoIdCarrera.value === carrera.id) {
+            restablecerFormularioCarrera();
+        }
+
+        mostrarMensaje(
+            resultado.mensaje,
+            "exito"
+        );
+    } catch (error) {
+        mostrarMensaje(
+            error.message,
+            "error"
+        );
+    }
+}
+
 function manejarClickTabla(evento) {
     const boton = evento.target.closest(
         "button[data-accion]"
@@ -396,6 +456,12 @@ function manejarClickTabla(evento) {
         carreraSeleccionada
     );
 }
+
+    if (accion === "eliminar") {
+        eliminarCarrera(
+            carreraSeleccionada
+        );
+    }
     
 }
 
