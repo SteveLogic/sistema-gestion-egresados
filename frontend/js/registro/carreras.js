@@ -62,6 +62,10 @@ const botonGuardarCarrera = document.querySelector(
     "#boton-guardar-carrera"
 );
 
+const botonLimpiarCarrera = document.querySelector(
+    "#boton-limpiar-carrera"
+);
+
 const tituloFormularioCarrera = document.querySelector(
     "#titulo-formulario-carrera"
 );
@@ -105,7 +109,6 @@ async function cargarCarreras() {
         cuerpoTablaCarreras.innerHTML = "";
     }
 }
-
 async function manejarEnvioFormularioCarrera(evento) {
     evento.preventDefault();
 
@@ -113,6 +116,10 @@ async function manejarEnvioFormularioCarrera(evento) {
         formularioCarrera.reportValidity();
         return;
     }
+
+    const idCarrera = campoIdCarrera.value.trim();
+
+    const estaEditando = idCarrera !== "";
 
     const datosCarrera = {
         codigo: campoCodigoCarrera.value.trim(),
@@ -123,14 +130,25 @@ async function manejarEnvioFormularioCarrera(evento) {
         estado: campoEstadoCarrera.value
     };
 
+    const urlSolicitud = estaEditando
+        ? `${URL_CARRERAS}/${idCarrera}`
+        : URL_CARRERAS;
+
+    const metodoSolicitud = estaEditando
+        ? "PUT"
+        : "POST";
+
     botonGuardarCarrera.disabled = true;
-    botonGuardarCarrera.textContent = "Guardando...";
+
+    botonGuardarCarrera.textContent = estaEditando
+        ? "Actualizando..."
+        : "Guardando...";
 
     try {
         const respuesta = await fetch(
-            URL_CARRERAS,
+            urlSolicitud,
             {
-                method: "POST",
+                method: metodoSolicitud,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -150,18 +168,31 @@ async function manejarEnvioFormularioCarrera(evento) {
             throw new Error(
                 `${
                     resultado.mensaje ||
-                    "No fue posible registrar la carrera"
+                    "No fue posible guardar la carrera"
                 }${detalleErrores}`
             );
         }
 
-        listaCarreras.push(resultado.datos);
+        if (estaEditando) {
+            const indiceCarrera =
+                listaCarreras.findIndex(
+                    (carrera) =>
+                        carrera.id === idCarrera
+                );
+
+            if (indiceCarrera !== -1) {
+                listaCarreras[indiceCarrera] =
+                    resultado.datos;
+            }
+        } else {
+            listaCarreras.push(resultado.datos);
+        }
 
         mostrarCarrerasEnTabla(listaCarreras);
+
         mostrarDetalleCarrera(resultado.datos);
 
-        formularioCarrera.reset();
-        campoIdCarrera.value = "";
+        restablecerFormularioCarrera();
 
         mostrarMensaje(
             resultado.mensaje,
@@ -180,11 +211,13 @@ async function manejarEnvioFormularioCarrera(evento) {
         );
     } finally {
         botonGuardarCarrera.disabled = false;
+
         botonGuardarCarrera.textContent =
-            "Guardar carrera";
+            campoIdCarrera.value
+                ? "Actualizar carrera"
+                : "Guardar carrera";
     }
 }
-
 
 function mostrarCarrerasEnTabla(carreras) {
     cuerpoTablaCarreras.innerHTML = "";
@@ -233,14 +266,25 @@ function crearFilaCarrera(carrera) {
         </td>
 
         <td>
-            <button
-                type="button"
-                class="boton boton-secundario"
-                data-accion="consultar"
-                data-id="${carrera.id}"
-            >
-                Consultar
-            </button>
+            <div class="acciones-tabla">
+                <button
+                    type="button"
+                    class="boton boton-secundario"
+                    data-accion="consultar"
+                    data-id="${carrera.id}"
+                >
+                    Consultar
+                </button>
+
+                <button
+                    type="button"
+                    class="boton boton-primario"
+                    data-accion="editar"
+                    data-id="${carrera.id}"
+                >
+                    Editar
+                </button>
+            </div>
         </td>
     `;
 
@@ -267,6 +311,46 @@ function mostrarDetalleCarrera(carrera) {
         carrera.estado === "Activa"
             ? "estado estado-activo"
             : "estado estado-inactivo";
+}
+
+function prepararEdicionCarrera(carrera) {
+    campoIdCarrera.value = carrera.id;
+    campoCodigoCarrera.value = carrera.codigo;
+    campoNombreCarrera.value = carrera.nombre;
+    campoEscuelaCarrera.value = carrera.escuela;
+    campoDescripcionCarrera.value =
+        carrera.descripcion;
+    campoEstadoCarrera.value = carrera.estado;
+
+    tituloFormularioCarrera.textContent =
+        "Editar carrera académica";
+
+    descripcionFormularioCarrera.textContent =
+        "Modifica los datos de la carrera seleccionada.";
+
+    botonGuardarCarrera.textContent =
+        "Actualizar carrera";
+
+    document
+        .querySelector("#registrar-carrera")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+function restablecerFormularioCarrera() {
+    formularioCarrera.reset();
+
+    campoIdCarrera.value = "";
+
+    tituloFormularioCarrera.textContent =
+        "Registrar carrera académica";
+
+    descripcionFormularioCarrera.textContent =
+        "Completa los datos necesarios para registrar una nueva carrera.";
+
+    botonGuardarCarrera.textContent =
+        "Guardar carrera";
 }
 
 function manejarClickTabla(evento) {
@@ -306,6 +390,13 @@ function manejarClickTabla(evento) {
                 behavior: "smooth"
             });
     }
+
+    if (accion === "editar") {
+    prepararEdicionCarrera(
+        carreraSeleccionada
+    );
+}
+    
 }
 
 function mostrarMensaje(mensaje, tipo) {
@@ -329,4 +420,9 @@ cuerpoTablaCarreras.addEventListener(
 formularioCarrera.addEventListener(
     "submit",
     manejarEnvioFormularioCarrera
+);
+
+botonLimpiarCarrera.addEventListener(
+    "click",
+    restablecerFormularioCarrera
 );
