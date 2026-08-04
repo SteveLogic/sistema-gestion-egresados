@@ -344,20 +344,38 @@ function crearFilaEscuela(escuela) {
             </span>
         </td>
 
-        <td>
-            <div class="acciones-tabla">
+<td>
+    <div class="acciones-tabla">
 
-                <button
-                    type="button"
-                    class="boton boton-secundario"
-                    data-accion="consultar"
-                    data-id="${escuela.id}"
-                >
-                    Consultar
-                </button>
+        <button
+            type="button"
+            class="boton boton-secundario"
+            data-accion="consultar"
+            data-id="${escuela.id}"
+        >
+            Consultar
+        </button>
 
-            </div>
-        </td>
+        <button
+            type="button"
+            class="boton boton-secundario"
+            data-accion="editar"
+            data-id="${escuela.id}"
+        >
+            Editar
+        </button>
+
+        <button
+            type="button"
+            class="boton boton-secundario"
+            data-accion="eliminar"
+            data-id="${escuela.id}"
+        >
+            Eliminar
+        </button>
+
+    </div>
+</td>
     `;
 
     return fila;
@@ -383,7 +401,7 @@ function obtenerCarrerasDeEscuela(
     BOTÓN CONSULTAR
 */
 
-function manejarClickTablaEscuelas(
+async function manejarClickTablaEscuelas(
     evento
 ) {
     const boton = evento.target.closest(
@@ -394,7 +412,7 @@ function manejarClickTablaEscuelas(
         return;
     }
 
-    const idEscuela =
+    const idEscuelaSeleccionada =
         boton.dataset.id;
 
     const accion =
@@ -403,7 +421,8 @@ function manejarClickTablaEscuelas(
     const escuelaSeleccionada =
         listaEscuelas.find(
             (escuela) =>
-                escuela.id === idEscuela
+                escuela.id ===
+                idEscuelaSeleccionada
         );
 
     if (!escuelaSeleccionada) {
@@ -424,9 +443,155 @@ function manejarClickTablaEscuelas(
             behavior: "smooth",
             block: "start"
         });
+
+        return;
+    }
+
+    if (accion === "editar") {
+        cargarEscuelaEnFormulario(
+            escuelaSeleccionada
+        );
+
+        return;
+    }
+
+    if (accion === "eliminar") {
+        await eliminarEscuela(
+            escuelaSeleccionada
+        );
     }
 }
 
+/*
+    ELIMINACIÓN DE ESCUELAS
+*/
+
+async function eliminarEscuela(
+    escuela
+) {
+    const carrerasAsociadas =
+        obtenerCarrerasDeEscuela(
+            escuela.nombre
+        );
+
+    let mensajeConfirmacion =
+        `¿Desea eliminar la escuela "${escuela.nombre}"?`;
+
+    if (carrerasAsociadas.length > 0) {
+        mensajeConfirmacion +=
+            ` Esta escuela tiene ${carrerasAsociadas.length} carrera(s) asociada(s).`;
+    }
+
+    const eliminarConfirmado =
+        window.confirm(
+            mensajeConfirmacion
+        );
+
+    if (!eliminarConfirmado) {
+        return;
+    }
+
+    mostrarMensajeEscuelas(
+        "Eliminando escuela...",
+        "informativo"
+    );
+
+    try {
+        const respuesta = await fetch(
+            `${URL_ESCUELAS}/${escuela.id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const resultado =
+            await respuesta.json();
+
+        if (
+            !respuesta.ok ||
+            !resultado.exito
+        ) {
+            throw new Error(
+                resultado.mensaje ||
+                "No fue posible eliminar la escuela."
+            );
+        }
+
+        if (
+            idEscuela.value ===
+            escuela.id
+        ) {
+            limpiarFormularioEscuela();
+        }
+
+        await cargarDatosIniciales();
+
+        mostrarMensajeEscuelas(
+            resultado.mensaje ||
+            "Escuela eliminada correctamente.",
+            "exito"
+        );
+    } catch (error) {
+        mostrarMensajeEscuelas(
+            error.message,
+            "error"
+        );
+
+        console.error(
+            "Error al eliminar la escuela:",
+            error
+        );
+    }
+}
+
+
+/*
+    EDICIÓN DE ESCUELAS
+*/
+
+function cargarEscuelaEnFormulario(
+    escuela
+) {
+    idEscuela.value =
+        escuela.id;
+
+    codigoEscuela.value =
+        escuela.codigo;
+
+    nombreEscuela.value =
+        escuela.nombre;
+
+    responsableEscuela.value =
+        escuela.responsable;
+
+    correoEscuela.value =
+        escuela.correo;
+
+    telefonoEscuela.value =
+        escuela.telefono;
+
+    descripcionEscuela.value =
+        escuela.descripcion;
+
+    estadoEscuela.value =
+        escuela.estado;
+
+    tituloFormularioEscuela.textContent =
+        "Editar escuela académica";
+
+    descripcionFormularioEscuela.textContent =
+        "Modifica los datos de la escuela académica seleccionada.";
+
+    botonGuardarEscuela.textContent =
+        "Actualizar escuela";
+
+    document
+        .querySelector("#registrar-escuela")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+}
 
 /*
     DETALLE DE LA ESCUELA
@@ -536,7 +701,6 @@ function mostrarCarrerasDeEscuela(
 /*
     REGISTRO DE ESCUELAS
 */
-
 async function manejarEnvioFormularioEscuela(
     evento
 ) {
@@ -547,27 +711,57 @@ async function manejarEnvioFormularioEscuela(
         return;
     }
 
+    const estaEditando =
+        idEscuela.value !== "";
+
     const datosEscuela = {
-        codigo: codigoEscuela.value.trim(),
-        nombre: nombreEscuela.value.trim(),
+        codigo:
+            codigoEscuela.value.trim(),
+
+        nombre:
+            nombreEscuela.value.trim(),
+
         responsable:
             responsableEscuela.value.trim(),
-        correo: correoEscuela.value.trim(),
-        telefono: telefonoEscuela.value.trim(),
+
+        correo:
+            correoEscuela.value.trim(),
+
+        telefono:
+            telefonoEscuela.value.trim(),
+
         descripcion:
             descripcionEscuela.value.trim(),
-        estado: estadoEscuela.value
+
+        estado:
+            estadoEscuela.value
     };
 
+    const url =
+        estaEditando
+            ? `${URL_ESCUELAS}/${idEscuela.value}`
+            : URL_ESCUELAS;
+
+    const metodo =
+        estaEditando
+            ? "PUT"
+            : "POST";
+
+    const textoOriginalBoton =
+        botonGuardarEscuela.textContent;
+
     botonGuardarEscuela.disabled = true;
+
     botonGuardarEscuela.textContent =
-        "Guardando...";
+        estaEditando
+            ? "Actualizando..."
+            : "Guardando...";
 
     try {
         const respuesta = await fetch(
-            URL_ESCUELAS,
+            url,
             {
-                method: "POST",
+                method: metodo,
 
                 headers: {
                     "Content-Type":
@@ -593,9 +787,13 @@ async function manejarEnvioFormularioEscuela(
                 );
 
             throw new Error(
-                resultado.mensaje ||
                 mensajeErrores ||
-                "No fue posible registrar la escuela."
+                resultado.mensaje ||
+                (
+                    estaEditando
+                        ? "No fue posible actualizar la escuela."
+                        : "No fue posible registrar la escuela."
+                )
             );
         }
 
@@ -605,7 +803,11 @@ async function manejarEnvioFormularioEscuela(
 
         mostrarMensajeEscuelas(
             resultado.mensaje ||
-            "Escuela registrada correctamente.",
+            (
+                estaEditando
+                    ? "Escuela actualizada correctamente."
+                    : "Escuela registrada correctamente."
+            ),
             "exito"
         );
 
@@ -622,13 +824,22 @@ async function manejarEnvioFormularioEscuela(
         );
 
         console.error(
-            "Error al registrar la escuela:",
+            estaEditando
+                ? "Error al actualizar la escuela:"
+                : "Error al registrar la escuela:",
             error
         );
     } finally {
-        botonGuardarEscuela.disabled = false;
-        botonGuardarEscuela.textContent =
-            "Guardar escuela";
+        botonGuardarEscuela.disabled =
+            false;
+
+        if (idEscuela.value === "") {
+            botonGuardarEscuela.textContent =
+                "Guardar escuela";
+        } else {
+            botonGuardarEscuela.textContent =
+                textoOriginalBoton;
+        }
     }
 }
 
