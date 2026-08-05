@@ -13,7 +13,7 @@ const titulosRoutes = require("./routes/titulos.routes");
 const mentoriasRoutes = require("./routes/mentorias.routes");
 const actividadesRoutes = require("./routes/actividades.routes");
 const comunidadesRoutes = require("./routes/comunidades.routes");
-
+const comunicadosRoutes = require("./routes/comunicados.routes");
 const app = express();
 
 app.use(cors());
@@ -38,7 +38,7 @@ app.use("/api/titulos",titulosRoutes);
 app.use("/api/mentorias", mentoriasRoutes);
 app.use("/api/actividades",actividadesRoutes);
 app.use("/api/comunidades",comunidadesRoutes);
-
+app.use("/api/comunicados",comunicadosRoutes);
 
 app.use(manejarError);
 
