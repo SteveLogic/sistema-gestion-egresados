@@ -14,6 +14,7 @@ const mentoriasRoutes = require("./routes/mentorias.routes");
 const actividadesRoutes = require("./routes/actividades.routes");
 const comunidadesRoutes = require("./routes/comunidades.routes");
 const comunicadosRoutes = require("./routes/comunicados.routes");
+const oportunidadesRoutes = require("./routes/oportunidades.routes");
 const app = express();
 
 app.use(cors());
@@ -39,6 +40,7 @@ app.use("/api/mentorias", mentoriasRoutes);
 app.use("/api/actividades",actividadesRoutes);
 app.use("/api/comunidades",comunidadesRoutes);
 app.use("/api/comunicados",comunicadosRoutes);
+app.use("/api/oportunidades",oportunidadesRoutes);
 
 app.use(manejarError);
 
