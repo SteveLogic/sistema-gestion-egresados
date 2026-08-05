@@ -1,1 +1,8 @@
-// Rutas del módulo de auth
+const express = require("express");
+const authController = require("../controllers/auth.controller");
+
+const router = express.Router();
+
+router.post("/login", authController.iniciarSesion);
+
+module.exports = router;

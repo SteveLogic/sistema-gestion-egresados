@@ -15,6 +15,8 @@ const actividadesRoutes = require("./routes/actividades.routes");
 const comunidadesRoutes = require("./routes/comunidades.routes");
 const comunicadosRoutes = require("./routes/comunicados.routes");
 const oportunidadesRoutes = require("./routes/oportunidades.routes");
+const authRoutes = require("./routes/auth.routes");
+
 const app = express();
 
 app.use(cors());
@@ -41,6 +43,7 @@ app.use("/api/actividades",actividadesRoutes);
 app.use("/api/comunidades",comunidadesRoutes);
 app.use("/api/comunicados",comunicadosRoutes);
 app.use("/api/oportunidades",oportunidadesRoutes);
+app.use("/api/auth",authRoutes);
 
 app.use(manejarError);
 
