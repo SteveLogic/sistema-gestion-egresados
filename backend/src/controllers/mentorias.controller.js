@@ -1,1 +1,587 @@
-// Controladores del módulo de mentorias
+const mentoriasService = require(
+    "../services/mentorias.service"
+);
+
+function texto(valor) {
+    return String(valor ?? "").trim();
+}
+
+function esFechaValida(valor) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(texto(valor)) &&
+        !Number.isNaN(Date.parse(`${texto(valor)}T00:00:00`));
+}
+
+function responderError(respuesta, error) {
+    console.error("Error en mentorías:", error);
+
+    return respuesta.status(error.estado || 500).json({
+        exito: false,
+        mensaje:
+            error.estado
+                ? error.message
+                : "Ocurrió un error interno en el módulo de mentorías",
+        errores: error.errores || []
+    });
+}
+
+function validarMentor(datos) {
+    const errores = [];
+
+    if (!texto(datos.egresadoId)) {
+        errores.push("Debe seleccionar una persona egresada");
+    }
+
+    if (texto(datos.areaExperiencia).length < 3) {
+        errores.push("El área de experiencia es obligatoria");
+    }
+
+    if (texto(datos.especialidades).length < 10) {
+        errores.push(
+            "Las especialidades deben contener al menos 10 caracteres"
+        );
+    }
+
+    const anios = Number(datos.aniosExperiencia);
+
+    if (!Number.isInteger(anios) || anios < 1 || anios > 60) {
+        errores.push(
+            "Los años de experiencia deben estar entre 1 y 60"
+        );
+    }
+
+    if (texto(datos.disponibilidad).length < 3) {
+        errores.push("La disponibilidad es obligatoria");
+    }
+
+    if (!texto(datos.modalidad)) {
+        errores.push("Debe seleccionar una modalidad");
+    }
+
+    if (!texto(datos.estado)) {
+        errores.push("Debe seleccionar un estado");
+    }
+
+    return errores;
+}
+
+function validarSolicitud(datos, esCreacion = false) {
+    const errores = [];
+
+    if (!texto(datos.egresadoId)) {
+        errores.push("Debe seleccionar una persona egresada");
+    }
+
+    if (texto(datos.objetivo).length < 10) {
+        errores.push(
+            "El objetivo debe contener al menos 10 caracteres"
+        );
+    }
+
+    if (texto(datos.objetivo).length > 600) {
+        errores.push("El objetivo no puede superar 600 caracteres");
+    }
+
+    if (texto(datos.oportunidad).length < 3) {
+        errores.push("Debe indicar una oportunidad de mentoría");
+    }
+
+    if (texto(datos.comentarios).length > 500) {
+        errores.push(
+            "Los comentarios no pueden superar 500 caracteres"
+        );
+    }
+
+    if (
+        !esCreacion &&
+        !esFechaValida(datos.fechaSolicitud)
+    ) {
+        errores.push("La fecha de solicitud no es válida");
+    }
+
+    if (!esCreacion && !texto(datos.estado)) {
+        errores.push("Debe seleccionar un estado");
+    }
+
+    return errores;
+}
+
+function validarMentoria(datos) {
+    const errores = [];
+
+    if (!texto(datos.egresadoId)) {
+        errores.push("Debe seleccionar una persona egresada");
+    }
+
+    if (!texto(datos.mentorId)) {
+        errores.push("Debe seleccionar una persona mentora");
+    }
+
+    if (texto(datos.areaProfesional).length < 3) {
+        errores.push("El área profesional es obligatoria");
+    }
+
+    if (!texto(datos.modalidad)) {
+        errores.push("Debe seleccionar una modalidad");
+    }
+
+    if (!esFechaValida(datos.fechaInicio)) {
+        errores.push("La fecha de inicio no es válida");
+    }
+
+    if (!esFechaValida(datos.fechaFinalizacion)) {
+        errores.push("La fecha de finalización no es válida");
+    }
+
+    if (
+        esFechaValida(datos.fechaInicio) &&
+        esFechaValida(datos.fechaFinalizacion) &&
+        datos.fechaFinalizacion < datos.fechaInicio
+    ) {
+        errores.push(
+            "La fecha de finalización no puede ser anterior a la fecha de inicio"
+        );
+    }
+
+    if (!texto(datos.estado)) {
+        errores.push("Debe seleccionar un estado");
+    }
+
+    if (texto(datos.objetivo).length < 10) {
+        errores.push(
+            "El objetivo debe contener al menos 10 caracteres"
+        );
+    }
+
+    if (texto(datos.objetivo).length > 700) {
+        errores.push("El objetivo no puede superar 700 caracteres");
+    }
+
+    if (texto(datos.observaciones).length > 700) {
+        errores.push(
+            "Las observaciones no pueden superar 700 caracteres"
+        );
+    }
+
+    return errores;
+}
+
+function responderValidacion(respuesta, errores) {
+    return respuesta.status(400).json({
+        exito: false,
+        mensaje: "Los datos enviados no son válidos",
+        errores
+    });
+}
+
+/*
+    MENTORES
+*/
+
+function obtenerMentores(solicitud, respuesta) {
+    try {
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentores consultados correctamente",
+            datos: mentoriasService.obtenerMentores()
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function obtenerMentorPorId(solicitud, respuesta) {
+    try {
+        const mentor = mentoriasService.buscarMentorPorId(
+            solicitud.params.id
+        );
+
+        if (!mentor) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La persona mentora no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentor consultado correctamente",
+            datos: mentor
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function crearMentor(solicitud, respuesta) {
+    try {
+        const errores = validarMentor(solicitud.body);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const mentor = mentoriasService.crearMentor(solicitud.body);
+
+        return respuesta.status(201).json({
+            exito: true,
+            mensaje: "Persona mentora registrada correctamente",
+            datos: mentor
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function actualizarMentor(solicitud, respuesta) {
+    try {
+        const errores = validarMentor(solicitud.body);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const mentor = mentoriasService.actualizarMentor(
+            solicitud.params.id,
+            solicitud.body
+        );
+
+        if (!mentor) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La persona mentora no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Persona mentora actualizada correctamente",
+            datos: mentor
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function eliminarMentor(solicitud, respuesta) {
+    try {
+        const mentor = mentoriasService.eliminarMentor(
+            solicitud.params.id
+        );
+
+        if (!mentor) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La persona mentora no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Persona mentora eliminada correctamente",
+            datos: mentor
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+/*
+    SOLICITUDES
+*/
+
+function obtenerSolicitudes(solicitud, respuesta) {
+    try {
+        return respuesta.json({
+            exito: true,
+            mensaje: "Solicitudes consultadas correctamente",
+            datos: mentoriasService.obtenerSolicitudes()
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function obtenerSolicitudPorId(solicitud, respuesta) {
+    try {
+        const datos = mentoriasService.buscarSolicitudPorId(
+            solicitud.params.id
+        );
+
+        if (!datos) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La solicitud de mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Solicitud consultada correctamente",
+            datos
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function crearSolicitud(solicitud, respuesta) {
+    try {
+        const errores = validarSolicitud(solicitud.body, true);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const datos = mentoriasService.crearSolicitud({
+            ...solicitud.body,
+            estado: "Pendiente",
+            mentorId: ""
+        });
+
+        return respuesta.status(201).json({
+            exito: true,
+            mensaje: "Solicitud de mentoría registrada correctamente",
+            datos
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function actualizarSolicitud(solicitud, respuesta) {
+    try {
+        const errores = validarSolicitud(solicitud.body);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const datos = mentoriasService.actualizarSolicitud(
+            solicitud.params.id,
+            solicitud.body
+        );
+
+        if (!datos) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La solicitud de mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Solicitud de mentoría actualizada correctamente",
+            datos
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function asignarMentor(solicitud, respuesta) {
+    try {
+        const errores = [];
+
+        if (!texto(solicitud.body.mentorId)) {
+            errores.push("Debe seleccionar una persona mentora");
+        }
+
+        if (
+            texto(solicitud.body.observacionesAsignacion).length > 500
+        ) {
+            errores.push(
+                "Las observaciones no pueden superar 500 caracteres"
+            );
+        }
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const datos = mentoriasService.asignarMentorASolicitud(
+            solicitud.params.id,
+            solicitud.body
+        );
+
+        if (!datos) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La solicitud de mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Persona mentora asignada correctamente",
+            datos
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function eliminarSolicitud(solicitud, respuesta) {
+    try {
+        const datos = mentoriasService.eliminarSolicitud(
+            solicitud.params.id
+        );
+
+        if (!datos) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La solicitud de mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Solicitud de mentoría eliminada correctamente",
+            datos
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+/*
+    MENTORÍAS
+*/
+
+function obtenerMentorias(solicitud, respuesta) {
+    try {
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentorías consultadas correctamente",
+            datos: mentoriasService.obtenerMentorias()
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function obtenerMentoriaPorId(solicitud, respuesta) {
+    try {
+        const mentoria = mentoriasService.buscarMentoriaPorId(
+            solicitud.params.id
+        );
+
+        if (!mentoria) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentoría consultada correctamente",
+            datos: mentoria
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function crearMentoria(solicitud, respuesta) {
+    try {
+        const errores = validarMentoria(solicitud.body);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const mentoria = mentoriasService.crearMentoria(
+            solicitud.body
+        );
+
+        return respuesta.status(201).json({
+            exito: true,
+            mensaje: "Mentoría registrada correctamente",
+            datos: mentoria
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function actualizarMentoria(solicitud, respuesta) {
+    try {
+        const errores = validarMentoria(solicitud.body);
+
+        if (errores.length > 0) {
+            return responderValidacion(respuesta, errores);
+        }
+
+        const mentoria = mentoriasService.actualizarMentoria(
+            solicitud.params.id,
+            solicitud.body
+        );
+
+        if (!mentoria) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentoría actualizada correctamente",
+            datos: mentoria
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+function eliminarMentoria(solicitud, respuesta) {
+    try {
+        const mentoria = mentoriasService.eliminarMentoria(
+            solicitud.params.id
+        );
+
+        if (!mentoria) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje: "La mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.json({
+            exito: true,
+            mensaje: "Mentoría eliminada correctamente",
+            datos: mentoria
+        });
+    } catch (error) {
+        return responderError(respuesta, error);
+    }
+}
+
+module.exports = {
+    obtenerMentores,
+    obtenerMentorPorId,
+    crearMentor,
+    actualizarMentor,
+    eliminarMentor,
+    obtenerSolicitudes,
+    obtenerSolicitudPorId,
+    crearSolicitud,
+    actualizarSolicitud,
+    asignarMentor,
+    eliminarSolicitud,
+    obtenerMentorias,
+    obtenerMentoriaPorId,
+    crearMentoria,
+    actualizarMentoria,
+    eliminarMentoria
+};

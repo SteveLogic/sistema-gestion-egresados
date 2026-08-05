@@ -10,6 +10,7 @@ const carrerasRoutes = require("./routes/carreras.routes");
 const escuelasRoutes = require("./routes/escuelas.routes");
 const egresadosRoutes = require("./routes/egresados.routes");
 const titulosRoutes = require("./routes/titulos.routes");
+const mentoriasRoutes = require("./routes/mentorias.routes");
 
 
 const app = express();
@@ -33,6 +34,8 @@ app.use("/api/carreras", carrerasRoutes);
 app.use("/api/escuelas", escuelasRoutes);
 app.use("/api/egresados",egresadosRoutes);
 app.use("/api/titulos",titulosRoutes);
+app.use("/api/mentorias", mentoriasRoutes);
+
 
 app.use(manejarError);
 
