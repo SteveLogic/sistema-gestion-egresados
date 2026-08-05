@@ -409,6 +409,146 @@ function crearEgresado(
 
 
 /*
+    IMPORTAR EGRESADOS DESDE CSV
+    El navegador convierte el archivo en objetos JSON y
+    este controlador valida cada fila antes de almacenarla.
+*/
+
+function importarEgresados(
+    solicitud,
+    respuesta
+) {
+    const registros = Array.isArray(
+        solicitud.body
+    )
+        ? solicitud.body
+        : solicitud.body?.registros;
+
+    if (
+        !Array.isArray(registros) ||
+        registros.length === 0
+    ) {
+        return respuesta.status(400).json({
+            exito: false,
+            mensaje:
+                "Debe enviar al menos un egresado para importar",
+            errores: []
+        });
+    }
+
+    if (registros.length > 200) {
+        return respuesta.status(400).json({
+            exito: false,
+            mensaje:
+                "El archivo no puede contener más de 200 registros",
+            errores: []
+        });
+    }
+
+    const detalles = [];
+    const importados = [];
+
+    registros.forEach((registro, indice) => {
+        const filaCsv = Number(
+            registro?.__filaCsv
+        ) || indice + 2;
+
+        const datosEgresado = {
+            identificacion:
+                registro?.identificacion || "",
+            nombreCompleto:
+                registro?.nombreCompleto || "",
+            correo:
+                registro?.correo || "",
+            telefono:
+                registro?.telefono || "",
+            fechaRegistro:
+                registro?.fechaRegistro || "",
+            lugarTrabajo:
+                registro?.lugarTrabajo || "",
+            estado:
+                registro?.estado || "",
+            puestoActual:
+                registro?.puestoActual || "",
+            areaProfesional:
+                registro?.areaProfesional || "",
+            linkedin:
+                registro?.linkedin || "",
+            portafolio:
+                registro?.portafolio || ""
+        };
+
+        const errores =
+            validarDatosEgresado(
+                datosEgresado
+            );
+
+        if (errores.length > 0) {
+            detalles.push({
+                fila: filaCsv,
+                exito: false,
+                identificacion:
+                    datosEgresado.identificacion,
+                nombreCompleto:
+                    datosEgresado.nombreCompleto,
+                errores
+            });
+
+            return;
+        }
+
+        try {
+            const nuevoEgresado =
+                egresadosService.crearEgresado(
+                    datosEgresado
+                );
+
+            importados.push(
+                nuevoEgresado
+            );
+
+            detalles.push({
+                fila: filaCsv,
+                exito: true,
+                id: nuevoEgresado.id,
+                identificacion:
+                    nuevoEgresado.identificacion,
+                nombreCompleto:
+                    nuevoEgresado.nombreCompleto,
+                errores: []
+            });
+        } catch (error) {
+            detalles.push({
+                fila: filaCsv,
+                exito: false,
+                identificacion:
+                    datosEgresado.identificacion,
+                nombreCompleto:
+                    datosEgresado.nombreCompleto,
+                errores: [error.message]
+            });
+        }
+    });
+
+    const rechazadas =
+        detalles.length - importados.length;
+
+    return respuesta.status(200).json({
+        exito: true,
+        mensaje:
+            "Importación de egresados procesada correctamente",
+        datos: {
+            procesadas: detalles.length,
+            importadas: importados.length,
+            rechazadas,
+            egresados: importados,
+            detalles
+        }
+    });
+}
+
+
+/*
     ACTUALIZAR UN EGRESADO
 */
 
@@ -506,6 +646,7 @@ module.exports = {
     obtenerEgresados,
     obtenerEgresadoPorId,
     crearEgresado,
+    importarEgresados,
     actualizarEgresado,
     eliminarEgresado
 };

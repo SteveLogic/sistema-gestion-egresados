@@ -1,0 +1,3 @@
+identificacion,nombreCompleto,correo,telefono,fechaRegistro,lugarTrabajo,estado,puestoActual,areaProfesional,linkedin,portafolio
+1-1111-1111,Registro duplicado,duplicado@correo.com,8888-7777,2026-08-05,Empresa de prueba,Activo,Analista,Pruebas,,
+7-7777-7777,A,correo-invalido,123,05/08/2026,,Otro,,,,

@@ -159,8 +159,8 @@
     function aplicarPermisosVisuales(usuario, pagina) {
         if (usuario.rol === "bienestar" && pagina === "egresados.html") {
             activarModoConsulta({
-                secciones: ["#registrar-egresado"],
-                anclas: ['a[href*="#registrar-egresado"]'],
+                secciones: ["#registrar-egresado", "#importar-csv"],
+                anclas: ['a[href*="#registrar-egresado"]', 'a[href*="#importar-csv"]'],
                 acciones: ["editar", "eliminar"]
             });
         }

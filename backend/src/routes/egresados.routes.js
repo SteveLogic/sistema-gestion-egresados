@@ -30,6 +30,17 @@ router.get(
 
 
 /*
+    POST /api/egresados/importar
+    Importar varios egresados desde un archivo CSV
+*/
+
+router.post(
+    "/importar",
+    egresadosController.importarEgresados
+);
+
+
+/*
     POST /api/egresados
     Registrar un egresado
 */

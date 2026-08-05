@@ -846,14 +846,15 @@
                         <h2>Importar egresados mediante CSV</h2>
 
                         <p>
-                            Selecciona un archivo CSV que contenga los datos
-                            de las personas egresadas.
+                            Analiza el archivo, revisa la vista previa y
+                            confirma únicamente los registros válidos.
                         </p>
                     </div>
 
                     <div class="distribucion-csv">
 
                         <form
+                            id="formulario-importacion-csv"
                             class="formulario"
                             action="#"
                             method="post"
@@ -875,21 +876,29 @@
                             </div>
 
                             <div class="acciones-formulario">
-
                                 <button
                                     type="reset"
+                                    id="boton-limpiar-csv"
                                     class="boton boton-secundario"
                                 >
-                                    Cancelar
+                                    Limpiar
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-secundario"
                                 >
-                                    Importar archivo
+                                    Analizar archivo
                                 </button>
 
+                                <button
+                                    type="button"
+                                    id="boton-confirmar-importacion"
+                                    class="boton boton-primario"
+                                    hidden
+                                >
+                                    Confirmar importación
+                                </button>
                             </div>
 
                         </form>
@@ -899,29 +908,113 @@
                             <h3>Requisitos del archivo</h3>
 
                             <ul class="lista-requisitos">
-                                <li>El archivo debe utilizar formato CSV.</li>
-
-                                <li>
-                                    Debe incluir todos los campos obligatorios.
-                                </li>
-
-                                <li>
-                                    No debe contener identificaciones duplicadas.
-                                </li>
-
-                                <li>
-                                    Los correos deben utilizar un formato válido.
-                                </li>
+                                <li>Formato CSV separado por comas o punto y coma.</li>
+                                <li>Máximo 200 registros por archivo.</li>
+                                <li>Identificación y correo no pueden repetirse.</li>
+                                <li>Los estados permitidos son Activo, Pendiente e Inactivo.</li>
                             </ul>
 
+                            <p>
+                                <a
+                                    href="../ejemplos/plantilla-egresados.csv"
+                                    download
+                                >
+                                    Descargar plantilla de ejemplo
+                                </a>
+                            </p>
+
                             <p class="nota-demostracion">
-                                Estas validaciones se programarán con
-                                JavaScript y backend en avances posteriores.
+                                Los registros se almacenan temporalmente
+                                mientras el servidor permanece encendido.
                             </p>
 
                         </aside>
 
                     </div>
+
+                    <div
+                        id="mensaje-importacion-csv"
+                        class="mensaje-informativo"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    ></div>
+
+                    <section
+                        id="resumen-importacion-csv"
+                        class="seccion"
+                        hidden
+                    >
+                        <div class="encabezado-seccion">
+                            <h3>Resumen del archivo</h3>
+                        </div>
+
+                        <div class="cuadricula-resumen">
+                            <article class="tarjeta tarjeta-resumen">
+                                <p class="etiqueta-resumen">Filas procesadas</p>
+                                <p
+                                    id="csv-procesadas"
+                                    class="numero-resumen"
+                                >0</p>
+                            </article>
+
+                            <article class="tarjeta tarjeta-resumen">
+                                <p class="etiqueta-resumen">Filas válidas</p>
+                                <p
+                                    id="csv-validas"
+                                    class="numero-resumen"
+                                >0</p>
+                            </article>
+
+                            <article class="tarjeta tarjeta-resumen">
+                                <p class="etiqueta-resumen">Filas con errores</p>
+                                <p
+                                    id="csv-invalidas"
+                                    class="numero-resumen"
+                                >0</p>
+                            </article>
+
+                            <article class="tarjeta tarjeta-resumen">
+                                <p class="etiqueta-resumen">Importadas</p>
+                                <p
+                                    id="csv-importadas"
+                                    class="numero-resumen"
+                                >0</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section
+                        id="vista-previa-importacion-csv"
+                        class="seccion"
+                        hidden
+                    >
+                        <div class="encabezado-seccion">
+                            <h3>Vista previa</h3>
+                            <p>
+                                Se muestran hasta las primeras 50 filas.
+                            </p>
+                        </div>
+
+                        <div class="contenedor-tabla">
+                            <table class="tabla">
+                                <caption>
+                                    Resultado de la validación del archivo CSV
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>Fila</th>
+                                        <th>Identificación</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th>Estado</th>
+                                        <th>Resultado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpo-vista-previa-csv"></tbody>
+                            </table>
+                        </div>
+                    </section>
 
                 </section>
 
@@ -936,8 +1029,11 @@
         </div>
 
     </div>
+    
+    <script src="../js/auth/sesion.js"></script>
     <script src="../js/registro/egresados.js"></script>
     <script src="../js/registro/egresados-filtros-academicos.js"></script>
+    <script src="../js/registro/egresados-csv.js"></script>
 
 </body>
 </html>
