@@ -11,7 +11,8 @@ const escuelasRoutes = require("./routes/escuelas.routes");
 const egresadosRoutes = require("./routes/egresados.routes");
 const titulosRoutes = require("./routes/titulos.routes");
 const mentoriasRoutes = require("./routes/mentorias.routes");
-const actividadesRoutes =require("./routes/actividades.routes");
+const actividadesRoutes = require("./routes/actividades.routes");
+const comunidadesRoutes = require("./routes/comunidades.routes");
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/egresados",egresadosRoutes);
 app.use("/api/titulos",titulosRoutes);
 app.use("/api/mentorias", mentoriasRoutes);
 app.use("/api/actividades",actividadesRoutes);
+app.use("/api/comunidades",comunidadesRoutes);
 
 
 app.use(manejarError);
