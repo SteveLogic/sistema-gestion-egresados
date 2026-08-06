@@ -1,1 +1,47 @@
-/* Ajustes personalizados para Bootstrap en el Avance 3 */
+/*
+ * Compatibilidad entre Bootstrap 5.3.8 y la identidad visual del proyecto.
+ * Este archivo se carga despues de los estilos propios para resolver
+ * diferencias puntuales sin eliminar el diseño del Avance 2.
+ */
+
+:root {
+    --bs-primary: #0d6efd;
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-body-font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Bootstrap usa box-sizing: border-box; se conserva en todo el proyecto. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Evita que el subrayado global de Bootstrap altere la navegacion existente. */
+.marca,
+.menu-publico a,
+.barra-lateral a,
+.navegacion-lateral a,
+.boton,
+.boton-tabla {
+    text-decoration: none;
+}
+
+/* Mantiene la tipografia existente en controles y botones personalizados. */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* Utilidad para la migracion progresiva de tablas a Bootstrap. */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Respeta el atributo hidden aunque otros estilos definan display. */
+[hidden] {
+    display: none !important;
+}
