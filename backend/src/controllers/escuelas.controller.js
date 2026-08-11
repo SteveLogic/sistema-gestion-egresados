@@ -117,48 +117,68 @@ function validarDatosEscuela(datosEscuela) {
     return errores;
 }
 
-function obtenerEscuelas(
+async function obtenerEscuelas(
     solicitud,
     respuesta
 ) {
-    const escuelas =
-        escuelasService.obtenerEscuelas();
+    try {
+        const escuelas =
+            await escuelasService.obtenerEscuelas();
 
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Escuelas obtenidas correctamente",
-        datos: escuelas
-    });
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Escuelas obtenidas correctamente",
+            datos: escuelas
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
+            exito: false,
+            mensaje:
+                "No fue posible obtener las escuelas",
+            errores: [error.message]
+        });
+    }
 }
 
-function obtenerEscuelaPorId(
+async function obtenerEscuelaPorId(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
 
-    const escuela =
-        escuelasService.buscarEscuelaPorId(id);
+    try {
+        const escuela =
+            await escuelasService.buscarEscuelaPorId(
+                id
+            );
 
-    if (!escuela) {
-        return respuesta.status(404).json({
+        if (!escuela) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "La escuela no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Escuela obtenida correctamente",
+            datos: escuela
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "La escuela no fue encontrada",
-            errores: []
+                "No fue posible consultar la escuela",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Escuela obtenida correctamente",
-        datos: escuela
-    });
 }
 
-function crearEscuela(
+async function crearEscuela(
     solicitud,
     respuesta
 ) {
@@ -179,7 +199,7 @@ function crearEscuela(
 
     try {
         const nuevaEscuela =
-            escuelasService.crearEscuela(
+            await escuelasService.crearEscuela(
                 datosEscuela
             );
 
@@ -198,12 +218,11 @@ function crearEscuela(
     }
 }
 
-function actualizarEscuela(
+async function actualizarEscuela(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
-
     const datosEscuela =
         solicitud.body || {};
 
@@ -221,7 +240,7 @@ function actualizarEscuela(
 
     try {
         const escuelaActualizada =
-            escuelasService.actualizarEscuela(
+            await escuelasService.actualizarEscuela(
                 id,
                 datosEscuela
             );
@@ -250,30 +269,41 @@ function actualizarEscuela(
     }
 }
 
-function eliminarEscuela(
+async function eliminarEscuela(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
 
-    const escuelaEliminada =
-        escuelasService.eliminarEscuela(id);
+    try {
+        const escuelaEliminada =
+            await escuelasService.eliminarEscuela(
+                id
+            );
 
-    if (!escuelaEliminada) {
-        return respuesta.status(404).json({
+        if (!escuelaEliminada) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "La escuela no fue encontrada",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Escuela eliminada correctamente",
+            datos: escuelaEliminada
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "La escuela no fue encontrada",
-            errores: []
+                "No fue posible eliminar la escuela",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Escuela eliminada correctamente",
-        datos: escuelaEliminada
-    });
 }
 
 module.exports = {

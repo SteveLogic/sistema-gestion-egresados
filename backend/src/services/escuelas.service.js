@@ -1,76 +1,130 @@
-const escuelas = require("../data/escuelas.data");
+const Escuela = require("../models/escuela.model");
 const { generarId } = require("../utils/generar-id");
 
-function obtenerEscuelas() {
-    return escuelas;
+function escaparRegex(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function buscarEscuelaPorId(id) {
-    return escuelas.find(
-        (escuela) => escuela.id === id
+function patronExacto(texto) {
+    return new RegExp(
+        `^${escaparRegex(texto.trim())}$`,
+        "i"
     );
 }
 
-function existeEscuelaConCodigo(
+function limpiarDocumento(documento) {
+    if (!documento) {
+        return null;
+    }
+
+    const objeto =
+        typeof documento.toObject === "function"
+            ? documento.toObject()
+            : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
+}
+
+async function obtenerEscuelas() {
+    return Escuela.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ codigo: 1 })
+        .lean();
+}
+
+async function buscarEscuelaPorId(id) {
+    return Escuela.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
+}
+
+async function existeEscuelaConCodigo(
     codigo,
     idExcluir = null
 ) {
-    const codigoNormalizado =
-        codigo.trim().toUpperCase();
+    const filtro = {
+        codigo: codigo.trim().toUpperCase()
+    };
 
-    return escuelas.some((escuela) => {
-        const mismoCodigo =
-            escuela.codigo.trim().toUpperCase() ===
-            codigoNormalizado;
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-        const diferenteId =
-            escuela.id !== idExcluir;
-
-        return mismoCodigo && diferenteId;
-    });
+    return Boolean(
+        await Escuela.exists(filtro)
+    );
 }
 
-function existeEscuelaConNombre(
+async function existeEscuelaConNombre(
     nombre,
     idExcluir = null
 ) {
-    const nombreNormalizado =
-        nombre.trim().toLowerCase();
+    const filtro = {
+        nombre: patronExacto(nombre)
+    };
 
-    return escuelas.some((escuela) => {
-        const mismoNombre =
-            escuela.nombre.trim().toLowerCase() ===
-            nombreNormalizado;
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-        const diferenteId =
-            escuela.id !== idExcluir;
-
-        return mismoNombre && diferenteId;
-    });
+    return Boolean(
+        await Escuela.exists(filtro)
+    );
 }
 
-function existeEscuelaConCorreo(
+async function existeEscuelaConCorreo(
     correo,
     idExcluir = null
 ) {
-    const correoNormalizado =
-        correo.trim().toLowerCase();
+    const filtro = {
+        correo: correo.trim().toLowerCase()
+    };
 
-    return escuelas.some((escuela) => {
-        const mismoCorreo =
-            escuela.correo.trim().toLowerCase() ===
-            correoNormalizado;
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-        const diferenteId =
-            escuela.id !== idExcluir;
-
-        return mismoCorreo && diferenteId;
-    });
+    return Boolean(
+        await Escuela.exists(filtro)
+    );
 }
 
-function crearEscuela(datosEscuela) {
+function traducirErrorDuplicado(error) {
+    if (error && error.code === 11000) {
+        const campo = Object.keys(
+            error.keyPattern ||
+            error.keyValue ||
+            {}
+        )[0];
+
+        const mensajes = {
+            codigo:
+                "Ya existe una escuela con ese código",
+            nombre:
+                "Ya existe una escuela con ese nombre",
+            correo:
+                "Ya existe una escuela con ese correo",
+            id:
+                "Ya existe una escuela con ese identificador"
+        };
+
+        if (mensajes[campo]) {
+            throw new Error(
+                mensajes[campo]
+            );
+        }
+    }
+
+    throw error;
+}
+
+async function crearEscuela(datosEscuela) {
     if (
-        existeEscuelaConCodigo(
+        await existeEscuelaConCodigo(
             datosEscuela.codigo
         )
     ) {
@@ -80,7 +134,7 @@ function crearEscuela(datosEscuela) {
     }
 
     if (
-        existeEscuelaConNombre(
+        await existeEscuelaConNombre(
             datosEscuela.nombre
         )
     ) {
@@ -90,7 +144,7 @@ function crearEscuela(datosEscuela) {
     }
 
     if (
-        existeEscuelaConCorreo(
+        await existeEscuelaConCorreo(
             datosEscuela.correo
         )
     ) {
@@ -99,43 +153,51 @@ function crearEscuela(datosEscuela) {
         );
     }
 
-    const nuevaEscuela = {
-        id: generarId("esc"),
-        codigo:
-            datosEscuela.codigo
-                .trim()
-                .toUpperCase(),
-        nombre: datosEscuela.nombre.trim(),
-        responsable:
-            datosEscuela.responsable.trim(),
-        correo:
-            datosEscuela.correo
-                .trim()
-                .toLowerCase(),
-        telefono:
-            datosEscuela.telefono.trim(),
-        descripcion:
-            datosEscuela.descripcion.trim(),
-        estado: datosEscuela.estado
-    };
+    try {
+        const nuevaEscuela =
+            await Escuela.create({
+                id: generarId("esc"),
+                codigo:
+                    datosEscuela.codigo
+                        .trim()
+                        .toUpperCase(),
+                nombre:
+                    datosEscuela.nombre.trim(),
+                responsable:
+                    datosEscuela.responsable.trim(),
+                correo:
+                    datosEscuela.correo
+                        .trim()
+                        .toLowerCase(),
+                telefono:
+                    datosEscuela.telefono.trim(),
+                descripcion:
+                    datosEscuela.descripcion.trim(),
+                estado:
+                    datosEscuela.estado
+            });
 
-    escuelas.push(nuevaEscuela);
-
-    return nuevaEscuela;
+        return limpiarDocumento(
+            nuevaEscuela
+        );
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-function actualizarEscuela(
+async function actualizarEscuela(
     id,
     datosEscuela
 ) {
-    const escuela = buscarEscuelaPorId(id);
+    const escuela =
+        await Escuela.findOne({ id });
 
     if (!escuela) {
         return null;
     }
 
     if (
-        existeEscuelaConCodigo(
+        await existeEscuelaConCodigo(
             datosEscuela.codigo,
             id
         )
@@ -146,7 +208,7 @@ function actualizarEscuela(
     }
 
     if (
-        existeEscuelaConNombre(
+        await existeEscuelaConNombre(
             datosEscuela.nombre,
             id
         )
@@ -157,7 +219,7 @@ function actualizarEscuela(
     }
 
     if (
-        existeEscuelaConCorreo(
+        await existeEscuelaConCorreo(
             datosEscuela.correo,
             id
         )
@@ -192,22 +254,24 @@ function actualizarEscuela(
     escuela.estado =
         datosEscuela.estado;
 
-    return escuela;
+    try {
+        await escuela.save();
+
+        return limpiarDocumento(
+            escuela
+        );
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-function eliminarEscuela(id) {
-    const indice = escuelas.findIndex(
-        (escuela) => escuela.id === id
+async function eliminarEscuela(id) {
+    const escuelaEliminada =
+        await Escuela.findOneAndDelete({ id });
+
+    return limpiarDocumento(
+        escuelaEliminada
     );
-
-    if (indice === -1) {
-        return null;
-    }
-
-    const escuelasEliminadas =
-        escuelas.splice(indice, 1);
-
-    return escuelasEliminadas[0];
 }
 
 module.exports = {
