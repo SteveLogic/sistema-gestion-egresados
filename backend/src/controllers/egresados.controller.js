@@ -2,50 +2,16 @@ const egresadosService = require(
     "../services/egresados.service"
 );
 
-
-/*
-    VALIDACIONES
-*/
-
-function validarDatosEgresado(
-    datosEgresado
-) {
+function validarDatosEgresado(datosEgresado) {
     const errores = [];
 
-    validarIdentificacion(
-        datosEgresado,
-        errores
-    );
-
-    validarNombreCompleto(
-        datosEgresado,
-        errores
-    );
-
-    validarCorreo(
-        datosEgresado,
-        errores
-    );
-
-    validarTelefono(
-        datosEgresado,
-        errores
-    );
-
-    validarFechaRegistro(
-        datosEgresado,
-        errores
-    );
-
-    validarLugarTrabajo(
-        datosEgresado,
-        errores
-    );
-
-    validarEstado(
-        datosEgresado,
-        errores
-    );
+    validarIdentificacion(datosEgresado, errores);
+    validarNombreCompleto(datosEgresado, errores);
+    validarCorreo(datosEgresado, errores);
+    validarTelefono(datosEgresado, errores);
+    validarFechaRegistro(datosEgresado, errores);
+    validarLugarTrabajo(datosEgresado, errores);
+    validarEstado(datosEgresado, errores);
 
     validarEnlaceOpcional(
         datosEgresado.linkedin,
@@ -62,20 +28,17 @@ function validarDatosEgresado(
     return errores;
 }
 
-
 function validarIdentificacion(
     datosEgresado,
     errores
 ) {
     if (
         !datosEgresado.identificacion ||
-        datosEgresado.identificacion
-            .trim() === ""
+        datosEgresado.identificacion.trim() === ""
     ) {
         errores.push(
             "La identificación es obligatoria"
         );
-
         return;
     }
 
@@ -93,20 +56,17 @@ function validarIdentificacion(
     }
 }
 
-
 function validarNombreCompleto(
     datosEgresado,
     errores
 ) {
     if (
         !datosEgresado.nombreCompleto ||
-        datosEgresado.nombreCompleto
-            .trim() === ""
+        datosEgresado.nombreCompleto.trim() === ""
     ) {
         errores.push(
             "El nombre completo es obligatorio"
         );
-
         return;
     }
 
@@ -121,20 +81,17 @@ function validarNombreCompleto(
     }
 }
 
-
 function validarCorreo(
     datosEgresado,
     errores
 ) {
     if (
         !datosEgresado.correo ||
-        datosEgresado.correo
-            .trim() === ""
+        datosEgresado.correo.trim() === ""
     ) {
         errores.push(
             "El correo electrónico es obligatorio"
         );
-
         return;
     }
 
@@ -152,20 +109,17 @@ function validarCorreo(
     }
 }
 
-
 function validarTelefono(
     datosEgresado,
     errores
 ) {
     if (
         !datosEgresado.telefono ||
-        datosEgresado.telefono
-            .trim() === ""
+        datosEgresado.telefono.trim() === ""
     ) {
         errores.push(
             "El teléfono es obligatorio"
         );
-
         return;
     }
 
@@ -183,20 +137,17 @@ function validarTelefono(
     }
 }
 
-
 function validarFechaRegistro(
     datosEgresado,
     errores
 ) {
     if (
         !datosEgresado.fechaRegistro ||
-        datosEgresado.fechaRegistro
-            .trim() === ""
+        datosEgresado.fechaRegistro.trim() === ""
     ) {
         errores.push(
             "La fecha de registro es obligatoria"
         );
-
         return;
     }
 
@@ -211,7 +162,6 @@ function validarFechaRegistro(
         errores.push(
             "La fecha de registro debe utilizar el formato AAAA-MM-DD"
         );
-
         return;
     }
 
@@ -219,17 +169,12 @@ function validarFechaRegistro(
         `${datosEgresado.fechaRegistro}T00:00:00`
     );
 
-    if (
-        Number.isNaN(
-            fecha.getTime()
-        )
-    ) {
+    if (Number.isNaN(fecha.getTime())) {
         errores.push(
             "La fecha de registro no es válida"
         );
     }
 }
-
 
 function validarLugarTrabajo(
     datosEgresado,
@@ -237,15 +182,13 @@ function validarLugarTrabajo(
 ) {
     if (
         !datosEgresado.lugarTrabajo ||
-        datosEgresado.lugarTrabajo
-            .trim() === ""
+        datosEgresado.lugarTrabajo.trim() === ""
     ) {
         errores.push(
             "El lugar de trabajo es obligatorio"
         );
     }
 }
-
 
 function validarEstado(
     datosEgresado,
@@ -269,24 +212,17 @@ function validarEstado(
     }
 }
 
-
 function validarEnlaceOpcional(
     enlace,
     nombreCampo,
     errores
 ) {
-    if (
-        !enlace ||
-        enlace.trim() === ""
-    ) {
+    if (!enlace || enlace.trim() === "") {
         return;
     }
 
     try {
-        const url = new URL(
-            enlace.trim()
-        );
-
+        const url = new URL(enlace.trim());
         const protocolosPermitidos = [
             "http:",
             "https:"
@@ -308,64 +244,68 @@ function validarEnlaceOpcional(
     }
 }
 
-
-/*
-    CONSULTAR TODOS LOS EGRESADOS
-*/
-
-function obtenerEgresados(
+async function obtenerEgresados(
     solicitud,
     respuesta
 ) {
-    const egresados =
-        egresadosService.obtenerEgresados();
+    try {
+        const egresados =
+            await egresadosService.obtenerEgresados();
 
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Egresados obtenidos correctamente",
-        datos: egresados
-    });
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Egresados obtenidos correctamente",
+            datos: egresados
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
+            exito: false,
+            mensaje:
+                "No fue posible obtener los egresados",
+            errores: [error.message]
+        });
+    }
 }
 
-
-/*
-    CONSULTAR UN EGRESADO POR ID
-*/
-
-function obtenerEgresadoPorId(
+async function obtenerEgresadoPorId(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
 
-    const egresado =
-        egresadosService
-            .buscarEgresadoPorId(id);
+    try {
+        const egresado =
+            await egresadosService.buscarEgresadoPorId(
+                id
+            );
 
-    if (!egresado) {
-        return respuesta.status(404).json({
+        if (!egresado) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El egresado no fue encontrado",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Egresado obtenido correctamente",
+            datos: egresado
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "El egresado no fue encontrado",
-            errores: []
+                "No fue posible consultar el egresado",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Egresado obtenido correctamente",
-        datos: egresado
-    });
 }
 
-
-/*
-    CREAR UN EGRESADO
-*/
-
-function crearEgresado(
+async function crearEgresado(
     solicitud,
     respuesta
 ) {
@@ -388,7 +328,7 @@ function crearEgresado(
 
     try {
         const nuevoEgresado =
-            egresadosService.crearEgresado(
+            await egresadosService.crearEgresado(
                 datosEgresado
             );
 
@@ -407,14 +347,7 @@ function crearEgresado(
     }
 }
 
-
-/*
-    IMPORTAR EGRESADOS DESDE CSV
-    El navegador convierte el archivo en objetos JSON y
-    este controlador valida cada fila antes de almacenarla.
-*/
-
-function importarEgresados(
+async function importarEgresados(
     solicitud,
     respuesta
 ) {
@@ -448,10 +381,15 @@ function importarEgresados(
     const detalles = [];
     const importados = [];
 
-    registros.forEach((registro, indice) => {
-        const filaCsv = Number(
-            registro?.__filaCsv
-        ) || indice + 2;
+    for (
+        let indice = 0;
+        indice < registros.length;
+        indice += 1
+    ) {
+        const registro = registros[indice];
+        const filaCsv =
+            Number(registro?.__filaCsv) ||
+            indice + 2;
 
         const datosEgresado = {
             identificacion:
@@ -493,13 +431,12 @@ function importarEgresados(
                     datosEgresado.nombreCompleto,
                 errores
             });
-
-            return;
+            continue;
         }
 
         try {
             const nuevoEgresado =
-                egresadosService.crearEgresado(
+                await egresadosService.crearEgresado(
                     datosEgresado
                 );
 
@@ -528,36 +465,29 @@ function importarEgresados(
                 errores: [error.message]
             });
         }
-    });
-
-    const rechazadas =
-        detalles.length - importados.length;
+    }
 
     return respuesta.status(200).json({
         exito: true,
         mensaje:
-            "Importación de egresados procesada correctamente",
+            `Importación terminada: ${importados.length} registro(s) importado(s) y ${detalles.length - importados.length} rechazado(s) por el backend.`,
         datos: {
-            procesadas: detalles.length,
-            importadas: importados.length,
-            rechazadas,
-            egresados: importados,
+            procesados: registros.length,
+            importados: importados.length,
+            rechazados:
+                detalles.length -
+                importados.length,
+            registros: importados,
             detalles
         }
     });
 }
 
-
-/*
-    ACTUALIZAR UN EGRESADO
-*/
-
-function actualizarEgresado(
+async function actualizarEgresado(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
-
     const datosEgresado =
         solicitud.body || {};
 
@@ -577,21 +507,18 @@ function actualizarEgresado(
 
     try {
         const egresadoActualizado =
-            egresadosService
-                .actualizarEgresado(
-                    id,
-                    datosEgresado
-                );
+            await egresadosService.actualizarEgresado(
+                id,
+                datosEgresado
+            );
 
         if (!egresadoActualizado) {
-            return respuesta
-                .status(404)
-                .json({
-                    exito: false,
-                    mensaje:
-                        "El egresado no fue encontrado",
-                    errores: []
-                });
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El egresado no fue encontrado",
+                errores: []
+            });
         }
 
         return respuesta.status(200).json({
@@ -609,38 +536,42 @@ function actualizarEgresado(
     }
 }
 
-
-/*
-    ELIMINAR UN EGRESADO
-*/
-
-function eliminarEgresado(
+async function eliminarEgresado(
     solicitud,
     respuesta
 ) {
     const { id } = solicitud.params;
 
-    const egresadoEliminado =
-        egresadosService
-            .eliminarEgresado(id);
+    try {
+        const egresadoEliminado =
+            await egresadosService.eliminarEgresado(
+                id
+            );
 
-    if (!egresadoEliminado) {
-        return respuesta.status(404).json({
+        if (!egresadoEliminado) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El egresado no fue encontrado",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Egresado eliminado correctamente",
+            datos: egresadoEliminado
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "El egresado no fue encontrado",
-            errores: []
+                "No fue posible eliminar el egresado",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Egresado eliminado correctamente",
-        datos: egresadoEliminado
-    });
 }
-
 
 module.exports = {
     obtenerEgresados,

@@ -1,129 +1,87 @@
-const titulos = require(
-    "../data/titulos.data"
-);
+const Titulo = require("../models/titulo.model");
+const Egresado = require("../models/egresado.model");
+const Carrera = require("../models/carrera.model");
+const Escuela = require("../models/escuela.model");
 
-const egresados = require(
-    "../data/egresados.data"
-);
-
-const carreras = require(
-    "../data/carreras.data"
-);
-
-const escuelas = require(
-    "../data/escuelas.data"
-);
-
-const {
-    generarId
-} = require(
-    "../utils/generar-id"
-);
-
-
-/*
-    UTILIDADES INTERNAS
-*/
+const { generarId } = require("../utils/generar-id");
 
 function limpiarTexto(valor) {
-    if (typeof valor !== "string") {
-        return "";
+    return typeof valor === "string"
+        ? valor.trim()
+        : "";
+}
+
+function limpiarDocumento(documento) {
+    if (!documento) {
+        return null;
     }
 
-    return valor.trim();
+    const objeto =
+        typeof documento.toObject === "function"
+            ? documento.toObject()
+            : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
 }
 
-
-function buscarTituloInternoPorId(id) {
-    return (
-        titulos.find(
-            (titulo) =>
-                titulo.id === id
-        ) || null
-    );
-}
-
-
-function buscarEgresadoPorId(id) {
-    return (
-        egresados.find(
-            (egresado) =>
-                egresado.id === id
-        ) || null
-    );
-}
-
-
-function buscarCarreraPorId(id) {
-    return (
-        carreras.find(
-            (carrera) =>
-                carrera.id === id
-        ) || null
-    );
-}
-
-
-function buscarEscuelaPorId(id) {
-    return (
-        escuelas.find(
-            (escuela) =>
-                escuela.id === id
-        ) || null
-    );
-}
-
-
-/*
-    AGREGAR INFORMACIÓN DE LAS RELACIONES
-*/
-
-function construirTituloDetallado(
+async function construirTituloDetallado(
     titulo
 ) {
-    const egresado =
-        buscarEgresadoPorId(
-            titulo.egresadoId
-        );
+    if (!titulo) {
+        return null;
+    }
 
-    const carrera =
-        buscarCarreraPorId(
-            titulo.carreraId
-        );
+    const tituloPlano =
+        limpiarDocumento(titulo);
 
-    const escuela =
-        buscarEscuelaPorId(
-            titulo.escuelaId
-        );
+    const [
+        egresado,
+        carrera,
+        escuela
+    ] = await Promise.all([
+        Egresado.findOne({
+            id: tituloPlano.egresadoId
+        })
+            .select("-_id nombreCompleto identificacion")
+            .lean(),
+        Carrera.findOne({
+            id: tituloPlano.carreraId
+        })
+            .select("-_id nombre codigo")
+            .lean(),
+        Escuela.findOne({
+            id: tituloPlano.escuelaId
+        })
+            .select("-_id nombre codigo")
+            .lean()
+    ]);
 
     return {
-        ...titulo,
-
+        ...tituloPlano,
         egresadoNombre:
             egresado
                 ? egresado.nombreCompleto
                 : "No disponible",
-
         egresadoIdentificacion:
             egresado
                 ? egresado.identificacion
                 : "No disponible",
-
         carreraNombre:
             carrera
                 ? carrera.nombre
                 : "No disponible",
-
         carreraCodigo:
             carrera
                 ? carrera.codigo
                 : "No disponible",
-
         escuelaNombre:
             escuela
                 ? escuela.nombre
                 : "No disponible",
-
         escuelaCodigo:
             escuela
                 ? escuela.codigo
@@ -131,66 +89,70 @@ function construirTituloDetallado(
     };
 }
 
+async function obtenerTitulos() {
+    const titulos = await Titulo.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ anioGraduacion: -1 })
+        .lean();
 
-/*
-    CONSULTAR TODOS LOS TÍTULOS
-*/
-
-function obtenerTitulos() {
-    return titulos.map(
-        construirTituloDetallado
+    return Promise.all(
+        titulos.map(
+            construirTituloDetallado
+        )
     );
 }
 
-
-/*
-    CONSULTAR UN TÍTULO POR ID
-*/
-
-function buscarTituloPorId(id) {
-    const titulo =
-        buscarTituloInternoPorId(id);
-
-    if (!titulo) {
-        return null;
-    }
+async function buscarTituloPorId(id) {
+    const titulo = await Titulo.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
 
     return construirTituloDetallado(
         titulo
     );
 }
 
-
-/*
-    CONSULTAR TÍTULOS DE UN EGRESADO
-*/
-
-function buscarTitulosPorEgresado(
+async function buscarTitulosPorEgresado(
     egresadoId
 ) {
-    return titulos
-        .filter(
-            (titulo) =>
-                titulo.egresadoId ===
-                egresadoId
-        )
-        .map(
+    const titulos = await Titulo.find({
+        egresadoId
+    })
+        .select("-_id -createdAt -updatedAt")
+        .sort({ anioGraduacion: -1 })
+        .lean();
+
+    return Promise.all(
+        titulos.map(
             construirTituloDetallado
-        );
+        )
+    );
 }
 
-
-/*
-    VALIDAR RELACIONES
-*/
-
-function validarRelaciones(
+async function validarRelaciones(
     datosTitulo
 ) {
-    const egresado =
-        buscarEgresadoPorId(
-            datosTitulo.egresadoId
-        );
+    const [
+        egresado,
+        carrera,
+        escuela
+    ] = await Promise.all([
+        Egresado.findOne({
+            id: limpiarTexto(
+                datosTitulo.egresadoId
+            )
+        }).lean(),
+        Carrera.findOne({
+            id: limpiarTexto(
+                datosTitulo.carreraId
+            )
+        }).lean(),
+        Escuela.findOne({
+            id: limpiarTexto(
+                datosTitulo.escuelaId
+            )
+        }).lean()
+    ]);
 
     if (!egresado) {
         throw new Error(
@@ -198,21 +160,11 @@ function validarRelaciones(
         );
     }
 
-    const carrera =
-        buscarCarreraPorId(
-            datosTitulo.carreraId
-        );
-
     if (!carrera) {
         throw new Error(
             "La carrera seleccionada no existe"
         );
     }
-
-    const escuela =
-        buscarEscuelaPorId(
-            datosTitulo.escuelaId
-        );
 
     if (!escuela) {
         throw new Error(
@@ -230,69 +182,55 @@ function validarRelaciones(
     }
 }
 
-
-/*
-    VALIDAR TÍTULO DUPLICADO
-*/
-
-function existeTituloDuplicado(
+async function existeTituloDuplicado(
     datosTitulo,
     idExcluir = null
 ) {
-    return titulos.some(
-        (titulo) => {
-            const mismoEgresado =
-                titulo.egresadoId ===
-                datosTitulo.egresadoId;
+    const filtro = {
+        egresadoId:
+            limpiarTexto(
+                datosTitulo.egresadoId
+            ),
+        tipoPrograma:
+            limpiarTexto(
+                datosTitulo.tipoPrograma
+            ),
+        carreraId:
+            limpiarTexto(
+                datosTitulo.carreraId
+            ),
+        anioGraduacion:
+            Number(
+                datosTitulo.anioGraduacion
+            )
+    };
 
-            const mismoTipo =
-                limpiarTexto(
-                    titulo.tipoPrograma
-                ).toLowerCase() ===
-                limpiarTexto(
-                    datosTitulo.tipoPrograma
-                ).toLowerCase();
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-            const mismaCarrera =
-                titulo.carreraId ===
-                datosTitulo.carreraId;
-
-            const mismoAnio =
-                Number(
-                    titulo.anioGraduacion
-                ) ===
-                Number(
-                    datosTitulo.anioGraduacion
-                );
-
-            const diferenteId =
-                titulo.id !== idExcluir;
-
-            return (
-                mismoEgresado &&
-                mismoTipo &&
-                mismaCarrera &&
-                mismoAnio &&
-                diferenteId
-            );
-        }
+    return Boolean(
+        await Titulo.exists(filtro)
     );
 }
 
+function traducirErrorDuplicado(error) {
+    if (error && error.code === 11000) {
+        throw new Error(
+            "El egresado ya tiene registrado ese título para el mismo año"
+        );
+    }
 
-/*
-    CREAR UN TÍTULO
-*/
+    throw error;
+}
 
-function crearTitulo(
-    datosTitulo
-) {
-    validarRelaciones(
+async function crearTitulo(datosTitulo) {
+    await validarRelaciones(
         datosTitulo
     );
 
     if (
-        existeTituloDuplicado(
+        await existeTituloDuplicado(
             datosTitulo
         )
     ) {
@@ -301,76 +239,65 @@ function crearTitulo(
         );
     }
 
-    const nuevoTitulo = {
-        id: generarId("tit"),
+    try {
+        const nuevoTitulo =
+            await Titulo.create({
+                id: generarId("tit"),
+                egresadoId:
+                    limpiarTexto(
+                        datosTitulo.egresadoId
+                    ),
+                tipoPrograma:
+                    limpiarTexto(
+                        datosTitulo.tipoPrograma
+                    ),
+                carreraId:
+                    limpiarTexto(
+                        datosTitulo.carreraId
+                    ),
+                escuelaId:
+                    limpiarTexto(
+                        datosTitulo.escuelaId
+                    ),
+                anioGraduacion:
+                    Number(
+                        datosTitulo.anioGraduacion
+                    ),
+                estado:
+                    limpiarTexto(
+                        datosTitulo.estado
+                    ),
+                observaciones:
+                    limpiarTexto(
+                        datosTitulo.observaciones
+                    )
+            });
 
-        egresadoId:
-            limpiarTexto(
-                datosTitulo.egresadoId
-            ),
-
-        tipoPrograma:
-            limpiarTexto(
-                datosTitulo.tipoPrograma
-            ),
-
-        carreraId:
-            limpiarTexto(
-                datosTitulo.carreraId
-            ),
-
-        escuelaId:
-            limpiarTexto(
-                datosTitulo.escuelaId
-            ),
-
-        anioGraduacion:
-            Number(
-                datosTitulo.anioGraduacion
-            ),
-
-        estado:
-            limpiarTexto(
-                datosTitulo.estado
-            ),
-
-        observaciones:
-            limpiarTexto(
-                datosTitulo.observaciones
-            )
-    };
-
-    titulos.push(
-        nuevoTitulo
-    );
-
-    return construirTituloDetallado(
-        nuevoTitulo
-    );
+        return construirTituloDetallado(
+            nuevoTitulo
+        );
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-
-/*
-    ACTUALIZAR UN TÍTULO
-*/
-
-function actualizarTitulo(
+async function actualizarTitulo(
     id,
     datosTitulo
 ) {
     const titulo =
-        buscarTituloInternoPorId(id);
+        await Titulo.findOne({ id });
 
     if (!titulo) {
         return null;
     }
 
-    validarRelaciones(
+    await validarRelaciones(
         datosTitulo
     );
 
     if (
-        existeTituloDuplicado(
+        await existeTituloDuplicado(
             datosTitulo,
             id
         )
@@ -384,69 +311,54 @@ function actualizarTitulo(
         limpiarTexto(
             datosTitulo.egresadoId
         );
-
     titulo.tipoPrograma =
         limpiarTexto(
             datosTitulo.tipoPrograma
         );
-
     titulo.carreraId =
         limpiarTexto(
             datosTitulo.carreraId
         );
-
     titulo.escuelaId =
         limpiarTexto(
             datosTitulo.escuelaId
         );
-
     titulo.anioGraduacion =
         Number(
             datosTitulo.anioGraduacion
         );
-
     titulo.estado =
         limpiarTexto(
             datosTitulo.estado
         );
-
     titulo.observaciones =
         limpiarTexto(
             datosTitulo.observaciones
         );
 
-    return construirTituloDetallado(
-        titulo
-    );
+    try {
+        await titulo.save();
+
+        return construirTituloDetallado(
+            titulo
+        );
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
+async function eliminarTitulo(id) {
+    const tituloEliminado =
+        await Titulo.findOneAndDelete({ id });
 
-/*
-    ELIMINAR UN TÍTULO
-*/
-
-function eliminarTitulo(id) {
-    const indiceTitulo =
-        titulos.findIndex(
-            (titulo) =>
-                titulo.id === id
-        );
-
-    if (indiceTitulo === -1) {
+    if (!tituloEliminado) {
         return null;
     }
-
-    const tituloEliminado =
-        titulos.splice(
-            indiceTitulo,
-            1
-        )[0];
 
     return construirTituloDetallado(
         tituloEliminado
     );
 }
-
 
 module.exports = {
     obtenerTitulos,

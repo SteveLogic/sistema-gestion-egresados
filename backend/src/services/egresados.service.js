@@ -1,126 +1,114 @@
-const egresados = require(
-    "../data/egresados.data"
-);
-
-const {
-    generarId
-} = require(
-    "../utils/generar-id"
-);
-
-
-/*
-    UTILIDADES INTERNAS
-*/
+const Egresado = require("../models/egresado.model");
+const { generarId } = require("../utils/generar-id");
 
 function limpiarTexto(valor) {
-    if (typeof valor !== "string") {
-        return "";
+    return typeof valor === "string"
+        ? valor.trim()
+        : "";
+}
+
+function normalizarCorreo(valor) {
+    return limpiarTexto(valor).toLowerCase();
+}
+
+function limpiarDocumento(documento) {
+    if (!documento) {
+        return null;
     }
 
-    return valor.trim();
+    const objeto =
+        typeof documento.toObject === "function"
+            ? documento.toObject()
+            : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
 }
 
-function normalizarCorreo(correo) {
-    return limpiarTexto(correo)
-        .toLowerCase();
+async function obtenerEgresados() {
+    return Egresado.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ nombreCompleto: 1 })
+        .lean();
 }
 
-
-/*
-    CONSULTAR TODOS LOS EGRESADOS
-*/
-
-function obtenerEgresados() {
-    return egresados;
+async function buscarEgresadoPorId(id) {
+    return Egresado.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
 }
 
-
-/*
-    BUSCAR UN EGRESADO POR ID
-*/
-
-function buscarEgresadoPorId(id) {
-    return (
-        egresados.find(
-            (egresado) =>
-                egresado.id === id
-        ) || null
-    );
-}
-
-
-/*
-    VALIDAR IDENTIFICACIÓN DUPLICADA
-*/
-
-function existeIdentificacion(
+async function existeIdentificacion(
     identificacion,
     idExcluir = null
 ) {
-    const identificacionNormalizada =
-        limpiarTexto(identificacion)
-            .toLowerCase();
+    const filtro = {
+        identificacion:
+            limpiarTexto(identificacion)
+    };
 
-    return egresados.some(
-        (egresado) => {
-            const mismaIdentificacion =
-                limpiarTexto(
-                    egresado.identificacion
-                ).toLowerCase() ===
-                identificacionNormalizada;
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-            const diferenteId =
-                egresado.id !== idExcluir;
-
-            return (
-                mismaIdentificacion &&
-                diferenteId
-            );
-        }
+    return Boolean(
+        await Egresado.exists(filtro)
     );
 }
 
-
-/*
-    VALIDAR CORREO DUPLICADO
-*/
-
-function existeCorreo(
+async function existeCorreo(
     correo,
     idExcluir = null
 ) {
-    const correoNormalizado =
-        normalizarCorreo(correo);
+    const filtro = {
+        correo: normalizarCorreo(correo)
+    };
 
-    return egresados.some(
-        (egresado) => {
-            const mismoCorreo =
-                normalizarCorreo(
-                    egresado.correo
-                ) === correoNormalizado;
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
 
-            const diferenteId =
-                egresado.id !== idExcluir;
-
-            return (
-                mismoCorreo &&
-                diferenteId
-            );
-        }
+    return Boolean(
+        await Egresado.exists(filtro)
     );
 }
 
+function traducirErrorDuplicado(error) {
+    if (error && error.code === 11000) {
+        const campo = Object.keys(
+            error.keyPattern ||
+            error.keyValue ||
+            {}
+        )[0];
 
-/*
-    CREAR UN EGRESADO
-*/
+        if (campo === "identificacion") {
+            throw new Error(
+                "Ya existe un egresado con esa identificación"
+            );
+        }
 
-function crearEgresado(
-    datosEgresado
-) {
+        if (campo === "correo") {
+            throw new Error(
+                "Ya existe un egresado con ese correo"
+            );
+        }
+
+        if (campo === "id") {
+            throw new Error(
+                "Ya existe un egresado con ese identificador"
+            );
+        }
+    }
+
+    throw error;
+}
+
+async function crearEgresado(datosEgresado) {
     if (
-        existeIdentificacion(
+        await existeIdentificacion(
             datosEgresado.identificacion
         )
     ) {
@@ -130,7 +118,7 @@ function crearEgresado(
     }
 
     if (
-        existeCorreo(
+        await existeCorreo(
             datosEgresado.correo
         )
     ) {
@@ -139,88 +127,77 @@ function crearEgresado(
         );
     }
 
-    const nuevoEgresado = {
-        id: generarId("egr"),
+    try {
+        const nuevoEgresado =
+            await Egresado.create({
+                id: generarId("egr"),
+                identificacion:
+                    limpiarTexto(
+                        datosEgresado.identificacion
+                    ),
+                nombreCompleto:
+                    limpiarTexto(
+                        datosEgresado.nombreCompleto
+                    ),
+                correo:
+                    normalizarCorreo(
+                        datosEgresado.correo
+                    ),
+                telefono:
+                    limpiarTexto(
+                        datosEgresado.telefono
+                    ),
+                fechaRegistro:
+                    limpiarTexto(
+                        datosEgresado.fechaRegistro
+                    ),
+                lugarTrabajo:
+                    limpiarTexto(
+                        datosEgresado.lugarTrabajo
+                    ),
+                estado:
+                    limpiarTexto(
+                        datosEgresado.estado
+                    ),
+                puestoActual:
+                    limpiarTexto(
+                        datosEgresado.puestoActual
+                    ),
+                areaProfesional:
+                    limpiarTexto(
+                        datosEgresado.areaProfesional
+                    ),
+                linkedin:
+                    limpiarTexto(
+                        datosEgresado.linkedin
+                    ),
+                portafolio:
+                    limpiarTexto(
+                        datosEgresado.portafolio
+                    )
+            });
 
-        identificacion:
-            limpiarTexto(
-                datosEgresado.identificacion
-            ),
-
-        nombreCompleto:
-            limpiarTexto(
-                datosEgresado.nombreCompleto
-            ),
-
-        correo:
-            normalizarCorreo(
-                datosEgresado.correo
-            ),
-
-        telefono:
-            limpiarTexto(
-                datosEgresado.telefono
-            ),
-
-        fechaRegistro:
-            limpiarTexto(
-                datosEgresado.fechaRegistro
-            ),
-
-        lugarTrabajo:
-            limpiarTexto(
-                datosEgresado.lugarTrabajo
-            ),
-
-        estado:
-            limpiarTexto(
-                datosEgresado.estado
-            ),
-
-        puestoActual:
-            limpiarTexto(
-                datosEgresado.puestoActual
-            ),
-
-        areaProfesional:
-            limpiarTexto(
-                datosEgresado.areaProfesional
-            ),
-
-        linkedin:
-            limpiarTexto(
-                datosEgresado.linkedin
-            ),
-
-        portafolio:
-            limpiarTexto(
-                datosEgresado.portafolio
-            )
-    };
-
-    egresados.push(nuevoEgresado);
-
-    return nuevoEgresado;
+        return limpiarDocumento(
+            nuevoEgresado
+        );
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-
-/*
-    ACTUALIZAR UN EGRESADO
-*/
-
-function actualizarEgresado(
+async function actualizarEgresado(
     id,
     datosEgresado
 ) {
-    const egresadoEncontrado =
-        buscarEgresadoPorId(id);
+    const egresado =
+        await Egresado.findOne({ id });
 
-    if (!egresadoEncontrado) {
+    if (!egresado) {
         return null;
     }
 
     if (
-        existeIdentificacion(
+        await existeIdentificacion(
             datosEgresado.identificacion,
             id
         )
@@ -231,7 +208,7 @@ function actualizarEgresado(
     }
 
     if (
-        existeCorreo(
+        await existeCorreo(
             datosEgresado.correo,
             id
         )
@@ -241,89 +218,78 @@ function actualizarEgresado(
         );
     }
 
-    egresadoEncontrado.identificacion =
+    egresado.identificacion =
         limpiarTexto(
             datosEgresado.identificacion
         );
 
-    egresadoEncontrado.nombreCompleto =
+    egresado.nombreCompleto =
         limpiarTexto(
             datosEgresado.nombreCompleto
         );
 
-    egresadoEncontrado.correo =
+    egresado.correo =
         normalizarCorreo(
             datosEgresado.correo
         );
 
-    egresadoEncontrado.telefono =
+    egresado.telefono =
         limpiarTexto(
             datosEgresado.telefono
         );
 
-    egresadoEncontrado.fechaRegistro =
+    egresado.fechaRegistro =
         limpiarTexto(
             datosEgresado.fechaRegistro
         );
 
-    egresadoEncontrado.lugarTrabajo =
+    egresado.lugarTrabajo =
         limpiarTexto(
             datosEgresado.lugarTrabajo
         );
 
-    egresadoEncontrado.estado =
+    egresado.estado =
         limpiarTexto(
             datosEgresado.estado
         );
 
-    egresadoEncontrado.puestoActual =
+    egresado.puestoActual =
         limpiarTexto(
             datosEgresado.puestoActual
         );
 
-    egresadoEncontrado.areaProfesional =
+    egresado.areaProfesional =
         limpiarTexto(
             datosEgresado.areaProfesional
         );
 
-    egresadoEncontrado.linkedin =
+    egresado.linkedin =
         limpiarTexto(
             datosEgresado.linkedin
         );
 
-    egresadoEncontrado.portafolio =
+    egresado.portafolio =
         limpiarTexto(
             datosEgresado.portafolio
         );
 
-    return egresadoEncontrado;
-}
+    try {
+        await egresado.save();
 
-
-/*
-    ELIMINAR UN EGRESADO
-*/
-
-function eliminarEgresado(id) {
-    const indiceEgresado =
-        egresados.findIndex(
-            (egresado) =>
-                egresado.id === id
-        );
-
-    if (indiceEgresado === -1) {
-        return null;
+        return limpiarDocumento(egresado);
+    } catch (error) {
+        traducirErrorDuplicado(error);
     }
-
-    const egresadosEliminados =
-        egresados.splice(
-            indiceEgresado,
-            1
-        );
-
-    return egresadosEliminados[0];
 }
 
+async function eliminarEgresado(id) {
+    const egresadoEliminado =
+        await Egresado.findOneAndDelete({ id });
+
+    return limpiarDocumento(
+        egresadoEliminado
+    );
+}
 
 module.exports = {
     obtenerEgresados,

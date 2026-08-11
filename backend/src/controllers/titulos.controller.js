@@ -2,36 +2,19 @@ const titulosService = require(
     "../services/titulos.service"
 );
 
-
-/*
-    UTILIDADES DE VALIDACIÓN
-*/
-
-function normalizarTextoValidacion(
-    valor
-) {
+function normalizarTextoValidacion(valor) {
     if (typeof valor !== "string") {
         return "";
     }
 
     return valor
         .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
+        .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
         .trim();
 }
 
-
-/*
-    VALIDAR TODOS LOS DATOS
-*/
-
-function validarDatosTitulo(
-    datosTitulo
-) {
+function validarDatosTitulo(datosTitulo) {
     const errores = [];
 
     validarCampoObligatorio(
@@ -75,7 +58,6 @@ function validarDatosTitulo(
     return errores;
 }
 
-
 function validarCampoObligatorio(
     valor,
     mensaje,
@@ -88,7 +70,6 @@ function validarCampoObligatorio(
         errores.push(mensaje);
     }
 }
-
 
 function validarTipoPrograma(
     tipoPrograma,
@@ -116,14 +97,11 @@ function validarTipoPrograma(
     }
 }
 
-
 function validarAnioGraduacion(
     anioGraduacion,
     errores
 ) {
-    const anio =
-        Number(anioGraduacion);
-
+    const anio = Number(anioGraduacion);
     const anioMaximo =
         new Date().getFullYear() + 1;
 
@@ -131,7 +109,6 @@ function validarAnioGraduacion(
         errores.push(
             "El año de graduación debe ser un número entero"
         );
-
         return;
     }
 
@@ -145,15 +122,9 @@ function validarAnioGraduacion(
     }
 }
 
-
-function validarEstado(
-    estado,
-    errores
-) {
+function validarEstado(estado, errores) {
     const estadoNormalizado =
-        normalizarTextoValidacion(
-            estado
-        );
+        normalizarTextoValidacion(estado);
 
     const estadosPermitidos = [
         "registrado",
@@ -172,7 +143,6 @@ function validarEstado(
     }
 }
 
-
 function validarObservaciones(
     observaciones,
     errores
@@ -187,92 +157,98 @@ function validarObservaciones(
     }
 }
 
-
-/*
-    CONSULTAR TODOS LOS TÍTULOS
-*/
-
-function obtenerTitulos(
+async function obtenerTitulos(
     solicitud,
     respuesta
 ) {
-    const titulos =
-        titulosService.obtenerTitulos();
+    try {
+        const titulos =
+            await titulosService.obtenerTitulos();
 
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Títulos obtenidos correctamente",
-        datos: titulos
-    });
-}
-
-
-/*
-    CONSULTAR UN TÍTULO POR ID
-*/
-
-function obtenerTituloPorId(
-    solicitud,
-    respuesta
-) {
-    const { id } =
-        solicitud.params;
-
-    const titulo =
-        titulosService.buscarTituloPorId(
-            id
-        );
-
-    if (!titulo) {
-        return respuesta.status(404).json({
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Títulos obtenidos correctamente",
+            datos: titulos
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "El título no fue encontrado",
-            errores: []
+                "No fue posible obtener los títulos",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Título obtenido correctamente",
-        datos: titulo
-    });
 }
 
+async function obtenerTituloPorId(
+    solicitud,
+    respuesta
+) {
+    const { id } = solicitud.params;
 
-/*
-    CONSULTAR TÍTULOS DE UN EGRESADO
-*/
+    try {
+        const titulo =
+            await titulosService.buscarTituloPorId(
+                id
+            );
 
-function obtenerTitulosPorEgresado(
+        if (!titulo) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El título no fue encontrado",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Título obtenido correctamente",
+            datos: titulo
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
+            exito: false,
+            mensaje:
+                "No fue posible consultar el título",
+            errores: [error.message]
+        });
+    }
+}
+
+async function obtenerTitulosPorEgresado(
     solicitud,
     respuesta
 ) {
     const { egresadoId } =
         solicitud.params;
 
-    const titulos =
-        titulosService
-            .buscarTitulosPorEgresado(
-                egresadoId
-            );
+    try {
+        const titulos =
+            await titulosService
+                .buscarTitulosPorEgresado(
+                    egresadoId
+                );
 
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Títulos del egresado obtenidos correctamente",
-        datos: titulos
-    });
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Títulos del egresado obtenidos correctamente",
+            datos: titulos
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
+            exito: false,
+            mensaje:
+                "No fue posible consultar los títulos del egresado",
+            errores: [error.message]
+        });
+    }
 }
 
-
-/*
-    REGISTRAR UN TÍTULO
-*/
-
-function crearTitulo(
+async function crearTitulo(
     solicitud,
     respuesta
 ) {
@@ -280,9 +256,7 @@ function crearTitulo(
         solicitud.body || {};
 
     const errores =
-        validarDatosTitulo(
-            datosTitulo
-        );
+        validarDatosTitulo(datosTitulo);
 
     if (errores.length > 0) {
         return respuesta.status(400).json({
@@ -295,7 +269,7 @@ function crearTitulo(
 
     try {
         const nuevoTitulo =
-            titulosService.crearTitulo(
+            await titulosService.crearTitulo(
                 datosTitulo
             );
 
@@ -312,11 +286,7 @@ function crearTitulo(
             );
 
         return respuesta
-            .status(
-                esDuplicado
-                    ? 409
-                    : 400
-            )
+            .status(esDuplicado ? 409 : 400)
             .json({
                 exito: false,
                 mensaje: error.message,
@@ -325,25 +295,16 @@ function crearTitulo(
     }
 }
 
-
-/*
-    ACTUALIZAR UN TÍTULO
-*/
-
-function actualizarTitulo(
+async function actualizarTitulo(
     solicitud,
     respuesta
 ) {
-    const { id } =
-        solicitud.params;
-
+    const { id } = solicitud.params;
     const datosTitulo =
         solicitud.body || {};
 
     const errores =
-        validarDatosTitulo(
-            datosTitulo
-        );
+        validarDatosTitulo(datosTitulo);
 
     if (errores.length > 0) {
         return respuesta.status(400).json({
@@ -356,20 +317,18 @@ function actualizarTitulo(
 
     try {
         const tituloActualizado =
-            titulosService.actualizarTitulo(
+            await titulosService.actualizarTitulo(
                 id,
                 datosTitulo
             );
 
         if (!tituloActualizado) {
-            return respuesta
-                .status(404)
-                .json({
-                    exito: false,
-                    mensaje:
-                        "El título no fue encontrado",
-                    errores: []
-                });
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El título no fue encontrado",
+                errores: []
+            });
         }
 
         return respuesta.status(200).json({
@@ -382,14 +341,13 @@ function actualizarTitulo(
         const esDuplicado =
             error.message.includes(
                 "otro registro"
+            ) ||
+            error.message.includes(
+                "ya tiene"
             );
 
         return respuesta
-            .status(
-                esDuplicado
-                    ? 409
-                    : 400
-            )
+            .status(esDuplicado ? 409 : 400)
             .json({
                 exito: false,
                 mensaje: error.message,
@@ -398,40 +356,42 @@ function actualizarTitulo(
     }
 }
 
-
-/*
-    ELIMINAR UN TÍTULO
-*/
-
-function eliminarTitulo(
+async function eliminarTitulo(
     solicitud,
     respuesta
 ) {
-    const { id } =
-        solicitud.params;
+    const { id } = solicitud.params;
 
-    const tituloEliminado =
-        titulosService.eliminarTitulo(
-            id
-        );
+    try {
+        const tituloEliminado =
+            await titulosService.eliminarTitulo(
+                id
+            );
 
-    if (!tituloEliminado) {
-        return respuesta.status(404).json({
+        if (!tituloEliminado) {
+            return respuesta.status(404).json({
+                exito: false,
+                mensaje:
+                    "El título no fue encontrado",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje:
+                "Título eliminado correctamente",
+            datos: tituloEliminado
+        });
+    } catch (error) {
+        return respuesta.status(500).json({
             exito: false,
             mensaje:
-                "El título no fue encontrado",
-            errores: []
+                "No fue posible eliminar el título",
+            errores: [error.message]
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje:
-            "Título eliminado correctamente",
-        datos: tituloEliminado
-    });
 }
-
 
 module.exports = {
     obtenerTitulos,
