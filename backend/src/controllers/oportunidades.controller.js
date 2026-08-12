@@ -118,11 +118,19 @@ function validarDatosOportunidad(datos) {
     return errores;
 }
 
-async function obtenerOportunidades(_solicitud, respuesta) {
+async function obtenerOportunidades(solicitud, respuesta) {
+    let oportunidades = await oportunidadesService.obtenerOportunidades();
+
+    if (solicitud.usuario?.rol === "egresado") {
+        oportunidades = oportunidades.filter(
+            (oportunidad) => normalizarTexto(oportunidad.estado) === "publicada"
+        );
+    }
+
     return respuesta.json({
         exito: true,
         mensaje: "Oportunidades consultadas correctamente",
-        datos: await oportunidadesService.obtenerOportunidades()
+        datos: oportunidades
     });
 }
 
@@ -131,7 +139,11 @@ async function obtenerOportunidadPorId(solicitud, respuesta) {
         solicitud.params.id
     );
 
-    if (!oportunidad) {
+    if (
+        !oportunidad ||
+        (solicitud.usuario?.rol === "egresado" &&
+            normalizarTexto(oportunidad.estado) !== "publicada")
+    ) {
         return respuesta.status(404).json({
             exito: false,
             mensaje: "La oportunidad no fue encontrada",

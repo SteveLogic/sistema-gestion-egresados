@@ -86,18 +86,30 @@ function validarDatosComunicado(datos) {
     return errores;
 }
 
-async function obtenerComunicados(_solicitud, respuesta) {
+async function obtenerComunicados(solicitud, respuesta) {
+    let comunicados = await comunicadosService.obtenerComunicados();
+
+    if (solicitud.usuario?.rol === "egresado") {
+        comunicados = comunicados.filter(
+            (comunicado) => normalizarTexto(comunicado.estado) === "publicado"
+        );
+    }
+
     return respuesta.json({
         exito: true,
         mensaje: "Comunicados consultados correctamente",
-        datos: await comunicadosService.obtenerComunicados()
+        datos: comunicados
     });
 }
 
 async function obtenerComunicadoPorId(solicitud, respuesta) {
     const comunicado = await comunicadosService.buscarComunicadoPorId(solicitud.params.id);
 
-    if (!comunicado) {
+    if (
+        !comunicado ||
+        (solicitud.usuario?.rol === "egresado" &&
+            normalizarTexto(comunicado.estado) !== "publicado")
+    ) {
         return respuesta.status(404).json({
             exito: false,
             mensaje: "El comunicado no fue encontrado",

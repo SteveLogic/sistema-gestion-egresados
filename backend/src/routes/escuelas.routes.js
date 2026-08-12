@@ -12,12 +12,13 @@ const { permitirRoles } = require("../middleware/roles.middleware");
 const router = express.Router();
 
 router.use(autenticarSolicitud);
-router.use(permitirRoles("registro"));
 
-router.get("/", obtenerEscuelas);
-router.get("/:id", obtenerEscuelaPorId);
-router.post("/", crearEscuela);
-router.put("/:id", actualizarEscuela);
-router.delete("/:id", eliminarEscuela);
+// Registro administra escuelas. Bienestar puede consultarlas para
+// utilizar los filtros académicos de egresados.
+router.get("/", permitirRoles("registro", "bienestar"), obtenerEscuelas);
+router.get("/:id", permitirRoles("registro", "bienestar"), obtenerEscuelaPorId);
+router.post("/", permitirRoles("registro"), crearEscuela);
+router.put("/:id", permitirRoles("registro"), actualizarEscuela);
+router.delete("/:id", permitirRoles("registro"), eliminarEscuela);
 
 module.exports = router;

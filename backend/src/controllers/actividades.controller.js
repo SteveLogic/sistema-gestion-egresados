@@ -115,10 +115,18 @@ function responderValidacion(respuesta, errores) {
 
 async function obtenerActividades(solicitud, respuesta) {
     try {
+        let actividades = await actividadesService.obtenerActividades();
+
+        if (solicitud.usuario?.rol === "egresado") {
+            actividades = actividades.filter(
+                (actividad) => texto(actividad.estado).toLowerCase() !== "borrador"
+            );
+        }
+
         return respuesta.json({
             exito: true,
             mensaje: "Actividades consultadas correctamente",
-            datos: await actividadesService.obtenerActividades()
+            datos: actividades
         });
     } catch (error) {
         return responderError(respuesta, error);
@@ -131,7 +139,11 @@ async function obtenerActividadPorId(solicitud, respuesta) {
             solicitud.params.id
         );
 
-        if (!actividad) {
+        if (
+            !actividad ||
+            (solicitud.usuario?.rol === "egresado" &&
+                texto(actividad.estado).toLowerCase() === "borrador")
+        ) {
             return respuesta.status(404).json({
                 exito: false,
                 mensaje: "La actividad no fue encontrada",

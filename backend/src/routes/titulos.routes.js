@@ -14,7 +14,8 @@ router.use(autenticarSolicitud);
 
 router.get(
     "/",
-    permitirRoles("registro"),
+    // Bienestar necesita lectura para los filtros académicos de egresados.
+    permitirRoles("registro", "bienestar"),
     titulosController.obtenerTitulos
 );
 

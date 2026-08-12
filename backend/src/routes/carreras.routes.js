@@ -12,12 +12,13 @@ const { permitirRoles } = require("../middleware/roles.middleware");
 const router = express.Router();
 
 router.use(autenticarSolicitud);
-router.use(permitirRoles("registro"));
 
-router.get("/", obtenerCarreras);
-router.get("/:id", obtenerCarreraPorId);
-router.post("/", crearCarrera);
-router.put("/:id", actualizarCarrera);
-router.delete("/:id", eliminarCarrera);
+// Registro administra carreras. Bienestar puede consultarlas para
+// utilizar los filtros académicos de egresados.
+router.get("/", permitirRoles("registro", "bienestar"), obtenerCarreras);
+router.get("/:id", permitirRoles("registro", "bienestar"), obtenerCarreraPorId);
+router.post("/", permitirRoles("registro"), crearCarrera);
+router.put("/:id", permitirRoles("registro"), actualizarCarrera);
+router.delete("/:id", permitirRoles("registro"), eliminarCarrera);
 
 module.exports = router;

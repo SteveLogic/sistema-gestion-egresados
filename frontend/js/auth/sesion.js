@@ -278,6 +278,13 @@
             "#asignar-mentor-solicitud"
         ].forEach(ocultarSelector);
 
+        document
+            .querySelectorAll('a[href*="#registrar-mentoria"]')
+            .forEach((enlace) => {
+                enlace.href = "#solicitar-mentoria";
+                enlace.textContent = "Solicitar mentoría";
+            });
+
         const aplicar = () => {
             document.querySelectorAll(
                 '[data-accion="editar"], [data-accion="asignar"], [data-accion="eliminar"]'

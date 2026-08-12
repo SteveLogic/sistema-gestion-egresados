@@ -173,6 +173,21 @@ function responderValidacion(respuesta, errores) {
     });
 }
 
+function filtrarDatosPropios(solicitud, lista) {
+    if (solicitud.usuario?.rol !== "egresado") {
+        return lista;
+    }
+
+    return lista.filter(
+        (item) => item.egresadoId === solicitud.usuario.egresadoId
+    );
+}
+
+function puedeConsultarDato(solicitud, item) {
+    return solicitud.usuario?.rol !== "egresado" ||
+        item.egresadoId === solicitud.usuario.egresadoId;
+}
+
 /*
     MENTORES
 */
@@ -297,7 +312,10 @@ async function obtenerSolicitudes(solicitud, respuesta) {
         return respuesta.json({
             exito: true,
             mensaje: "Solicitudes consultadas correctamente",
-            datos: await mentoriasService.obtenerSolicitudes()
+            datos: filtrarDatosPropios(
+                solicitud,
+                await mentoriasService.obtenerSolicitudes()
+            )
         });
     } catch (error) {
         return responderError(respuesta, error);
@@ -314,6 +332,14 @@ async function obtenerSolicitudPorId(solicitud, respuesta) {
             return respuesta.status(404).json({
                 exito: false,
                 mensaje: "La solicitud de mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        if (!puedeConsultarDato(solicitud, datos)) {
+            return respuesta.status(403).json({
+                exito: false,
+                mensaje: "Tu rol no tiene permiso para consultar esta solicitud.",
                 errores: []
             });
         }
@@ -459,7 +485,10 @@ async function obtenerMentorias(solicitud, respuesta) {
         return respuesta.json({
             exito: true,
             mensaje: "Mentorías consultadas correctamente",
-            datos: await mentoriasService.obtenerMentorias()
+            datos: filtrarDatosPropios(
+                solicitud,
+                await mentoriasService.obtenerMentorias()
+            )
         });
     } catch (error) {
         return responderError(respuesta, error);
@@ -476,6 +505,14 @@ async function obtenerMentoriaPorId(solicitud, respuesta) {
             return respuesta.status(404).json({
                 exito: false,
                 mensaje: "La mentoría no fue encontrada",
+                errores: []
+            });
+        }
+
+        if (!puedeConsultarDato(solicitud, mentoria)) {
+            return respuesta.status(403).json({
+                exito: false,
+                mensaje: "Tu rol no tiene permiso para consultar esta mentoría.",
                 errores: []
             });
         }

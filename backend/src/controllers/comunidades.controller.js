@@ -119,10 +119,18 @@ function responderValidacion(respuesta, errores) {
 
 async function obtenerComunidades(solicitud, respuesta) {
     try {
+        let comunidades = await comunidadesService.obtenerComunidades();
+
+        if (solicitud.usuario?.rol === "egresado") {
+            comunidades = comunidades.filter(
+                (comunidad) => texto(comunidad.estado).toLowerCase() === "activa"
+            );
+        }
+
         return respuesta.json({
             exito: true,
             mensaje: "Comunidades consultadas correctamente",
-            datos: await comunidadesService.obtenerComunidades()
+            datos: comunidades
         });
     } catch (error) {
         return responderError(respuesta, error);
@@ -135,7 +143,11 @@ async function obtenerComunidadPorId(solicitud, respuesta) {
             solicitud.params.id
         );
 
-        if (!comunidad) {
+        if (
+            !comunidad ||
+            (solicitud.usuario?.rol === "egresado" &&
+                texto(comunidad.estado).toLowerCase() !== "activa")
+        ) {
             return respuesta.status(404).json({
                 exito: false,
                 mensaje: "La comunidad no fue encontrada",
@@ -155,6 +167,20 @@ async function obtenerComunidadPorId(solicitud, respuesta) {
 
 async function obtenerIntegrantes(solicitud, respuesta) {
     try {
+        if (solicitud.usuario?.rol === "egresado") {
+            const comunidad = await comunidadesService.buscarComunidadPorId(
+                solicitud.params.id
+            );
+
+            if (!comunidad || texto(comunidad.estado).toLowerCase() !== "activa") {
+                return respuesta.status(404).json({
+                    exito: false,
+                    mensaje: "La comunidad no fue encontrada",
+                    errores: []
+                });
+            }
+        }
+
         const resultado = await comunidadesService.obtenerIntegrantes(
             solicitud.params.id
         );
