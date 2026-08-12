@@ -86,16 +86,16 @@ function validarDatosComunicado(datos) {
     return errores;
 }
 
-function obtenerComunicados(_solicitud, respuesta) {
+async function obtenerComunicados(_solicitud, respuesta) {
     return respuesta.json({
         exito: true,
         mensaje: "Comunicados consultados correctamente",
-        datos: comunicadosService.obtenerComunicados()
+        datos: await comunicadosService.obtenerComunicados()
     });
 }
 
-function obtenerComunicadoPorId(solicitud, respuesta) {
-    const comunicado = comunicadosService.buscarComunicadoPorId(solicitud.params.id);
+async function obtenerComunicadoPorId(solicitud, respuesta) {
+    const comunicado = await comunicadosService.buscarComunicadoPorId(solicitud.params.id);
 
     if (!comunicado) {
         return respuesta.status(404).json({
@@ -112,7 +112,7 @@ function obtenerComunicadoPorId(solicitud, respuesta) {
     });
 }
 
-function crearComunicado(solicitud, respuesta) {
+async function crearComunicado(solicitud, respuesta) {
     const errores = validarDatosComunicado(solicitud.body);
 
     if (errores.length > 0) {
@@ -124,7 +124,7 @@ function crearComunicado(solicitud, respuesta) {
     }
 
     try {
-        const comunicado = comunicadosService.crearComunicado(solicitud.body);
+        const comunicado = await comunicadosService.crearComunicado(solicitud.body);
 
         return respuesta.status(201).json({
             exito: true,
@@ -141,7 +141,7 @@ function crearComunicado(solicitud, respuesta) {
     }
 }
 
-function actualizarComunicado(solicitud, respuesta) {
+async function actualizarComunicado(solicitud, respuesta) {
     const errores = validarDatosComunicado(solicitud.body);
 
     if (errores.length > 0) {
@@ -153,7 +153,7 @@ function actualizarComunicado(solicitud, respuesta) {
     }
 
     try {
-        const comunicado = comunicadosService.actualizarComunicado(
+        const comunicado = await comunicadosService.actualizarComunicado(
             solicitud.params.id,
             solicitud.body
         );
@@ -181,8 +181,8 @@ function actualizarComunicado(solicitud, respuesta) {
     }
 }
 
-function eliminarComunicado(solicitud, respuesta) {
-    const comunicado = comunicadosService.eliminarComunicado(solicitud.params.id);
+async function eliminarComunicado(solicitud, respuesta) {
+    const comunicado = await comunicadosService.eliminarComunicado(solicitud.params.id);
 
     if (!comunicado) {
         return respuesta.status(404).json({

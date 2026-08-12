@@ -1,4 +1,4 @@
-const oportunidades = require("../data/oportunidades.data");
+const Oportunidad = require("../models/oportunidad.model");
 const { generarId } = require("../utils/generar-id");
 
 function limpiarTexto(valor) {
@@ -47,22 +47,53 @@ function obtenerEstadoCanonico(valor) {
     return mapa[normalizarTexto(valor)] || limpiarTexto(valor);
 }
 
-function buscarOportunidadPorId(id) {
-    return oportunidades.find((oportunidad) => oportunidad.id === id) || null;
+function escaparRegex(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function existeDuplicado(datos, idExcluir = "") {
-    const empresa = normalizarTexto(datos.empresa);
-    const puesto = normalizarTexto(datos.puesto);
-    const fecha = limpiarTexto(datos.fechaPublicacion);
+function patronExacto(texto) {
+    return new RegExp(`^${escaparRegex(limpiarTexto(texto))}$`, "i");
+}
 
-    return oportunidades.some(
-        (oportunidad) =>
-            oportunidad.id !== idExcluir &&
-            normalizarTexto(oportunidad.empresa) === empresa &&
-            normalizarTexto(oportunidad.puesto) === puesto &&
-            oportunidad.fechaPublicacion === fecha
-    );
+function limpiarDocumento(documento) {
+    if (!documento) return null;
+
+    const objeto = typeof documento.toObject === "function"
+        ? documento.toObject()
+        : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
+}
+
+async function obtenerOportunidades() {
+    return Oportunidad.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ id: 1 })
+        .lean();
+}
+
+async function buscarOportunidadPorId(id) {
+    return Oportunidad.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
+}
+
+async function existeDuplicado(datos, idExcluir = "") {
+    const filtro = {
+        empresa: patronExacto(datos.empresa),
+        puesto: patronExacto(datos.puesto),
+        fechaPublicacion: limpiarTexto(datos.fechaPublicacion)
+    };
+
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
+
+    return Boolean(await Oportunidad.exists(filtro));
 }
 
 function prepararDatos(datos) {
@@ -81,64 +112,47 @@ function prepararDatos(datos) {
     };
 }
 
-function obtenerOportunidades() {
-    return oportunidades.map((oportunidad) => ({ ...oportunidad }));
+function crearErrorDuplicado(mensaje) {
+    const error = new Error(mensaje);
+    error.codigo = "DUPLICADO";
+    return error;
 }
 
-function crearOportunidad(datos) {
-    if (existeDuplicado(datos)) {
-        const error = new Error(
+async function crearOportunidad(datos) {
+    if (await existeDuplicado(datos)) {
+        throw crearErrorDuplicado(
             "Ya existe una oportunidad de esa empresa y puesto con la misma fecha de publicación"
         );
-        error.codigo = "DUPLICADO";
-        throw error;
     }
 
-    const nuevaOportunidad = {
+    const oportunidad = await Oportunidad.create({
         id: generarId("opo"),
         ...prepararDatos(datos)
-    };
+    });
 
-    oportunidades.push(nuevaOportunidad);
-    return { ...nuevaOportunidad };
+    return limpiarDocumento(oportunidad);
 }
 
-function actualizarOportunidad(id, datos) {
-    const indice = oportunidades.findIndex(
-        (oportunidad) => oportunidad.id === id
-    );
+async function actualizarOportunidad(id, datos) {
+    const oportunidad = await Oportunidad.findOne({ id });
 
-    if (indice === -1) {
-        return null;
-    }
+    if (!oportunidad) return null;
 
-    if (existeDuplicado(datos, id)) {
-        const error = new Error(
+    if (await existeDuplicado(datos, id)) {
+        throw crearErrorDuplicado(
             "Ya existe otra oportunidad de esa empresa y puesto con la misma fecha de publicación"
         );
-        error.codigo = "DUPLICADO";
-        throw error;
     }
 
-    oportunidades[indice] = {
-        id,
-        ...prepararDatos(datos)
-    };
+    Object.assign(oportunidad, prepararDatos(datos));
+    await oportunidad.save();
 
-    return { ...oportunidades[indice] };
+    return limpiarDocumento(oportunidad);
 }
 
-function eliminarOportunidad(id) {
-    const indice = oportunidades.findIndex(
-        (oportunidad) => oportunidad.id === id
-    );
-
-    if (indice === -1) {
-        return null;
-    }
-
-    const [eliminada] = oportunidades.splice(indice, 1);
-    return { ...eliminada };
+async function eliminarOportunidad(id) {
+    const oportunidad = await Oportunidad.findOneAndDelete({ id });
+    return limpiarDocumento(oportunidad);
 }
 
 module.exports = {

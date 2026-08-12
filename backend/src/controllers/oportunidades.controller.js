@@ -118,16 +118,16 @@ function validarDatosOportunidad(datos) {
     return errores;
 }
 
-function obtenerOportunidades(_solicitud, respuesta) {
+async function obtenerOportunidades(_solicitud, respuesta) {
     return respuesta.json({
         exito: true,
         mensaje: "Oportunidades consultadas correctamente",
-        datos: oportunidadesService.obtenerOportunidades()
+        datos: await oportunidadesService.obtenerOportunidades()
     });
 }
 
-function obtenerOportunidadPorId(solicitud, respuesta) {
-    const oportunidad = oportunidadesService.buscarOportunidadPorId(
+async function obtenerOportunidadPorId(solicitud, respuesta) {
+    const oportunidad = await oportunidadesService.buscarOportunidadPorId(
         solicitud.params.id
     );
 
@@ -146,7 +146,7 @@ function obtenerOportunidadPorId(solicitud, respuesta) {
     });
 }
 
-function crearOportunidad(solicitud, respuesta) {
+async function crearOportunidad(solicitud, respuesta) {
     const errores = validarDatosOportunidad(solicitud.body);
 
     if (errores.length > 0) {
@@ -158,7 +158,7 @@ function crearOportunidad(solicitud, respuesta) {
     }
 
     try {
-        const oportunidad = oportunidadesService.crearOportunidad(
+        const oportunidad = await oportunidadesService.crearOportunidad(
             solicitud.body
         );
 
@@ -180,7 +180,7 @@ function crearOportunidad(solicitud, respuesta) {
     }
 }
 
-function actualizarOportunidad(solicitud, respuesta) {
+async function actualizarOportunidad(solicitud, respuesta) {
     const errores = validarDatosOportunidad(solicitud.body);
 
     if (errores.length > 0) {
@@ -192,7 +192,7 @@ function actualizarOportunidad(solicitud, respuesta) {
     }
 
     try {
-        const oportunidad = oportunidadesService.actualizarOportunidad(
+        const oportunidad = await oportunidadesService.actualizarOportunidad(
             solicitud.params.id,
             solicitud.body
         );
@@ -223,8 +223,8 @@ function actualizarOportunidad(solicitud, respuesta) {
     }
 }
 
-function eliminarOportunidad(solicitud, respuesta) {
-    const oportunidad = oportunidadesService.eliminarOportunidad(
+async function eliminarOportunidad(solicitud, respuesta) {
+    const oportunidad = await oportunidadesService.eliminarOportunidad(
         solicitud.params.id
     );
 

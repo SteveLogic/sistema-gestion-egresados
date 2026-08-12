@@ -1,4 +1,4 @@
-const comunidades = require("../data/comunidades.data");
+const Comunidad = require("../models/comunidad.model");
 const { generarId } = require("../utils/generar-id");
 
 function crearError(mensaje, estado = 400, errores = []) {
@@ -36,54 +36,66 @@ function obtenerValorCanonico(valor, opciones, nombreCampo) {
     return encontrado;
 }
 
-function copiarComunidad(comunidad) {
-    return {
-        ...comunidad,
-        integrantes: comunidad.integrantes.map((integrante) => ({
-            ...integrante
-        }))
-    };
+function escaparRegex(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function buscarComunidadInternaPorId(id) {
-    return comunidades.find((comunidad) => comunidad.id === id);
+function patronExacto(texto) {
+    return new RegExp(`^${escaparRegex(limpiarTexto(texto))}$`, "i");
 }
 
-function obtenerComunidades() {
-    return comunidades.map(copiarComunidad);
+function limpiarDocumento(documento) {
+    if (!documento) return null;
+
+    const objeto = typeof documento.toObject === "function"
+        ? documento.toObject()
+        : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
 }
 
-function buscarComunidadPorId(id) {
-    const comunidad = buscarComunidadInternaPorId(id);
-    return comunidad ? copiarComunidad(comunidad) : null;
+async function obtenerComunidades() {
+    return Comunidad.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ id: 1 })
+        .lean();
 }
 
-function obtenerIntegrantes(id) {
-    const comunidad = buscarComunidadInternaPorId(id);
+async function buscarComunidadPorId(id) {
+    return Comunidad.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
+}
 
-    if (!comunidad) {
-        return null;
-    }
+async function obtenerIntegrantes(id) {
+    const comunidad = await Comunidad.findOne({ id })
+        .select("-_id id nombre cantidadIntegrantes integrantes")
+        .lean();
+
+    if (!comunidad) return null;
 
     return {
         comunidadId: comunidad.id,
         comunidadNombre: comunidad.nombre,
         cantidadIntegrantes: comunidad.cantidadIntegrantes,
-        integrantes: comunidad.integrantes.map((integrante) => ({
-            ...integrante
-        }))
+        integrantes: comunidad.integrantes || []
     };
 }
 
-function validarDuplicado(datos, idActual = "") {
-    const duplicada = comunidades.some(
-        (comunidad) =>
-            comunidad.id !== idActual &&
-            normalizarTexto(comunidad.nombre) ===
-                normalizarTexto(datos.nombre)
-    );
+async function validarDuplicado(datos, idActual = "") {
+    const filtro = {
+        nombre: patronExacto(datos.nombre)
+    };
 
-    if (duplicada) {
+    if (idActual) {
+        filtro.id = { $ne: idActual };
+    }
+
+    if (await Comunidad.exists(filtro)) {
         throw crearError(
             "Ya existe una comunidad con el mismo nombre",
             409
@@ -149,46 +161,37 @@ function construirDatosComunidad(datos, comunidadAnterior = null) {
     };
 }
 
-function crearComunidad(datos) {
-    validarDuplicado(datos);
+async function crearComunidad(datos) {
+    await validarDuplicado(datos);
 
-    const comunidad = {
+    const comunidad = await Comunidad.create({
         id: generarId("com"),
-        ...construirDatosComunidad(datos)
-    };
+        ...construirDatosComunidad(datos),
+        integrantes: []
+    });
 
-    comunidades.push(comunidad);
-    return copiarComunidad(comunidad);
+    return limpiarDocumento(comunidad);
 }
 
-function actualizarComunidad(id, datos) {
-    const comunidad = buscarComunidadInternaPorId(id);
+async function actualizarComunidad(id, datos) {
+    const comunidad = await Comunidad.findOne({ id });
 
-    if (!comunidad) {
-        return null;
-    }
+    if (!comunidad) return null;
 
-    validarDuplicado(datos, id);
+    await validarDuplicado(datos, id);
 
     Object.assign(
         comunidad,
         construirDatosComunidad(datos, comunidad)
     );
 
-    return copiarComunidad(comunidad);
+    await comunidad.save();
+    return limpiarDocumento(comunidad);
 }
 
-function eliminarComunidad(id) {
-    const indice = comunidades.findIndex(
-        (comunidad) => comunidad.id === id
-    );
-
-    if (indice === -1) {
-        return null;
-    }
-
-    const [comunidadEliminada] = comunidades.splice(indice, 1);
-    return copiarComunidad(comunidadEliminada);
+async function eliminarComunidad(id) {
+    const comunidad = await Comunidad.findOneAndDelete({ id });
+    return limpiarDocumento(comunidad);
 }
 
 module.exports = {

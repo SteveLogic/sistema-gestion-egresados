@@ -1,4 +1,4 @@
-const comunicados = require("../data/comunicados.data");
+const Comunicado = require("../models/comunicado.model");
 const { generarId } = require("../utils/generar-id");
 
 function limpiarTexto(valor) {
@@ -36,26 +36,55 @@ function obtenerPublicoCanonico(valor) {
 }
 
 function convertirBooleano(valor) {
-    if (typeof valor === "boolean") {
-        return valor;
-    }
+    if (typeof valor === "boolean") return valor;
 
     const texto = normalizarTexto(valor);
     return ["true", "1", "si", "sí", "on"].includes(texto);
 }
 
-function buscarComunicadoPorId(id) {
-    return comunicados.find((comunicado) => comunicado.id === id) || null;
+function escaparRegex(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function existeTituloDuplicado(titulo, idExcluir = "") {
-    const tituloNormalizado = normalizarTexto(titulo);
+function patronExacto(texto) {
+    return new RegExp(`^${escaparRegex(limpiarTexto(texto))}$`, "i");
+}
 
-    return comunicados.some(
-        (comunicado) =>
-            comunicado.id !== idExcluir &&
-            normalizarTexto(comunicado.titulo) === tituloNormalizado
-    );
+function limpiarDocumento(documento) {
+    if (!documento) return null;
+
+    const objeto = typeof documento.toObject === "function"
+        ? documento.toObject()
+        : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
+}
+
+async function obtenerComunicados() {
+    return Comunicado.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ id: 1 })
+        .lean();
+}
+
+async function buscarComunicadoPorId(id) {
+    return Comunicado.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
+}
+
+async function existeTituloDuplicado(titulo, idExcluir = "") {
+    const filtro = { titulo: patronExacto(titulo) };
+
+    if (idExcluir) {
+        filtro.id = { $ne: idExcluir };
+    }
+
+    return Boolean(await Comunicado.exists(filtro));
 }
 
 function prepararDatos(datos) {
@@ -73,56 +102,65 @@ function prepararDatos(datos) {
     };
 }
 
-function obtenerComunicados() {
-    return comunicados.map((comunicado) => ({ ...comunicado }));
+function crearErrorDuplicado(mensaje) {
+    const error = new Error(mensaje);
+    error.codigo = "DUPLICADO";
+    return error;
 }
 
-function crearComunicado(datos) {
-    if (existeTituloDuplicado(datos.titulo)) {
-        const error = new Error("Ya existe un comunicado con ese título");
-        error.codigo = "DUPLICADO";
-        throw error;
+function traducirErrorDuplicado(error, mensaje) {
+    if (error && error.code === 11000) {
+        throw crearErrorDuplicado(mensaje);
     }
 
-    const nuevoComunicado = {
-        id: generarId("cmd"),
-        ...prepararDatos(datos)
-    };
-
-    comunicados.push(nuevoComunicado);
-    return { ...nuevoComunicado };
+    throw error;
 }
 
-function actualizarComunicado(id, datos) {
-    const indice = comunicados.findIndex((comunicado) => comunicado.id === id);
-
-    if (indice === -1) {
-        return null;
+async function crearComunicado(datos) {
+    if (await existeTituloDuplicado(datos.titulo)) {
+        throw crearErrorDuplicado("Ya existe un comunicado con ese título");
     }
 
-    if (existeTituloDuplicado(datos.titulo, id)) {
-        const error = new Error("Ya existe otro comunicado con ese título");
-        error.codigo = "DUPLICADO";
-        throw error;
+    try {
+        const comunicado = await Comunicado.create({
+            id: generarId("cmd"),
+            ...prepararDatos(datos)
+        });
+
+        return limpiarDocumento(comunicado);
+    } catch (error) {
+        traducirErrorDuplicado(
+            error,
+            "Ya existe un comunicado con ese título"
+        );
     }
-
-    comunicados[indice] = {
-        id,
-        ...prepararDatos(datos)
-    };
-
-    return { ...comunicados[indice] };
 }
 
-function eliminarComunicado(id) {
-    const indice = comunicados.findIndex((comunicado) => comunicado.id === id);
+async function actualizarComunicado(id, datos) {
+    const comunicado = await Comunicado.findOne({ id });
 
-    if (indice === -1) {
-        return null;
+    if (!comunicado) return null;
+
+    if (await existeTituloDuplicado(datos.titulo, id)) {
+        throw crearErrorDuplicado("Ya existe otro comunicado con ese título");
     }
 
-    const [eliminado] = comunicados.splice(indice, 1);
-    return { ...eliminado };
+    Object.assign(comunicado, prepararDatos(datos));
+
+    try {
+        await comunicado.save();
+        return limpiarDocumento(comunicado);
+    } catch (error) {
+        traducirErrorDuplicado(
+            error,
+            "Ya existe otro comunicado con ese título"
+        );
+    }
+}
+
+async function eliminarComunicado(id) {
+    const comunicado = await Comunicado.findOneAndDelete({ id });
+    return limpiarDocumento(comunicado);
 }
 
 module.exports = {

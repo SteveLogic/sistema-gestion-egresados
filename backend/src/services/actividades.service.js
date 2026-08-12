@@ -1,4 +1,4 @@
-const actividades = require("../data/actividades.data");
+const Actividad = require("../models/actividad.model");
 const { generarId } = require("../utils/generar-id");
 
 function crearError(mensaje, estado = 400, errores = []) {
@@ -36,30 +36,53 @@ function obtenerValorCanonico(valor, opciones, nombreCampo) {
     return encontrado;
 }
 
-function buscarActividadInternaPorId(id) {
-    return actividades.find((actividad) => actividad.id === id);
+function escaparRegex(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function obtenerActividades() {
-    return actividades.map((actividad) => ({ ...actividad }));
+function patronExacto(texto) {
+    return new RegExp(`^${escaparRegex(limpiarTexto(texto))}$`, "i");
 }
 
-function buscarActividadPorId(id) {
-    const actividad = buscarActividadInternaPorId(id);
-    return actividad ? { ...actividad } : null;
+function limpiarDocumento(documento) {
+    if (!documento) return null;
+
+    const objeto = typeof documento.toObject === "function"
+        ? documento.toObject()
+        : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
 }
 
-function validarDuplicado(datos, idActual = "") {
-    const duplicada = actividades.some(
-        (actividad) =>
-            actividad.id !== idActual &&
-            normalizarTexto(actividad.titulo) ===
-                normalizarTexto(datos.titulo) &&
-            actividad.fecha === datos.fecha &&
-            actividad.hora === datos.hora
-    );
+async function obtenerActividades() {
+    return Actividad.find()
+        .select("-_id -createdAt -updatedAt")
+        .sort({ id: 1 })
+        .lean();
+}
 
-    if (duplicada) {
+async function buscarActividadPorId(id) {
+    return Actividad.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
+}
+
+async function validarDuplicado(datos, idActual = "") {
+    const filtro = {
+        titulo: patronExacto(datos.titulo),
+        fecha: limpiarTexto(datos.fecha),
+        hora: limpiarTexto(datos.hora)
+    };
+
+    if (idActual) {
+        filtro.id = { $ne: idActual };
+    }
+
+    if (await Actividad.exists(filtro)) {
         throw crearError(
             "Ya existe una actividad con el mismo título, fecha y hora",
             409
@@ -109,51 +132,40 @@ function construirDatosActividad(datos, actividadAnterior = null) {
         responsable: limpiarTexto(datos.responsable),
         enlace: limpiarTexto(datos.enlace),
         fechaCreacion:
-            actividadAnterior?.fechaCreacion ||
-            new Date().toISOString()
+            actividadAnterior?.fechaCreacion || new Date().toISOString()
     };
 }
 
-function crearActividad(datos) {
-    validarDuplicado(datos);
+async function crearActividad(datos) {
+    await validarDuplicado(datos);
 
-    const actividad = {
+    const actividad = await Actividad.create({
         id: generarId("act"),
         ...construirDatosActividad(datos)
-    };
+    });
 
-    actividades.push(actividad);
-    return { ...actividad };
+    return limpiarDocumento(actividad);
 }
 
-function actualizarActividad(id, datos) {
-    const actividad = buscarActividadInternaPorId(id);
+async function actualizarActividad(id, datos) {
+    const actividad = await Actividad.findOne({ id });
 
-    if (!actividad) {
-        return null;
-    }
+    if (!actividad) return null;
 
-    validarDuplicado(datos, id);
+    await validarDuplicado(datos, id);
 
     Object.assign(
         actividad,
         construirDatosActividad(datos, actividad)
     );
 
-    return { ...actividad };
+    await actividad.save();
+    return limpiarDocumento(actividad);
 }
 
-function eliminarActividad(id) {
-    const indice = actividades.findIndex(
-        (actividad) => actividad.id === id
-    );
-
-    if (indice === -1) {
-        return null;
-    }
-
-    const [actividadEliminada] = actividades.splice(indice, 1);
-    return { ...actividadEliminada };
+async function eliminarActividad(id) {
+    const actividad = await Actividad.findOneAndDelete({ id });
+    return limpiarDocumento(actividad);
 }
 
 module.exports = {

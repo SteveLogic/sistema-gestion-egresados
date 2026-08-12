@@ -117,21 +117,21 @@ function responderValidacion(respuesta, errores) {
     });
 }
 
-function obtenerComunidades(solicitud, respuesta) {
+async function obtenerComunidades(solicitud, respuesta) {
     try {
         return respuesta.json({
             exito: true,
             mensaje: "Comunidades consultadas correctamente",
-            datos: comunidadesService.obtenerComunidades()
+            datos: await comunidadesService.obtenerComunidades()
         });
     } catch (error) {
         return responderError(respuesta, error);
     }
 }
 
-function obtenerComunidadPorId(solicitud, respuesta) {
+async function obtenerComunidadPorId(solicitud, respuesta) {
     try {
-        const comunidad = comunidadesService.buscarComunidadPorId(
+        const comunidad = await comunidadesService.buscarComunidadPorId(
             solicitud.params.id
         );
 
@@ -153,9 +153,9 @@ function obtenerComunidadPorId(solicitud, respuesta) {
     }
 }
 
-function obtenerIntegrantes(solicitud, respuesta) {
+async function obtenerIntegrantes(solicitud, respuesta) {
     try {
-        const resultado = comunidadesService.obtenerIntegrantes(
+        const resultado = await comunidadesService.obtenerIntegrantes(
             solicitud.params.id
         );
 
@@ -177,7 +177,7 @@ function obtenerIntegrantes(solicitud, respuesta) {
     }
 }
 
-function crearComunidad(solicitud, respuesta) {
+async function crearComunidad(solicitud, respuesta) {
     const errores = validarComunidad(solicitud.body);
 
     if (errores.length > 0) {
@@ -185,7 +185,7 @@ function crearComunidad(solicitud, respuesta) {
     }
 
     try {
-        const comunidad = comunidadesService.crearComunidad(
+        const comunidad = await comunidadesService.crearComunidad(
             solicitud.body
         );
 
@@ -199,7 +199,7 @@ function crearComunidad(solicitud, respuesta) {
     }
 }
 
-function actualizarComunidad(solicitud, respuesta) {
+async function actualizarComunidad(solicitud, respuesta) {
     const errores = validarComunidad(solicitud.body);
 
     if (errores.length > 0) {
@@ -207,7 +207,7 @@ function actualizarComunidad(solicitud, respuesta) {
     }
 
     try {
-        const comunidad = comunidadesService.actualizarComunidad(
+        const comunidad = await comunidadesService.actualizarComunidad(
             solicitud.params.id,
             solicitud.body
         );
@@ -230,9 +230,9 @@ function actualizarComunidad(solicitud, respuesta) {
     }
 }
 
-function eliminarComunidad(solicitud, respuesta) {
+async function eliminarComunidad(solicitud, respuesta) {
     try {
-        const comunidad = comunidadesService.eliminarComunidad(
+        const comunidad = await comunidadesService.eliminarComunidad(
             solicitud.params.id
         );
 

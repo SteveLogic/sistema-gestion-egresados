@@ -113,21 +113,21 @@ function responderValidacion(respuesta, errores) {
     });
 }
 
-function obtenerActividades(solicitud, respuesta) {
+async function obtenerActividades(solicitud, respuesta) {
     try {
         return respuesta.json({
             exito: true,
             mensaje: "Actividades consultadas correctamente",
-            datos: actividadesService.obtenerActividades()
+            datos: await actividadesService.obtenerActividades()
         });
     } catch (error) {
         return responderError(respuesta, error);
     }
 }
 
-function obtenerActividadPorId(solicitud, respuesta) {
+async function obtenerActividadPorId(solicitud, respuesta) {
     try {
-        const actividad = actividadesService.buscarActividadPorId(
+        const actividad = await actividadesService.buscarActividadPorId(
             solicitud.params.id
         );
 
@@ -149,7 +149,7 @@ function obtenerActividadPorId(solicitud, respuesta) {
     }
 }
 
-function crearActividad(solicitud, respuesta) {
+async function crearActividad(solicitud, respuesta) {
     try {
         const errores = validarActividad(solicitud.body);
 
@@ -157,7 +157,7 @@ function crearActividad(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const actividad = actividadesService.crearActividad(
+        const actividad = await actividadesService.crearActividad(
             solicitud.body
         );
 
@@ -171,7 +171,7 @@ function crearActividad(solicitud, respuesta) {
     }
 }
 
-function actualizarActividad(solicitud, respuesta) {
+async function actualizarActividad(solicitud, respuesta) {
     try {
         const errores = validarActividad(solicitud.body);
 
@@ -179,7 +179,7 @@ function actualizarActividad(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const actividad = actividadesService.actualizarActividad(
+        const actividad = await actividadesService.actualizarActividad(
             solicitud.params.id,
             solicitud.body
         );
@@ -202,9 +202,9 @@ function actualizarActividad(solicitud, respuesta) {
     }
 }
 
-function eliminarActividad(solicitud, respuesta) {
+async function eliminarActividad(solicitud, respuesta) {
     try {
-        const actividad = actividadesService.eliminarActividad(
+        const actividad = await actividadesService.eliminarActividad(
             solicitud.params.id
         );
 
