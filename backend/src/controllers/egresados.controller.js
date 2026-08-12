@@ -488,24 +488,65 @@ async function actualizarEgresado(
     respuesta
 ) {
     const { id } = solicitud.params;
-    const datosEgresado =
+    let datosEgresado =
         solicitud.body || {};
 
-    const errores =
-        validarDatosEgresado(
-            datosEgresado
-        );
-
-    if (errores.length > 0) {
-        return respuesta.status(400).json({
-            exito: false,
-            mensaje:
-                "Los datos del egresado no son válidos",
-            errores
-        });
-    }
-
     try {
+        if (solicitud.usuario?.rol === "egresado") {
+            const egresadoActual =
+                await egresadosService.buscarEgresadoPorId(
+                    id
+                );
+
+            if (!egresadoActual) {
+                return respuesta.status(404).json({
+                    exito: false,
+                    mensaje:
+                        "El egresado no fue encontrado",
+                    errores: []
+                });
+            }
+
+            datosEgresado = {
+                identificacion:
+                    egresadoActual.identificacion,
+                nombreCompleto:
+                    egresadoActual.nombreCompleto,
+                correo:
+                    datosEgresado.correo,
+                telefono:
+                    datosEgresado.telefono,
+                fechaRegistro:
+                    egresadoActual.fechaRegistro,
+                lugarTrabajo:
+                    datosEgresado.lugarTrabajo,
+                estado:
+                    egresadoActual.estado,
+                puestoActual:
+                    datosEgresado.puestoActual,
+                areaProfesional:
+                    datosEgresado.areaProfesional,
+                linkedin:
+                    datosEgresado.linkedin,
+                portafolio:
+                    datosEgresado.portafolio
+            };
+        }
+
+        const errores =
+            validarDatosEgresado(
+                datosEgresado
+            );
+
+        if (errores.length > 0) {
+            return respuesta.status(400).json({
+                exito: false,
+                mensaje:
+                    "Los datos del egresado no son válidos",
+                errores
+            });
+        }
+
         const egresadoActualizado =
             await egresadosService.actualizarEgresado(
                 id,

@@ -1,8 +1,6 @@
 /*
  * Compatibilidad entre Bootstrap 5.3.8 y la identidad visual del proyecto.
- * Este archivo se carga despues de los estilos propios para resolver
- * diferencias puntuales sin eliminar el diseño del Avance 2.
- */
+/* Estos ajustes conservan la identidad visual del sistema. */
 
 :root {
     --bs-primary: #0d6efd;
@@ -50,7 +48,7 @@ textarea {
 /* ========================================
    MIGRACION EFECTIVA A BOOTSTRAP 5
    Las clases Bootstrap conviven con las clases semanticas del proyecto.
-   Estos ajustes conservan la identidad visual del Avance 2.
+  /* Estos ajustes conservan la identidad visual del sistema. 
 ======================================== */
 
 /* Los contenedores Bootstrap respetan el ancho maximo definido por el proyecto. */
