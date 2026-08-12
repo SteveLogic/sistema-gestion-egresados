@@ -1,11 +1,11 @@
-const mentores = require("../data/mentores.data");
-const solicitudes = require("../data/solicitudes-mentoria.data");
-const mentorias = require("../data/mentorias.data");
-const egresados = require("../data/egresados.data");
+const Mentor = require("../models/mentor.model");
+const SolicitudMentoria = require(
+    "../models/solicitud-mentoria.model"
+);
+const Mentoria = require("../models/mentoria.model");
+const Egresado = require("../models/egresado.model");
 
-const {
-    generarId
-} = require("../utils/generar-id");
+const { generarId } = require("../utils/generar-id");
 
 function crearError(mensaje, estado = 400, errores = []) {
     const error = new Error(mensaje);
@@ -43,36 +43,69 @@ function obtenerValorCanonico(valor, opciones, nombreCampo) {
     return encontrado;
 }
 
-function buscarEgresadoPorId(id) {
-    return egresados.find((egresado) => egresado.id === id);
+function limpiarDocumento(documento) {
+    if (!documento) {
+        return null;
+    }
+
+    const objeto =
+        typeof documento.toObject === "function"
+            ? documento.toObject()
+            : { ...documento };
+
+    delete objeto._id;
+    delete objeto.createdAt;
+    delete objeto.updatedAt;
+
+    return objeto;
 }
 
-function buscarMentorInternoPorId(id) {
-    return mentores.find((mentor) => mentor.id === id);
+async function buscarEgresadoInternoPorId(id) {
+    return Egresado.findOne({ id })
+        .select("-_id -createdAt -updatedAt")
+        .lean();
 }
 
-function buscarSolicitudInternaPorId(id) {
-    return solicitudes.find((solicitud) => solicitud.id === id);
+async function buscarMentorInternoPorId(id) {
+    return Mentor.findOne({ id });
 }
 
-function buscarMentoriaInternaPorId(id) {
-    return mentorias.find((mentoria) => mentoria.id === id);
+async function buscarSolicitudInternaPorId(id) {
+    return SolicitudMentoria.findOne({ id });
 }
 
-function obtenerNombreMentor(mentorId) {
-    const mentor = buscarMentorInternoPorId(mentorId);
-    const egresado = mentor
-        ? buscarEgresadoPorId(mentor.egresadoId)
-        : null;
-
-    return egresado?.nombreCompleto || "Sin asignar";
+async function buscarMentoriaInternaPorId(id) {
+    return Mentoria.findOne({ id });
 }
 
-function construirMentorDetallado(mentor) {
-    const egresado = buscarEgresadoPorId(mentor.egresadoId);
+async function obtenerNombreMentor(mentorId) {
+    if (!mentorId) {
+        return "Sin asignar";
+    }
+
+    const mentor = await Mentor.findOne({ id: mentorId })
+        .select("egresadoId -_id")
+        .lean();
+
+    if (!mentor) {
+        return "Mentor no encontrado";
+    }
+
+    const egresado = await buscarEgresadoInternoPorId(
+        mentor.egresadoId
+    );
+
+    return egresado?.nombreCompleto || "Mentor no encontrado";
+}
+
+async function construirMentorDetallado(mentor) {
+    const mentorLimpio = limpiarDocumento(mentor);
+    const egresado = await buscarEgresadoInternoPorId(
+        mentorLimpio.egresadoId
+    );
 
     return {
-        ...mentor,
+        ...mentorLimpio,
         egresadoNombre:
             egresado?.nombreCompleto || "Egresado no encontrado",
         egresadoIdentificacion:
@@ -82,31 +115,40 @@ function construirMentorDetallado(mentor) {
     };
 }
 
-function construirSolicitudDetallada(solicitud) {
-    const egresado = buscarEgresadoPorId(solicitud.egresadoId);
+async function construirSolicitudDetallada(solicitud) {
+    const solicitudLimpia = limpiarDocumento(solicitud);
+    const egresado = await buscarEgresadoInternoPorId(
+        solicitudLimpia.egresadoId
+    );
 
     return {
-        ...solicitud,
+        ...solicitudLimpia,
         egresadoNombre:
             egresado?.nombreCompleto || "Egresado no encontrado",
         egresadoIdentificacion:
             egresado?.identificacion || "No disponible",
-        mentorNombre:
-            solicitud.mentorId
-                ? obtenerNombreMentor(solicitud.mentorId)
-                : "Sin asignar"
+        mentorNombre: solicitudLimpia.mentorId
+            ? await obtenerNombreMentor(solicitudLimpia.mentorId)
+            : "Sin asignar"
     };
 }
 
-function construirMentoriaDetallada(mentoria) {
-    const egresado = buscarEgresadoPorId(mentoria.egresadoId);
-    const mentor = buscarMentorInternoPorId(mentoria.mentorId);
+async function construirMentoriaDetallada(mentoria) {
+    const mentoriaLimpia = limpiarDocumento(mentoria);
+
+    const [egresado, mentor] = await Promise.all([
+        buscarEgresadoInternoPorId(mentoriaLimpia.egresadoId),
+        Mentor.findOne({ id: mentoriaLimpia.mentorId })
+            .select("-_id -createdAt -updatedAt")
+            .lean()
+    ]);
+
     const egresadoMentor = mentor
-        ? buscarEgresadoPorId(mentor.egresadoId)
+        ? await buscarEgresadoInternoPorId(mentor.egresadoId)
         : null;
 
     return {
-        ...mentoria,
+        ...mentoriaLimpia,
         egresadoNombre:
             egresado?.nombreCompleto || "Egresado no encontrado",
         egresadoIdentificacion:
@@ -118,8 +160,8 @@ function construirMentoriaDetallada(mentoria) {
     };
 }
 
-function validarEgresado(egresadoId) {
-    const egresado = buscarEgresadoPorId(egresadoId);
+async function validarEgresado(egresadoId) {
+    const egresado = await buscarEgresadoInternoPorId(egresadoId);
 
     if (!egresado) {
         throw crearError(
@@ -131,8 +173,8 @@ function validarEgresado(egresadoId) {
     return egresado;
 }
 
-function validarMentor(mentorId) {
-    const mentor = buscarMentorInternoPorId(mentorId);
+async function validarMentor(mentorId) {
+    const mentor = await buscarMentorInternoPorId(mentorId);
 
     if (!mentor) {
         throw crearError(
@@ -152,95 +194,131 @@ function validarParticipantesDistintos(egresadoId, mentor) {
     }
 }
 
-function sincronizarEstadoMentor(mentorId) {
-    const mentor = buscarMentorInternoPorId(mentorId);
+async function sincronizarEstadoMentor(mentorId) {
+    if (!mentorId) {
+        return;
+    }
+
+    const mentor = await buscarMentorInternoPorId(mentorId);
 
     if (!mentor || mentor.estado === "Inactivo") {
         return;
     }
 
-    const tieneMentoriaVigente = mentorias.some(
-        (mentoria) =>
-            mentoria.mentorId === mentorId &&
-            ["Pendiente", "Activa"].includes(mentoria.estado)
-    );
-
-    const tieneSolicitudAsignada = solicitudes.some(
-        (solicitud) =>
-            solicitud.mentorId === mentorId &&
-            solicitud.estado === "Asignada"
-    );
+    const [tieneMentoriaVigente, tieneSolicitudAsignada] =
+        await Promise.all([
+            Mentoria.exists({
+                mentorId,
+                estado: { $in: ["Pendiente", "Activa"] }
+            }),
+            SolicitudMentoria.exists({
+                mentorId,
+                estado: "Asignada"
+            })
+        ]);
 
     mentor.estado =
         tieneMentoriaVigente || tieneSolicitudAsignada
             ? "Asignado"
             : "Disponible";
+
+    await mentor.save();
 }
 
-/*
-    MENTORES
-*/
+function traducirErrorDuplicado(error) {
+    if (error?.code === 11000) {
+        const campo = Object.keys(
+            error.keyPattern || error.keyValue || {}
+        )[0];
 
-function obtenerMentores() {
-    return mentores.map(construirMentorDetallado);
+        if (campo === "egresadoId") {
+            throw crearError(
+                "La persona egresada ya está registrada como mentora",
+                409
+            );
+        }
+
+        if (campo === "id") {
+            throw crearError(
+                "Ya existe un registro con ese identificador",
+                409
+            );
+        }
+    }
+
+    throw error;
 }
 
-function buscarMentorPorId(id) {
-    const mentor = buscarMentorInternoPorId(id);
-    return mentor ? construirMentorDetallado(mentor) : null;
-}
+/* MENTORES */
 
-function crearMentor(datos) {
-    validarEgresado(datos.egresadoId);
+async function obtenerMentores() {
+    const mentores = await Mentor.find()
+        .sort({ id: 1 })
+        .lean();
 
-    const yaRegistrado = mentores.some(
-        (mentor) => mentor.egresadoId === datos.egresadoId
+    return Promise.all(
+        mentores.map(construirMentorDetallado)
     );
+}
 
-    if (yaRegistrado) {
+async function buscarMentorPorId(id) {
+    const mentor = await Mentor.findOne({ id }).lean();
+    return mentor
+        ? construirMentorDetallado(mentor)
+        : null;
+}
+
+async function crearMentor(datos) {
+    await validarEgresado(datos.egresadoId);
+
+    if (await Mentor.exists({ egresadoId: datos.egresadoId })) {
         throw crearError(
             "La persona egresada ya está registrada como mentora",
             409
         );
     }
 
-    const mentor = {
-        id: generarId("men"),
-        egresadoId: datos.egresadoId,
-        areaExperiencia: limpiarTexto(datos.areaExperiencia),
-        especialidades: limpiarTexto(datos.especialidades),
-        aniosExperiencia: Number(datos.aniosExperiencia),
-        disponibilidad: limpiarTexto(datos.disponibilidad),
-        modalidad: obtenerValorCanonico(
-            datos.modalidad,
-            ["Virtual", "Presencial", "Híbrida"],
-            "La modalidad"
-        ),
-        estado: obtenerValorCanonico(
-            datos.estado,
-            ["Disponible", "Asignado", "Inactivo"],
-            "El estado"
-        )
-    };
+    try {
+        const mentor = await Mentor.create({
+            id: generarId("men"),
+            egresadoId: datos.egresadoId,
+            areaExperiencia: limpiarTexto(datos.areaExperiencia),
+            especialidades: limpiarTexto(datos.especialidades),
+            aniosExperiencia: Number(datos.aniosExperiencia),
+            disponibilidad: limpiarTexto(datos.disponibilidad),
+            modalidad: obtenerValorCanonico(
+                datos.modalidad,
+                ["Virtual", "Presencial", "Híbrida"],
+                "La modalidad"
+            ),
+            estado: obtenerValorCanonico(
+                datos.estado,
+                ["Disponible", "Asignado", "Inactivo"],
+                "El estado"
+            )
+        });
 
-    mentores.push(mentor);
-    return construirMentorDetallado(mentor);
+        await sincronizarEstadoMentor(mentor.id);
+        const actualizado = await Mentor.findOne({ id: mentor.id });
+        return construirMentorDetallado(actualizado);
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-function actualizarMentor(id, datos) {
-    const mentor = buscarMentorInternoPorId(id);
+async function actualizarMentor(id, datos) {
+    const mentor = await buscarMentorInternoPorId(id);
 
     if (!mentor) {
         return null;
     }
 
-    validarEgresado(datos.egresadoId);
+    await validarEgresado(datos.egresadoId);
 
-    const duplicado = mentores.some(
-        (otroMentor) =>
-            otroMentor.id !== id &&
-            otroMentor.egresadoId === datos.egresadoId
-    );
+    const duplicado = await Mentor.exists({
+        egresadoId: datos.egresadoId,
+        id: { $ne: id }
+    });
 
     if (duplicado) {
         throw crearError(
@@ -249,72 +327,89 @@ function actualizarMentor(id, datos) {
         );
     }
 
-    Object.assign(mentor, {
-        egresadoId: datos.egresadoId,
-        areaExperiencia: limpiarTexto(datos.areaExperiencia),
-        especialidades: limpiarTexto(datos.especialidades),
-        aniosExperiencia: Number(datos.aniosExperiencia),
-        disponibilidad: limpiarTexto(datos.disponibilidad),
-        modalidad: obtenerValorCanonico(
-            datos.modalidad,
-            ["Virtual", "Presencial", "Híbrida"],
-            "La modalidad"
-        ),
-        estado: obtenerValorCanonico(
-            datos.estado,
-            ["Disponible", "Asignado", "Inactivo"],
-            "El estado"
-        )
-    });
+    mentor.egresadoId = datos.egresadoId;
+    mentor.areaExperiencia = limpiarTexto(datos.areaExperiencia);
+    mentor.especialidades = limpiarTexto(datos.especialidades);
+    mentor.aniosExperiencia = Number(datos.aniosExperiencia);
+    mentor.disponibilidad = limpiarTexto(datos.disponibilidad);
+    mentor.modalidad = obtenerValorCanonico(
+        datos.modalidad,
+        ["Virtual", "Presencial", "Híbrida"],
+        "La modalidad"
+    );
+    mentor.estado = obtenerValorCanonico(
+        datos.estado,
+        ["Disponible", "Asignado", "Inactivo"],
+        "El estado"
+    );
 
-    sincronizarEstadoMentor(id);
-    return construirMentorDetallado(mentor);
+    try {
+        await mentor.save();
+        await sincronizarEstadoMentor(id);
+        const actualizado = await Mentor.findOne({ id });
+        return construirMentorDetallado(actualizado);
+    } catch (error) {
+        traducirErrorDuplicado(error);
+    }
 }
 
-function eliminarMentor(id) {
-    const indice = mentores.findIndex((mentor) => mentor.id === id);
+async function eliminarMentor(id) {
+    const mentor = await buscarMentorInternoPorId(id);
 
-    if (indice === -1) {
+    if (!mentor) {
         return null;
     }
 
-    const estaRelacionado =
-        mentorias.some((mentoria) => mentoria.mentorId === id) ||
-        solicitudes.some((solicitud) => solicitud.mentorId === id);
+    const [tieneMentorias, tieneSolicitudes] = await Promise.all([
+        Mentoria.exists({ mentorId: id }),
+        SolicitudMentoria.exists({ mentorId: id })
+    ]);
 
-    if (estaRelacionado) {
+    if (tieneMentorias || tieneSolicitudes) {
         throw crearError(
             "No se puede eliminar una persona mentora vinculada a solicitudes o mentorías",
             409
         );
     }
 
-    const [mentorEliminado] = mentores.splice(indice, 1);
-    return construirMentorDetallado(mentorEliminado);
+    const detalle = await construirMentorDetallado(mentor);
+    await Mentor.deleteOne({ id });
+    return detalle;
 }
 
-/*
-    SOLICITUDES
-*/
+/* SOLICITUDES */
 
-function obtenerSolicitudes() {
-    return solicitudes.map(construirSolicitudDetallada);
+async function obtenerSolicitudes() {
+    const solicitudes = await SolicitudMentoria.find()
+        .sort({ fechaSolicitud: -1, id: 1 })
+        .lean();
+
+    return Promise.all(
+        solicitudes.map(construirSolicitudDetallada)
+    );
 }
 
-function buscarSolicitudPorId(id) {
-    const solicitud = buscarSolicitudInternaPorId(id);
-    return solicitud ? construirSolicitudDetallada(solicitud) : null;
+async function buscarSolicitudPorId(id) {
+    const solicitud = await SolicitudMentoria.findOne({ id }).lean();
+    return solicitud
+        ? construirSolicitudDetallada(solicitud)
+        : null;
 }
 
-function crearSolicitud(datos) {
-    validarEgresado(datos.egresadoId);
+async function crearSolicitud(datos) {
+    await validarEgresado(datos.egresadoId);
 
-    const duplicada = solicitudes.some(
+    const vigentes = await SolicitudMentoria.find({
+        egresadoId: datos.egresadoId,
+        estado: { $in: ["Pendiente", "Asignada"] }
+    })
+        .select("oportunidad -_id")
+        .lean();
+
+    const duplicada = vigentes.some(
         (solicitud) =>
-            solicitud.egresadoId === datos.egresadoId &&
             normalizarTexto(solicitud.oportunidad) ===
-                normalizarTexto(datos.oportunidad) &&
-            ["Pendiente", "Asignada"].includes(solicitud.estado)
+            normalizarTexto(datos.oportunidad)
     );
 
     if (duplicada) {
@@ -324,7 +419,14 @@ function crearSolicitud(datos) {
         );
     }
 
-    const solicitud = {
+    const mentorId = limpiarTexto(datos.mentorId);
+
+    if (mentorId) {
+        const mentor = await validarMentor(mentorId);
+        validarParticipantesDistintos(datos.egresadoId, mentor);
+    }
+
+    const solicitud = await SolicitudMentoria.create({
         id: generarId("sol"),
         egresadoId: datos.egresadoId,
         objetivo: limpiarTexto(datos.objetivo),
@@ -338,33 +440,26 @@ function crearSolicitud(datos) {
             ["Pendiente", "Asignada", "Rechazada", "Cancelada"],
             "El estado"
         ),
-        mentorId: limpiarTexto(datos.mentorId),
+        mentorId,
         observacionesAsignacion:
             limpiarTexto(datos.observacionesAsignacion)
-    };
+    });
 
-    if (solicitud.mentorId) {
-        const mentor = validarMentor(solicitud.mentorId);
-        validarParticipantesDistintos(solicitud.egresadoId, mentor);
-    }
-
-    solicitudes.push(solicitud);
-
-    if (solicitud.mentorId) {
-        sincronizarEstadoMentor(solicitud.mentorId);
+    if (mentorId) {
+        await sincronizarEstadoMentor(mentorId);
     }
 
     return construirSolicitudDetallada(solicitud);
 }
 
-function actualizarSolicitud(id, datos) {
-    const solicitud = buscarSolicitudInternaPorId(id);
+async function actualizarSolicitud(id, datos) {
+    const solicitud = await buscarSolicitudInternaPorId(id);
 
     if (!solicitud) {
         return null;
     }
 
-    validarEgresado(datos.egresadoId);
+    await validarEgresado(datos.egresadoId);
 
     const estado = obtenerValorCanonico(
         datos.estado,
@@ -386,35 +481,35 @@ function actualizarSolicitud(id, datos) {
     }
 
     if (mentorId) {
-        const mentor = validarMentor(mentorId);
+        const mentor = await validarMentor(mentorId);
         validarParticipantesDistintos(datos.egresadoId, mentor);
     }
 
-    Object.assign(solicitud, {
-        egresadoId: datos.egresadoId,
-        objetivo: limpiarTexto(datos.objetivo),
-        oportunidad: limpiarTexto(datos.oportunidad),
-        comentarios: limpiarTexto(datos.comentarios),
-        fechaSolicitud: limpiarTexto(datos.fechaSolicitud),
-        estado,
-        mentorId,
-        observacionesAsignacion:
-            limpiarTexto(datos.observacionesAsignacion)
-    });
+    solicitud.egresadoId = datos.egresadoId;
+    solicitud.objetivo = limpiarTexto(datos.objetivo);
+    solicitud.oportunidad = limpiarTexto(datos.oportunidad);
+    solicitud.comentarios = limpiarTexto(datos.comentarios);
+    solicitud.fechaSolicitud = limpiarTexto(datos.fechaSolicitud);
+    solicitud.estado = estado;
+    solicitud.mentorId = mentorId;
+    solicitud.observacionesAsignacion =
+        limpiarTexto(datos.observacionesAsignacion);
+
+    await solicitud.save();
 
     if (mentorAnteriorId) {
-        sincronizarEstadoMentor(mentorAnteriorId);
+        await sincronizarEstadoMentor(mentorAnteriorId);
     }
 
     if (mentorId) {
-        sincronizarEstadoMentor(mentorId);
+        await sincronizarEstadoMentor(mentorId);
     }
 
     return construirSolicitudDetallada(solicitud);
 }
 
-function asignarMentorASolicitud(id, datos) {
-    const solicitud = buscarSolicitudInternaPorId(id);
+async function asignarMentorASolicitud(id, datos) {
+    const solicitud = await buscarSolicitudInternaPorId(id);
 
     if (!solicitud) {
         return null;
@@ -427,7 +522,7 @@ function asignarMentorASolicitud(id, datos) {
         );
     }
 
-    const mentor = validarMentor(datos.mentorId);
+    const mentor = await validarMentor(datos.mentorId);
 
     if (mentor.estado === "Inactivo") {
         throw crearError(
@@ -445,59 +540,64 @@ function asignarMentorASolicitud(id, datos) {
     solicitud.observacionesAsignacion =
         limpiarTexto(datos.observacionesAsignacion);
 
+    await solicitud.save();
+
     if (mentorAnteriorId && mentorAnteriorId !== mentor.id) {
-        sincronizarEstadoMentor(mentorAnteriorId);
+        await sincronizarEstadoMentor(mentorAnteriorId);
     }
 
-    sincronizarEstadoMentor(mentor.id);
+    await sincronizarEstadoMentor(mentor.id);
     return construirSolicitudDetallada(solicitud);
 }
 
-function eliminarSolicitud(id) {
-    const indice = solicitudes.findIndex(
-        (solicitud) => solicitud.id === id
-    );
+async function eliminarSolicitud(id) {
+    const solicitud = await buscarSolicitudInternaPorId(id);
 
-    if (indice === -1) {
+    if (!solicitud) {
         return null;
     }
 
-    const tieneMentoria = mentorias.some(
-        (mentoria) => mentoria.solicitudId === id
-    );
-
-    if (tieneMentoria) {
+    if (await Mentoria.exists({ solicitudId: id })) {
         throw crearError(
             "No se puede eliminar una solicitud vinculada a una mentoría",
             409
         );
     }
 
-    const [solicitudEliminada] = solicitudes.splice(indice, 1);
+    const mentorId = solicitud.mentorId;
+    const detalle = await construirSolicitudDetallada(solicitud);
 
-    if (solicitudEliminada.mentorId) {
-        sincronizarEstadoMentor(solicitudEliminada.mentorId);
+    await SolicitudMentoria.deleteOne({ id });
+
+    if (mentorId) {
+        await sincronizarEstadoMentor(mentorId);
     }
 
-    return construirSolicitudDetallada(solicitudEliminada);
+    return detalle;
 }
 
-/*
-    MENTORÍAS
-*/
+/* MENTORÍAS */
 
-function obtenerMentorias() {
-    return mentorias.map(construirMentoriaDetallada);
+async function obtenerMentorias() {
+    const mentorias = await Mentoria.find()
+        .sort({ fechaInicio: -1, id: 1 })
+        .lean();
+
+    return Promise.all(
+        mentorias.map(construirMentoriaDetallada)
+    );
 }
 
-function buscarMentoriaPorId(id) {
-    const mentoria = buscarMentoriaInternaPorId(id);
-    return mentoria ? construirMentoriaDetallada(mentoria) : null;
+async function buscarMentoriaPorId(id) {
+    const mentoria = await Mentoria.findOne({ id }).lean();
+    return mentoria
+        ? construirMentoriaDetallada(mentoria)
+        : null;
 }
 
-function prepararDatosMentoria(datos) {
-    validarEgresado(datos.egresadoId);
-    const mentor = validarMentor(datos.mentorId);
+async function prepararDatosMentoria(datos) {
+    await validarEgresado(datos.egresadoId);
+    const mentor = await validarMentor(datos.mentorId);
     validarParticipantesDistintos(datos.egresadoId, mentor);
 
     if (mentor.estado === "Inactivo") {
@@ -510,7 +610,7 @@ function prepararDatosMentoria(datos) {
     const solicitudId = limpiarTexto(datos.solicitudId);
 
     if (solicitudId) {
-        const solicitud = buscarSolicitudInternaPorId(solicitudId);
+        const solicitud = await buscarSolicitudInternaPorId(solicitudId);
 
         if (!solicitud) {
             throw crearError(
@@ -548,102 +648,141 @@ function prepararDatosMentoria(datos) {
     };
 }
 
-function crearMentoria(datos) {
-    const datosPreparados = prepararDatosMentoria(datos);
-
-    if (datosPreparados.solicitudId) {
-        const duplicada = mentorias.some(
-            (mentoria) =>
-                mentoria.solicitudId === datosPreparados.solicitudId
-        );
-
-        if (duplicada) {
-            throw crearError(
-                "La solicitud seleccionada ya está vinculada a una mentoría",
-                409
-            );
-        }
+async function vincularSolicitudConMentoria(solicitudId, mentorId) {
+    if (!solicitudId) {
+        return;
     }
 
-    const mentoria = {
+    const solicitud = await buscarSolicitudInternaPorId(solicitudId);
+
+    if (!solicitud) {
+        return;
+    }
+
+    const mentorAnteriorId = solicitud.mentorId;
+    solicitud.estado = "Asignada";
+    solicitud.mentorId = mentorId;
+    await solicitud.save();
+
+    if (mentorAnteriorId && mentorAnteriorId !== mentorId) {
+        await sincronizarEstadoMentor(mentorAnteriorId);
+    }
+}
+
+async function liberarSolicitud(solicitudId) {
+    if (!solicitudId) {
+        return;
+    }
+
+    const solicitud = await buscarSolicitudInternaPorId(solicitudId);
+
+    if (!solicitud) {
+        return;
+    }
+
+    const mentorAnteriorId = solicitud.mentorId;
+    solicitud.estado = "Pendiente";
+    solicitud.mentorId = "";
+    solicitud.observacionesAsignacion = "";
+    await solicitud.save();
+
+    if (mentorAnteriorId) {
+        await sincronizarEstadoMentor(mentorAnteriorId);
+    }
+}
+
+async function crearMentoria(datos) {
+    const datosPreparados = await prepararDatosMentoria(datos);
+
+    if (
+        datosPreparados.solicitudId &&
+        await Mentoria.exists({
+            solicitudId: datosPreparados.solicitudId
+        })
+    ) {
+        throw crearError(
+            "La solicitud seleccionada ya está vinculada a una mentoría",
+            409
+        );
+    }
+
+    const mentoria = await Mentoria.create({
         id: generarId("ment"),
         ...datosPreparados
-    };
+    });
 
-    mentorias.push(mentoria);
+    await vincularSolicitudConMentoria(
+        mentoria.solicitudId,
+        mentoria.mentorId
+    );
 
-    if (mentoria.solicitudId) {
-        const solicitud = buscarSolicitudInternaPorId(
-            mentoria.solicitudId
-        );
-        solicitud.estado = "Asignada";
-        solicitud.mentorId = mentoria.mentorId;
-    }
-
-    sincronizarEstadoMentor(mentoria.mentorId);
+    await sincronizarEstadoMentor(mentoria.mentorId);
     return construirMentoriaDetallada(mentoria);
 }
 
-function actualizarMentoria(id, datos) {
-    const mentoria = buscarMentoriaInternaPorId(id);
+async function actualizarMentoria(id, datos) {
+    const mentoria = await buscarMentoriaInternaPorId(id);
 
     if (!mentoria) {
         return null;
     }
 
     const mentorAnteriorId = mentoria.mentorId;
-    const datosPreparados = prepararDatosMentoria(datos);
+    const solicitudAnteriorId = mentoria.solicitudId;
+    const datosPreparados = await prepararDatosMentoria(datos);
 
-    if (datosPreparados.solicitudId) {
-        const duplicada = mentorias.some(
-            (otraMentoria) =>
-                otraMentoria.id !== id &&
-                otraMentoria.solicitudId === datosPreparados.solicitudId
+    if (
+        datosPreparados.solicitudId &&
+        await Mentoria.exists({
+            solicitudId: datosPreparados.solicitudId,
+            id: { $ne: id }
+        })
+    ) {
+        throw crearError(
+            "La solicitud seleccionada ya está vinculada a otra mentoría",
+            409
         );
+    }
 
-        if (duplicada) {
-            throw crearError(
-                "La solicitud seleccionada ya está vinculada a otra mentoría",
-                409
-            );
-        }
+    if (
+        solicitudAnteriorId &&
+        solicitudAnteriorId !== datosPreparados.solicitudId
+    ) {
+        await liberarSolicitud(solicitudAnteriorId);
     }
 
     Object.assign(mentoria, datosPreparados);
+    await mentoria.save();
+
+    await vincularSolicitudConMentoria(
+        mentoria.solicitudId,
+        mentoria.mentorId
+    );
 
     if (mentorAnteriorId) {
-        sincronizarEstadoMentor(mentorAnteriorId);
+        await sincronizarEstadoMentor(mentorAnteriorId);
     }
 
-    sincronizarEstadoMentor(mentoria.mentorId);
+    await sincronizarEstadoMentor(mentoria.mentorId);
     return construirMentoriaDetallada(mentoria);
 }
 
-function eliminarMentoria(id) {
-    const indice = mentorias.findIndex(
-        (mentoria) => mentoria.id === id
-    );
+async function eliminarMentoria(id) {
+    const mentoria = await buscarMentoriaInternaPorId(id);
 
-    if (indice === -1) {
+    if (!mentoria) {
         return null;
     }
 
-    const [mentoriaEliminada] = mentorias.splice(indice, 1);
+    const detalle = await construirMentoriaDetallada(mentoria);
+    const mentorId = mentoria.mentorId;
+    const solicitudId = mentoria.solicitudId;
 
-    if (mentoriaEliminada.solicitudId) {
-        const solicitud = buscarSolicitudInternaPorId(
-            mentoriaEliminada.solicitudId
-        );
+    await Mentoria.deleteOne({ id });
+    await liberarSolicitud(solicitudId);
+    await sincronizarEstadoMentor(mentorId);
 
-        if (solicitud) {
-            solicitud.estado = "Pendiente";
-            solicitud.mentorId = "";
-            solicitud.observacionesAsignacion = "";
-        }
-    }
-
-    sincronizarEstadoMentor(mentoriaEliminada.mentorId);
-    return construirMentoriaDetallada(mentoriaEliminada);
+    return detalle;
 }
 
 module.exports = {

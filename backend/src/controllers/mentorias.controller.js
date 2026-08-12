@@ -177,21 +177,21 @@ function responderValidacion(respuesta, errores) {
     MENTORES
 */
 
-function obtenerMentores(solicitud, respuesta) {
+async function obtenerMentores(solicitud, respuesta) {
     try {
         return respuesta.json({
             exito: true,
             mensaje: "Mentores consultados correctamente",
-            datos: mentoriasService.obtenerMentores()
+            datos: await mentoriasService.obtenerMentores()
         });
     } catch (error) {
         return responderError(respuesta, error);
     }
 }
 
-function obtenerMentorPorId(solicitud, respuesta) {
+async function obtenerMentorPorId(solicitud, respuesta) {
     try {
-        const mentor = mentoriasService.buscarMentorPorId(
+        const mentor = await mentoriasService.buscarMentorPorId(
             solicitud.params.id
         );
 
@@ -213,7 +213,7 @@ function obtenerMentorPorId(solicitud, respuesta) {
     }
 }
 
-function crearMentor(solicitud, respuesta) {
+async function crearMentor(solicitud, respuesta) {
     try {
         const errores = validarMentor(solicitud.body);
 
@@ -221,7 +221,7 @@ function crearMentor(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const mentor = mentoriasService.crearMentor(solicitud.body);
+        const mentor = await mentoriasService.crearMentor(solicitud.body);
 
         return respuesta.status(201).json({
             exito: true,
@@ -233,7 +233,7 @@ function crearMentor(solicitud, respuesta) {
     }
 }
 
-function actualizarMentor(solicitud, respuesta) {
+async function actualizarMentor(solicitud, respuesta) {
     try {
         const errores = validarMentor(solicitud.body);
 
@@ -241,7 +241,7 @@ function actualizarMentor(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const mentor = mentoriasService.actualizarMentor(
+        const mentor = await mentoriasService.actualizarMentor(
             solicitud.params.id,
             solicitud.body
         );
@@ -264,9 +264,9 @@ function actualizarMentor(solicitud, respuesta) {
     }
 }
 
-function eliminarMentor(solicitud, respuesta) {
+async function eliminarMentor(solicitud, respuesta) {
     try {
-        const mentor = mentoriasService.eliminarMentor(
+        const mentor = await mentoriasService.eliminarMentor(
             solicitud.params.id
         );
 
@@ -292,21 +292,21 @@ function eliminarMentor(solicitud, respuesta) {
     SOLICITUDES
 */
 
-function obtenerSolicitudes(solicitud, respuesta) {
+async function obtenerSolicitudes(solicitud, respuesta) {
     try {
         return respuesta.json({
             exito: true,
             mensaje: "Solicitudes consultadas correctamente",
-            datos: mentoriasService.obtenerSolicitudes()
+            datos: await mentoriasService.obtenerSolicitudes()
         });
     } catch (error) {
         return responderError(respuesta, error);
     }
 }
 
-function obtenerSolicitudPorId(solicitud, respuesta) {
+async function obtenerSolicitudPorId(solicitud, respuesta) {
     try {
-        const datos = mentoriasService.buscarSolicitudPorId(
+        const datos = await mentoriasService.buscarSolicitudPorId(
             solicitud.params.id
         );
 
@@ -328,7 +328,7 @@ function obtenerSolicitudPorId(solicitud, respuesta) {
     }
 }
 
-function crearSolicitud(solicitud, respuesta) {
+async function crearSolicitud(solicitud, respuesta) {
     try {
         const errores = validarSolicitud(solicitud.body, true);
 
@@ -336,7 +336,7 @@ function crearSolicitud(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const datos = mentoriasService.crearSolicitud({
+        const datos = await mentoriasService.crearSolicitud({
             ...solicitud.body,
             estado: "Pendiente",
             mentorId: ""
@@ -352,7 +352,7 @@ function crearSolicitud(solicitud, respuesta) {
     }
 }
 
-function actualizarSolicitud(solicitud, respuesta) {
+async function actualizarSolicitud(solicitud, respuesta) {
     try {
         const errores = validarSolicitud(solicitud.body);
 
@@ -360,7 +360,7 @@ function actualizarSolicitud(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const datos = mentoriasService.actualizarSolicitud(
+        const datos = await mentoriasService.actualizarSolicitud(
             solicitud.params.id,
             solicitud.body
         );
@@ -383,7 +383,7 @@ function actualizarSolicitud(solicitud, respuesta) {
     }
 }
 
-function asignarMentor(solicitud, respuesta) {
+async function asignarMentor(solicitud, respuesta) {
     try {
         const errores = [];
 
@@ -403,7 +403,7 @@ function asignarMentor(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const datos = mentoriasService.asignarMentorASolicitud(
+        const datos = await mentoriasService.asignarMentorASolicitud(
             solicitud.params.id,
             solicitud.body
         );
@@ -426,9 +426,9 @@ function asignarMentor(solicitud, respuesta) {
     }
 }
 
-function eliminarSolicitud(solicitud, respuesta) {
+async function eliminarSolicitud(solicitud, respuesta) {
     try {
-        const datos = mentoriasService.eliminarSolicitud(
+        const datos = await mentoriasService.eliminarSolicitud(
             solicitud.params.id
         );
 
@@ -454,21 +454,21 @@ function eliminarSolicitud(solicitud, respuesta) {
     MENTORÍAS
 */
 
-function obtenerMentorias(solicitud, respuesta) {
+async function obtenerMentorias(solicitud, respuesta) {
     try {
         return respuesta.json({
             exito: true,
             mensaje: "Mentorías consultadas correctamente",
-            datos: mentoriasService.obtenerMentorias()
+            datos: await mentoriasService.obtenerMentorias()
         });
     } catch (error) {
         return responderError(respuesta, error);
     }
 }
 
-function obtenerMentoriaPorId(solicitud, respuesta) {
+async function obtenerMentoriaPorId(solicitud, respuesta) {
     try {
-        const mentoria = mentoriasService.buscarMentoriaPorId(
+        const mentoria = await mentoriasService.buscarMentoriaPorId(
             solicitud.params.id
         );
 
@@ -490,7 +490,7 @@ function obtenerMentoriaPorId(solicitud, respuesta) {
     }
 }
 
-function crearMentoria(solicitud, respuesta) {
+async function crearMentoria(solicitud, respuesta) {
     try {
         const errores = validarMentoria(solicitud.body);
 
@@ -498,7 +498,7 @@ function crearMentoria(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const mentoria = mentoriasService.crearMentoria(
+        const mentoria = await mentoriasService.crearMentoria(
             solicitud.body
         );
 
@@ -512,7 +512,7 @@ function crearMentoria(solicitud, respuesta) {
     }
 }
 
-function actualizarMentoria(solicitud, respuesta) {
+async function actualizarMentoria(solicitud, respuesta) {
     try {
         const errores = validarMentoria(solicitud.body);
 
@@ -520,7 +520,7 @@ function actualizarMentoria(solicitud, respuesta) {
             return responderValidacion(respuesta, errores);
         }
 
-        const mentoria = mentoriasService.actualizarMentoria(
+        const mentoria = await mentoriasService.actualizarMentoria(
             solicitud.params.id,
             solicitud.body
         );
@@ -543,9 +543,9 @@ function actualizarMentoria(solicitud, respuesta) {
     }
 }
 
-function eliminarMentoria(solicitud, respuesta) {
+async function eliminarMentoria(solicitud, respuesta) {
     try {
-        const mentoria = mentoriasService.eliminarMentoria(
+        const mentoria = await mentoriasService.eliminarMentoria(
             solicitud.params.id
         );
 
