@@ -249,17 +249,26 @@ async function confirmarImportacionCsv() {
             );
         }
 
+        const importados =
+            resultado.datos.importados ??
+            resultado.datos.importadas ??
+            0;
+
+        const rechazados =
+            resultado.datos.rechazados ??
+            resultado.datos.rechazadas ??
+            0;
+
         aplicarResultadosBackend(
             resultado.datos.detalles || []
         );
 
         csvImportadas.textContent =
-            resultado.datos.importadas;
+            importados;
 
         mostrarMensajeCsv(
-            `Importación terminada: ${resultado.datos.importadas} registro(s) importado(s) y ${resultado.datos.rechazadas} rechazado(s) por el backend.`
+            `Importación terminada: ${importados} registro(s) importado(s) y ${rechazados} rechazado(s) por el backend.`
         );
-
         botonConfirmarImportacion.hidden = true;
 
         if (typeof cargarEgresados === "function") {
