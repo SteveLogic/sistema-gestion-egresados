@@ -45,3 +45,73 @@ textarea {
 [hidden] {
     display: none !important;
 }
+
+
+/* ========================================
+   MIGRACION EFECTIVA A BOOTSTRAP 5
+   Las clases Bootstrap conviven con las clases semanticas del proyecto.
+   Estos ajustes conservan la identidad visual del Avance 2.
+======================================== */
+
+/* Los contenedores Bootstrap respetan el ancho maximo definido por el proyecto. */
+.contenedor.container {
+    max-width: var(--ancho-maximo);
+}
+
+/* Botones: Bootstrap aporta el componente y las clases propias conservan la paleta. */
+.boton.btn {
+    --bs-btn-font-weight: 700;
+    --bs-btn-border-radius: var(--radio-pequeno);
+    --bs-btn-padding-y: 0.65rem;
+    --bs-btn-padding-x: 1.2rem;
+}
+
+.boton-tabla.btn {
+    --bs-btn-font-size: 0.8rem;
+    --bs-btn-font-weight: 700;
+    --bs-btn-border-radius: var(--radio-pequeno);
+}
+
+/* Formularios Bootstrap adaptados al sistema visual existente. */
+.form-control,
+.form-select {
+    border-color: var(--color-borde);
+    border-radius: var(--radio-pequeno);
+    color: var(--color-texto);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-secundario);
+    box-shadow: 0 0 0 0.2rem rgba(11, 111, 232, 0.14);
+}
+
+/* Tablas: Bootstrap gestiona comportamiento responsive/hover y el CSS propio la marca. */
+.tabla.table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--color-texto);
+    --bs-table-hover-bg: #f7fafb;
+    margin-bottom: 0;
+}
+
+.tabla.table > :not(caption) > * > * {
+    box-shadow: none;
+}
+
+/* Cards y badges Bootstrap sin alterar las tarjetas/estados ya disenados. */
+.tarjeta.card {
+    color: inherit;
+}
+
+.estado.badge {
+    line-height: 1.2;
+}
+
+/* Alert se usa como base semantica para los mensajes informativos. */
+.mensaje-informativo.alert {
+    color: var(--color-texto);
+    margin-bottom: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+}

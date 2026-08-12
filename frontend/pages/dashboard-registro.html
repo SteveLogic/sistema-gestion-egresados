@@ -132,7 +132,7 @@
 
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
 
                 <!-- Bienvenida -->
                 <section class="seccion-bienvenida">
@@ -162,7 +162,7 @@
 
                     <div class="cuadricula-resumen">
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Egresados registrados
                             </p>
@@ -176,7 +176,7 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Títulos registrados
                             </p>
@@ -190,7 +190,7 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Carreras activas
                             </p>
@@ -204,7 +204,7 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Escuelas académicas
                             </p>
@@ -234,7 +234,7 @@
 
                     <div class="cuadricula">
 
-                        <article class="tarjeta">
+                        <article class="tarjeta card">
                             <h3>Registrar egresado</h3>
 
                             <p>
@@ -246,13 +246,13 @@
 
                             <a
                                 href="egresados.html#registrar-egresado"
-                                class="boton boton-primario"
+                                class="boton boton-primario btn btn-primary"
                             >
                                 Registrar egresado
                             </a>
                         </article>
 
-                        <article class="tarjeta">
+                        <article class="tarjeta card">
                             <h3>Importar archivo CSV</h3>
 
                             <p>
@@ -264,13 +264,13 @@
 
                             <a
                                 href="egresados.html#importar-csv"
-                                class="boton boton-secundario"
+                                class="boton boton-secundario btn btn-outline-primary"
                             >
                                 Importar CSV
                             </a>
                         </article>
 
-                        <article class="tarjeta">
+                        <article class="tarjeta card">
                             <h3>Registrar título</h3>
 
                             <p>
@@ -282,7 +282,7 @@
 
                             <a
                                 href="titulos.html#registrar-titulo"
-                                class="boton boton-secundario"
+                                class="boton boton-secundario btn btn-outline-primary"
                             >
                                 Registrar título
                             </a>
@@ -294,7 +294,7 @@
                 <!-- Registros recientes -->
                 <section class="seccion">
 
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
 
                         <div>
                             <h2>Egresados registrados recientemente</h2>
@@ -306,16 +306,16 @@
 
                         <a
                             href="egresados.html"
-                            class="boton boton-secundario"
+                            class="boton boton-secundario btn btn-outline-primary"
                         >
                             Ver todos
                         </a>
 
                     </div>
 
-                    <div class="contenedor-tabla">
+                    <div class="contenedor-tabla table-responsive">
 
-                        <table class="tabla">
+                        <table class="tabla table table-hover align-middle mb-0">
 
                             <caption>
                                 Últimas personas egresadas registradas
@@ -338,7 +338,7 @@
                                     <td>ana.martinez@correo.com</td>
                                     <td>15/07/2026</td>
                                     <td>
-                                        <span class="estado estado-activo">
+                                        <span class="estado estado-activo badge rounded-pill">
                                             Activo
                                         </span>
                                     </td>
@@ -350,7 +350,7 @@
                                     <td>carlos.ramirez@correo.com</td>
                                     <td>14/07/2026</td>
                                     <td>
-                                        <span class="estado estado-activo">
+                                        <span class="estado estado-activo badge rounded-pill">
                                             Activo
                                         </span>
                                     </td>
@@ -362,7 +362,7 @@
                                     <td>sofia.hernandez@correo.com</td>
                                     <td>13/07/2026</td>
                                     <td>
-                                        <span class="estado estado-pendiente">
+                                        <span class="estado estado-pendiente badge rounded-pill">
                                             Pendiente
                                         </span>
                                     </td>

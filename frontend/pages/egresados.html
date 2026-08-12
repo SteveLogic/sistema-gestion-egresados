@@ -136,7 +136,7 @@
 
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
 
                 <!-- Introducción -->
                 <section class="seccion-bienvenida">
@@ -154,26 +154,26 @@
 
                 <!-- Navegación interna -->
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de gestión de egresados"
                 >
                     <a
                         href="#consultar-egresados"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Consultar
                     </a>
 
                     <a
                         href="#registrar-egresado"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Registrar
                     </a>
 
                     <a
                         href="#importar-csv"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Importar CSV
                     </a>
@@ -205,7 +205,7 @@
                                     Nombre
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-nombre"
                                     name="nombre"
@@ -218,7 +218,7 @@
                                     Carrera
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-carrera"
                                     name="carrera"
                                 >
@@ -249,7 +249,7 @@
                                     Escuela académica
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-escuela"
                                     name="escuela"
                                 >
@@ -276,7 +276,7 @@
                                     Tipo de programa
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-programa"
                                     name="programa"
                                 >
@@ -303,7 +303,7 @@
                                     Año de graduación
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="filtro-anio"
                                     name="anio"
@@ -318,7 +318,7 @@
                                     Estado
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-estado"
                                     name="estado"
                                 >
@@ -340,18 +340,18 @@
                                 </select>
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="reset"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar filtros
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Buscar egresados
                                 </button>
@@ -367,7 +367,7 @@
                 <!-- Tabla de resultados -->
                 <section class="seccion">
 
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
 
                         <div>
                             <h2>Resultados</h2>
@@ -379,16 +379,16 @@
 
                         <a
                             href="#registrar-egresado"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Registrar egresado
                         </a>
 
                     </div>
 
-                    <div class="contenedor-tabla">
+                    <div class="contenedor-tabla table-responsive">
 
-                        <table class="tabla">
+                        <table class="tabla table table-hover align-middle mb-0">
 
                             <caption>
                                 Lista de personas egresadas
@@ -416,7 +416,7 @@
 
                     <div
                         id="mensaje-egresados"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     >
@@ -442,7 +442,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="cuadricula-detalle">
 
@@ -527,7 +527,7 @@
                                 <p>
                                     <span
                                         id="detalle-estado-egresado"
-                                        class="estado"
+                                        class="estado badge rounded-pill"
                                     >
                                         Sin seleccionar
                                     </span>
@@ -626,7 +626,7 @@
                                     Identificación *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="identificacion-egresado"
                                     name="identificacion"
@@ -646,7 +646,7 @@
                                     Nombre completo *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="nombre-completo-egresado"
                                     name="nombreCompleto"
@@ -664,7 +664,7 @@
                                     Correo electrónico *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="email"
                                     id="correo-egresado"
                                     name="correo"
@@ -680,7 +680,7 @@
                                     Teléfono *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="tel"
                                     id="telefono-egresado"
                                     name="telefono"
@@ -698,7 +698,7 @@
                                     Fecha de registro *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="date"
                                     id="fecha-registro-egresado"
                                     name="fechaRegistro"
@@ -713,7 +713,7 @@
                                     Lugar de trabajo *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="lugar-trabajo-egresado"
                                     name="lugarTrabajo"
@@ -730,7 +730,7 @@
                                     Estado *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="estado-egresado"
                                     name="estado"
                                     required
@@ -760,7 +760,7 @@
                                     Puesto actual
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="puesto-egresado"
                                     name="puestoActual"
@@ -776,7 +776,7 @@
                                     Área profesional
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="area-profesional-egresado"
                                     name="areaProfesional"
@@ -792,7 +792,7 @@
                                     Perfil de LinkedIn
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="linkedin-egresado"
                                     name="linkedin"
@@ -807,7 +807,7 @@
                                     Portafolio profesional
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="portafolio-egresado"
                                     name="portafolio"
@@ -816,12 +816,12 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="button"
                                     id="boton-limpiar-egresado"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar formulario
                                 </button>
@@ -829,7 +829,7 @@
                                 <button
                                     type="submit"
                                     id="boton-guardar-egresado"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar egresado
                                 </button>
@@ -874,7 +874,7 @@
                                     Archivo CSV *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="file"
                                     id="archivo-csv"
                                     name="archivoCsv"
@@ -883,18 +883,18 @@
                                 >
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="reset"
                                     id="boton-limpiar-csv"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Analizar archivo
                                 </button>
@@ -902,7 +902,7 @@
                                 <button
                                     type="button"
                                     id="boton-confirmar-importacion"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                     hidden
                                 >
                                     Confirmar importación
@@ -911,7 +911,7 @@
 
                         </form>
 
-                        <aside class="tarjeta instrucciones-csv">
+                        <aside class="tarjeta instrucciones-csv card">
 
                             <h3>Requisitos del archivo</h3>
 
@@ -941,7 +941,7 @@
 
                     <div
                         id="mensaje-importacion-csv"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         role="status"
                         aria-live="polite"
                         hidden
@@ -957,7 +957,7 @@
                         </div>
 
                         <div class="cuadricula-resumen">
-                            <article class="tarjeta tarjeta-resumen">
+                            <article class="tarjeta tarjeta-resumen card">
                                 <p class="etiqueta-resumen">Filas procesadas</p>
                                 <p
                                     id="csv-procesadas"
@@ -965,7 +965,7 @@
                                 >0</p>
                             </article>
 
-                            <article class="tarjeta tarjeta-resumen">
+                            <article class="tarjeta tarjeta-resumen card">
                                 <p class="etiqueta-resumen">Filas válidas</p>
                                 <p
                                     id="csv-validas"
@@ -973,7 +973,7 @@
                                 >0</p>
                             </article>
 
-                            <article class="tarjeta tarjeta-resumen">
+                            <article class="tarjeta tarjeta-resumen card">
                                 <p class="etiqueta-resumen">Filas con errores</p>
                                 <p
                                     id="csv-invalidas"
@@ -981,7 +981,7 @@
                                 >0</p>
                             </article>
 
-                            <article class="tarjeta tarjeta-resumen">
+                            <article class="tarjeta tarjeta-resumen card">
                                 <p class="etiqueta-resumen">Importadas</p>
                                 <p
                                     id="csv-importadas"
@@ -1003,8 +1003,8 @@
                             </p>
                         </div>
 
-                        <div class="contenedor-tabla">
-                            <table class="tabla">
+                        <div class="contenedor-tabla table-responsive">
+                            <table class="tabla table table-hover align-middle mb-0">
                                 <caption>
                                     Resultado de la validación del archivo CSV
                                 </caption>

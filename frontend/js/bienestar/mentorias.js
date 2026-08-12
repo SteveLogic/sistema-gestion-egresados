@@ -135,7 +135,7 @@ function renderMentorias(lista) {
             <td>${escapar(m.egresadoNombre)}</td><td>${escapar(m.mentorNombre)}</td>
             <td>${escapar(m.areaProfesional)}</td><td>${formatearFecha(m.fechaInicio)}</td>
             <td>${formatearFecha(m.fechaFinalizacion)}</td>
-            <td><span class="estado ${claseEstado(m.estado)}">${escapar(m.estado)}</span></td>
+            <td><span class="estado badge rounded-pill ${claseEstado(m.estado)}">${escapar(m.estado)}</span></td>
             <td><div class="acciones-tabla">
                 ${boton("consultar", m.id, "Consultar")}${boton("editar", m.id, "Editar")}
                 ${boton("eliminar", m.id, "Eliminar", true)}
@@ -152,7 +152,7 @@ function renderMentores() {
         fila.innerHTML = `
             <td>${escapar(m.egresadoNombre)}</td><td>${escapar(m.areaExperiencia)}</td>
             <td>${escapar(m.especialidades)}</td><td>${m.aniosExperiencia} año(s)</td>
-            <td>${escapar(m.modalidad)}</td><td><span class="estado ${claseEstado(m.estado)}">${escapar(m.estado)}</span></td>
+            <td>${escapar(m.modalidad)}</td><td><span class="estado badge rounded-pill ${claseEstado(m.estado)}">${escapar(m.estado)}</span></td>
             <td><div class="acciones-tabla">${boton("editar", m.id, "Editar")}${boton("eliminar", m.id, "Eliminar", true)}</div></td>`;
         tablaMentores.appendChild(fila);
     });
@@ -166,7 +166,7 @@ function renderSolicitudes() {
         fila.innerHTML = `
             <td>${escapar(s.egresadoNombre)}</td><td>${escapar(s.oportunidad)}</td>
             <td>${formatearFecha(s.fechaSolicitud)}</td><td>${escapar(s.mentorNombre)}</td>
-            <td><span class="estado ${claseEstado(s.estado)}">${escapar(s.estado)}</span></td>
+            <td><span class="estado badge rounded-pill ${claseEstado(s.estado)}">${escapar(s.estado)}</span></td>
             <td><div class="acciones-tabla">
                 ${boton("editar", s.id, "Editar")}${boton("asignar", s.id, "Asignar")}${boton("eliminar", s.id, "Eliminar", true)}
             </div></td>`;
@@ -175,7 +175,7 @@ function renderSolicitudes() {
 }
 
 function boton(accion, id, texto, peligro = false) {
-    return `<button type="button" class="boton-tabla${peligro ? " boton-tabla-peligro" : ""}" data-accion="${accion}" data-id="${id}">${texto}</button>`;
+    return `<button type="button" class="boton-tabla btn btn-sm ${peligro ? "boton-tabla-peligro btn-outline-danger" : "btn-outline-primary"}" data-accion="${accion}" data-id="${id}">${texto}</button>`;
 }
 
 function filaVacia(tbody, columnas, texto) {
@@ -227,7 +227,7 @@ function mostrarDetalleMentoria(m) {
     $("#detalle-modalidad-mentoria").textContent = m.modalidad;
     $("#detalle-inicio-mentoria").textContent = formatearFecha(m.fechaInicio);
     $("#detalle-finalizacion-mentoria").textContent = formatearFecha(m.fechaFinalizacion);
-    const estado = $("#detalle-estado-mentoria"); estado.textContent = m.estado; estado.className = `estado ${claseEstado(m.estado)}`;
+    const estado = $("#detalle-estado-mentoria"); estado.textContent = m.estado; estado.className = `estado badge rounded-pill ${claseEstado(m.estado)}`;
     $("#detalle-objetivo-mentoria").textContent = m.objetivo;
     $("#detalle-observaciones-mentoria").textContent = m.observaciones || "Sin observaciones";
     $("#detalle-mentoria").scrollIntoView({ behavior: "smooth", block: "start" });

@@ -279,7 +279,7 @@ function crearFilaCarrera(carrera) {
         <td>${carrera.descripcion}</td>
 
         <td>
-            <span class="estado ${claseEstado}">
+            <span class="estado badge rounded-pill ${claseEstado}">
                 ${carrera.estado}
             </span>
         </td>
@@ -288,7 +288,7 @@ function crearFilaCarrera(carrera) {
             <div class="acciones-tabla">
                 <button
                     type="button"
-                    class="boton boton-secundario"
+                    class="boton boton-secundario btn btn-outline-primary"
                     data-accion="consultar"
                     data-id="${carrera.id}"
                 >
@@ -297,7 +297,7 @@ function crearFilaCarrera(carrera) {
 
                 <button
                     type="button"
-                    class="boton boton-primario"
+                    class="boton boton-primario btn btn-primary"
                     data-accion="editar"
                     data-id="${carrera.id}"
                 >
@@ -307,7 +307,7 @@ function crearFilaCarrera(carrera) {
                 
                 <button
                     type="button"
-                    class="boton boton-peligro"
+                    class="boton boton-peligro btn btn-danger"
                     data-accion="eliminar"
                     data-id="${carrera.id}"
                     >
@@ -339,8 +339,8 @@ function mostrarDetalleCarrera(carrera) {
 
     detalleEstadoCarrera.className =
         carrera.estado === "Activa"
-            ? "estado estado-activo"
-            : "estado estado-inactivo";
+            ? "estado badge rounded-pill estado-activo"
+            : "estado badge rounded-pill estado-inactivo";
 }
 
 function prepararEdicionCarrera(carrera) {
@@ -568,7 +568,7 @@ function mostrarMensaje(mensaje, tipo) {
     mensajeCarreras.hidden = false;
 
     mensajeCarreras.className =
-        `mensaje-informativo mensaje-${tipo}`;
+        `mensaje-informativo alert alert-info mensaje-${tipo}`;
 }
 
 function ocultarMensaje() {

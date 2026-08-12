@@ -201,7 +201,7 @@ function mostrarTitulosPerfil() {
 
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
-        estado.className = `estado ${obtenerClaseEstado(titulo.estado)}`;
+        estado.className = `estado badge rounded-pill ${obtenerClaseEstado(titulo.estado)}`;
         estado.textContent = titulo.estado || "Sin estado";
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);
@@ -337,7 +337,7 @@ function mostrarEnlacePerfil(selector, url, textoVacio) {
 function actualizarEstado(selector, estado) {
     const elemento = document.querySelector(selector);
     elemento.textContent = estado || "Sin estado";
-    elemento.className = `estado ${obtenerClaseEstado(estado)}`;
+    elemento.className = `estado badge rounded-pill ${obtenerClaseEstado(estado)}`;
 }
 
 function obtenerClaseEstado(estado) {

@@ -144,7 +144,7 @@
 
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
 
                 <!-- Introducción -->
                 <section class="seccion-bienvenida">
@@ -160,7 +160,7 @@
 
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
 
                         <h2>Organización académica</h2>
 
@@ -175,27 +175,27 @@
 
                 <!-- Navegación interna -->
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de gestión de escuelas"
                 >
 
                     <a
                         href="#consultar-escuelas"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Consultar escuelas
                     </a>
 
                     <a
                         href="#registrar-escuela"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Registrar escuela
                     </a>
 
                     <a
                         href="#carreras-por-escuela"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Carreras asociadas
                     </a>
@@ -231,7 +231,7 @@
                                     Nombre de la escuela
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-nombre-escuela"
                                     name="nombreEscuela"
@@ -246,7 +246,7 @@
                                     Código
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-codigo-escuela"
                                     name="codigoEscuela"
@@ -261,7 +261,7 @@
                                     Persona responsable
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-responsable-escuela"
                                     name="responsable"
@@ -276,7 +276,7 @@
                                     Estado
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-estado-escuela"
                                     name="estado"
                                 >
@@ -297,18 +297,18 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="reset"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar filtros
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Buscar escuelas
                                 </button>
@@ -324,7 +324,7 @@
                 <!-- Tabla de escuelas -->
                 <section class="seccion">
 
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
 
                         <div>
 
@@ -339,16 +339,16 @@
 
                         <a
                             href="#registrar-escuela"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Registrar escuela
                         </a>
 
                     </div>
 
-                    <div class="contenedor-tabla">
+                    <div class="contenedor-tabla table-responsive">
 
-                        <table class="tabla">
+                        <table class="tabla table table-hover align-middle mb-0">
 
                             <caption>
                                 Escuelas académicas registradas
@@ -377,7 +377,7 @@
                     
                     <div
                         id="mensaje-escuelas"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     >
@@ -402,7 +402,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="cuadricula-detalle">
 
@@ -465,7 +465,7 @@
                                 <p>
                                     <span
                                         id="detalle-estado-escuela"
-                                        class="estado"
+                                        class="estado badge rounded-pill"
                                     >
                                         Sin seleccionar
                                     </span>
@@ -526,7 +526,7 @@
                                     Código de la escuela *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="codigo-escuela"
                                     name="codigo"
@@ -546,7 +546,7 @@
                                     Nombre de la escuela *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="nombre-escuela"
                                     name="nombre"
@@ -562,7 +562,7 @@
                                     Persona responsable *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="responsable-escuela"
                                     name="responsable"
@@ -577,7 +577,7 @@
                                 <label for="correo-escuela">
                                     Correo de contacto *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="email"
                                     id="correo-escuela"
                                     name="correo"
@@ -593,7 +593,7 @@
                                     Teléfono de contacto
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="tel"
                                     id="telefono-escuela"
                                     name="telefono"
@@ -610,7 +610,7 @@
                                     Estado *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="estado-escuela"
                                     name="estado"
                                     required
@@ -637,7 +637,7 @@
                                 <label for="descripcion-escuela">
                                     Descripción *
                                 </label>
-                                <textarea
+                                <textarea class="form-control"
                                     id="descripcion-escuela"
                                     name="descripcion"
                                     rows="5"
@@ -647,18 +647,18 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                             <button
                                 type="button"
                                 id="boton-limpiar-escuela"
-                                class="boton boton-secundario"
+                                class="boton boton-secundario btn btn-outline-primary"
                             >
                                 Limpiar formulario
                             </button>
                             <button
                                 type="submit"
                                 id="boton-guardar-escuela"
-                                class="boton boton-primario"
+                                class="boton boton-primario btn btn-primary"
                             >
                                 Guardar escuela
                             </button>
@@ -690,7 +690,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="encabezado-perfil-academico">
 
@@ -704,15 +704,15 @@
 
                             </div>
 
-                            <span class="estado estado-activo">
+                            <span class="estado estado-activo badge rounded-pill">
                                 3 carreras mostradas
                             </span>
 
                         </div>
 
-                        <div class="contenedor-tabla">
+                        <div class="contenedor-tabla table-responsive">
 
-                            <table class="tabla">
+                            <table class="tabla table table-hover align-middle mb-0">
 
                                 <caption>
                                     Carreras de la Escuela de Computación

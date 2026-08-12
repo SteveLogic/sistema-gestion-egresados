@@ -142,7 +142,7 @@
 
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
 
                 <!-- Introducción -->
                 <section class="seccion-bienvenida">
@@ -158,7 +158,7 @@
 
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
 
                         <h2>Información importante</h2>
 
@@ -173,27 +173,27 @@
 
                 <!-- Navegación interna -->
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de gestión de títulos"
                 >
 
                     <a
                         href="#consultar-titulos"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Consultar títulos
                     </a>
 
                     <a
                         href="#registrar-titulo"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Registrar título
                     </a>
 
                     <a
                         href="#titulos-egresado"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Títulos por egresado
                     </a>
@@ -229,7 +229,7 @@
                                     Persona egresada
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-egresado-titulo"
                                     name="egresado"
@@ -244,7 +244,7 @@
                                     Tipo de programa
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-tipo-programa"
                                     name="tipoPrograma"
                                 >
@@ -273,7 +273,7 @@
                                 <label for="filtro-carrera-titulo">
                                     Carrera
                                 </label>
-                                <select
+                                <select class="form-select"
                                     id="filtro-carrera-titulo"
                                     name="carrera"
                                 >
@@ -290,7 +290,7 @@
                                     Escuela académica
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-escuela-titulo"
                                     name="escuela"
                                 >
@@ -306,7 +306,7 @@
                                     Año de graduación
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="filtro-anio-titulo"
                                     name="anioGraduacion"
@@ -322,7 +322,7 @@
                                 <label for="filtro-estado-titulo">
                                     Estado
                                 </label>
-                                <select
+                                <select class="form-select"
                                     id="filtro-estado-titulo"
                                     name="estado"
                                 >
@@ -346,18 +346,18 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="reset"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar filtros
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Buscar títulos
                                 </button>
@@ -373,7 +373,7 @@
                 <!-- Tabla de títulos -->
                 <section class="seccion">
 
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
 
                         <div>
 
@@ -388,16 +388,16 @@
 
                         <a
                             href="#registrar-titulo"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Registrar título
                         </a>
 
                     </div>
 
-                    <div class="contenedor-tabla">
+                    <div class="contenedor-tabla table-responsive">
 
-                        <table class="tabla">
+                        <table class="tabla table table-hover align-middle mb-0">
 
                             <caption>
                                 Títulos académicos registrados
@@ -426,7 +426,7 @@
                     </div>
                     <div
                         id="mensaje-titulos"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     >
@@ -452,7 +452,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="cuadricula-detalle">
 
@@ -537,7 +537,7 @@
                                 <p>
                                     <span
                                         id="detalle-estado-titulo"
-                                        class="estado"
+                                        class="estado badge rounded-pill"
                                     >
                                         Sin seleccionar
                                     </span>
@@ -601,7 +601,7 @@
                                     Persona egresada *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="egresado-titulo"
                                     name="egresadoId"
                                     required
@@ -619,7 +619,7 @@
                                     Tipo de programa *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="tipo-programa-titulo"
                                     name="tipoPrograma"
                                     required
@@ -649,7 +649,7 @@
                                     Escuela académica *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="escuela-titulo"
                                     name="escuelaId"
                                     required
@@ -667,7 +667,7 @@
                                     Carrera *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="carrera-titulo"
                                     name="carreraId"
                                     required
@@ -686,7 +686,7 @@
                                     Año de graduación *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="anio-graduacion-titulo"
                                     name="anioGraduacion"
@@ -705,7 +705,7 @@
                                     Estado del título *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="estado-titulo"
                                     name="estado"
                                     required
@@ -735,7 +735,7 @@
                                     Observaciones
                                 </label>
 
-                                <textarea
+                                <textarea class="form-control"
                                     id="observaciones-titulo"
                                     name="observaciones"
                                     rows="5"
@@ -745,12 +745,12 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="button"
                                     id="boton-limpiar-titulo"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar formulario
                                 </button>
@@ -758,7 +758,7 @@
                                 <button
                                     type="submit"
                                     id="boton-guardar-titulo"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar título
                                 </button>
@@ -790,7 +790,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="encabezado-perfil-academico">
 
@@ -804,15 +804,15 @@
 
                             </div>
 
-                            <span class="estado estado-activo">
+                            <span class="estado estado-activo badge rounded-pill">
                                 2 títulos registrados
                             </span>
 
                         </div>
 
-                        <div class="contenedor-tabla">
+                        <div class="contenedor-tabla table-responsive">
 
-                            <table class="tabla">
+                            <table class="tabla table table-hover align-middle mb-0">
 
                                 <caption>
                                     Historial académico de Ana Martínez López
@@ -838,7 +838,7 @@
                                         <td>Escuela de Computación</td>
                                         <td>2021</td>
                                         <td>
-                                            <span class="estado estado-activo">
+                                            <span class="estado estado-activo badge rounded-pill">
                                                 Registrado
                                             </span>
                                         </td>
@@ -850,7 +850,7 @@
                                         <td>Escuela de Computación</td>
                                         <td>2024</td>
                                         <td>
-                                            <span class="estado estado-activo">
+                                            <span class="estado estado-activo badge rounded-pill">
                                                 Registrado
                                             </span>
                                         </td>

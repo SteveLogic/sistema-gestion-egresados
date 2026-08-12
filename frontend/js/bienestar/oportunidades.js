@@ -151,7 +151,7 @@ function renderizarTabla(oportunidades) {
 
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
-        estado.className = `estado ${obtenerClaseEstado(oportunidad.estado)}`;
+        estado.className = `estado badge rounded-pill ${obtenerClaseEstado(oportunidad.estado)}`;
         estado.textContent = oportunidad.estado;
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);
@@ -181,8 +181,8 @@ function crearBotonAccion(texto, accion, id, peligro = false) {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.className = peligro
-        ? "boton-tabla boton-tabla-peligro"
-        : "boton-tabla";
+        ? "boton-tabla boton-tabla-peligro btn btn-sm btn-outline-danger"
+        : "boton-tabla btn btn-sm btn-outline-primary";
     boton.dataset.accion = accion;
     boton.dataset.id = id;
     boton.textContent = texto;
@@ -217,7 +217,7 @@ function mostrarDetalle(oportunidad) {
     detalleEmpresa.textContent = oportunidad.empresa;
     detallePuesto.textContent = oportunidad.puesto;
     detalleEstado.textContent = oportunidad.estado;
-    detalleEstado.className = `estado ${obtenerClaseEstado(oportunidad.estado)}`;
+    detalleEstado.className = `estado badge rounded-pill ${obtenerClaseEstado(oportunidad.estado)}`;
     detalleArea.textContent = oportunidad.areaProfesional;
     detalleModalidad.textContent = oportunidad.modalidad;
     detalleUbicacion.textContent = oportunidad.ubicacion;

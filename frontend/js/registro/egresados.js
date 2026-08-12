@@ -365,7 +365,7 @@ function crearFilaEgresado(
         document.createElement("span");
 
     estado.className =
-        `estado ${obtenerClaseEstado(
+        `estado badge rounded-pill ${obtenerClaseEstado(
             egresado.estado
         )}`;
 
@@ -389,7 +389,7 @@ function crearFilaEgresado(
 
     botonConsultar.type = "button";
     botonConsultar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonConsultar.dataset.accion =
         "consultar";
@@ -405,7 +405,7 @@ function crearFilaEgresado(
 
     botonEditar.type = "button";
     botonEditar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonEditar.dataset.accion =
         "editar";
@@ -422,7 +422,7 @@ function crearFilaEgresado(
 
     botonEliminar.type = "button";
     botonEliminar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonEliminar.dataset.accion =
         "eliminar";
@@ -695,7 +695,7 @@ function mostrarDetalleEgresado(
         egresado.estado;
 
     detalleEstadoEgresado.className =
-        `estado ${obtenerClaseEstado(
+        `estado badge rounded-pill ${obtenerClaseEstado(
             egresado.estado
         )}`;
 

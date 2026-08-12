@@ -63,22 +63,22 @@
                 </div>
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
                 <section class="seccion-bienvenida">
                     <div class="encabezado-seccion">
                         <h2>Comunicados institucionales</h2>
                         <p>Consulta, registra y administra información institucional dirigida a la comunidad de egresados.</p>
                     </div>
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
                         <h2>Información del módulo</h2>
                         <p>Los datos se almacenan de forma persistente en MongoDB.</p>
                     </aside>
                 </section>
 
-                <nav class="navegacion-interna" aria-label="Secciones de comunicados">
-                    <a href="#consultar-comunicados" class="boton boton-secundario">Consultar comunicados</a>
-                    <a href="#registrar-comunicado" class="boton boton-primario">Registrar comunicado</a>
-                    <a href="#detalle-comunicado" class="boton boton-secundario">Ver detalle</a>
+                <nav class="navegacion-interna d-flex flex-wrap gap-2" aria-label="Secciones de comunicados">
+                    <a href="#consultar-comunicados" class="boton boton-secundario btn btn-outline-primary">Consultar comunicados</a>
+                    <a href="#registrar-comunicado" class="boton boton-primario btn btn-primary">Registrar comunicado</a>
+                    <a href="#detalle-comunicado" class="boton boton-secundario btn btn-outline-primary">Ver detalle</a>
                 </nav>
 
                 <section class="seccion">
@@ -87,19 +87,19 @@
                         <p>Estado general de las publicaciones institucionales.</p>
                     </div>
                     <div class="cuadricula-resumen">
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Total registrados</p>
                             <p id="resumen-total-comunicados" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Publicados</p>
                             <p id="resumen-publicados-comunicados" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Borradores</p>
                             <p id="resumen-borradores-comunicados" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Archivados</p>
                             <p id="resumen-archivados-comunicados" class="numero-resumen">0</p>
                         </article>
@@ -116,11 +116,11 @@
                         <div class="cuadricula-formulario">
                             <div class="campo">
                                 <label for="filtro-titulo-comunicado">Título o autor</label>
-                                <input type="search" id="filtro-titulo-comunicado" placeholder="Título o autor">
+                                <input class="form-control" type="search" id="filtro-titulo-comunicado" placeholder="Título o autor">
                             </div>
                             <div class="campo">
                                 <label for="filtro-publico-comunicado">Público objetivo</label>
-                                <select id="filtro-publico-comunicado">
+                                <select class="form-select" id="filtro-publico-comunicado">
                                     <option value="">Todos los públicos</option>
                                     <option value="Todos los egresados">Todos los egresados</option>
                                     <option value="Personas mentoras">Personas mentoras</option>
@@ -132,36 +132,36 @@
                             </div>
                             <div class="campo">
                                 <label for="filtro-fecha-comunicado">Fecha de publicación</label>
-                                <input type="date" id="filtro-fecha-comunicado">
+                                <input class="form-control" type="date" id="filtro-fecha-comunicado">
                             </div>
                             <div class="campo">
                                 <label for="filtro-estado-comunicado">Estado</label>
-                                <select id="filtro-estado-comunicado">
+                                <select class="form-select" id="filtro-estado-comunicado">
                                     <option value="">Todos los estados</option>
                                     <option value="Borrador">Borrador</option>
                                     <option value="Publicado">Publicado</option>
                                     <option value="Archivado">Archivado</option>
                                 </select>
                             </div>
-                            <div class="acciones-formulario">
-                                <button type="reset" class="boton boton-secundario">Limpiar filtros</button>
-                                <button type="submit" class="boton boton-primario">Buscar comunicados</button>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="reset" class="boton boton-secundario btn btn-outline-primary">Limpiar filtros</button>
+                                <button type="submit" class="boton boton-primario btn btn-primary">Buscar comunicados</button>
                             </div>
                         </div>
                     </form>
                 </section>
 
                 <section class="seccion">
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div>
                             <h2>Comunicados registrados</h2>
                             <p>Lista general de publicaciones institucionales.</p>
                         </div>
-                        <a href="#registrar-comunicado" class="boton boton-primario">Registrar comunicado</a>
+                        <a href="#registrar-comunicado" class="boton boton-primario btn btn-primary">Registrar comunicado</a>
                     </div>
 
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Comunicados institucionales registrados</caption>
                             <thead>
                                 <tr>
@@ -178,7 +178,7 @@
                         </table>
                     </div>
 
-                    <div id="mensaje-comunicados" class="mensaje-informativo" aria-live="polite" hidden></div>
+                    <div id="mensaje-comunicados" class="mensaje-informativo alert alert-info" aria-live="polite" hidden></div>
                 </section>
 
                 <section id="detalle-comunicado" class="seccion">
@@ -186,13 +186,13 @@
                         <h2>Detalle del comunicado</h2>
                         <p>Información completa de la publicación seleccionada.</p>
                     </div>
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="encabezado-perfil-academico">
                             <div>
                                 <p class="texto-secundario">Comunicado institucional</p>
                                 <h3 id="detalle-titulo-comunicado">Seleccione un comunicado</h3>
                             </div>
-                            <span id="detalle-estado-comunicado" class="estado">Sin seleccionar</span>
+                            <span id="detalle-estado-comunicado" class="estado badge rounded-pill">Sin seleccionar</span>
                         </div>
 
                         <div class="cuadricula-detalle">
@@ -219,19 +219,19 @@
                         <div class="cuadricula-formulario">
                             <div class="campo campo-completo">
                                 <label for="titulo-comunicado">Título del comunicado *</label>
-                                <input type="text" id="titulo-comunicado" minlength="5" maxlength="150" required>
+                                <input class="form-control" type="text" id="titulo-comunicado" minlength="5" maxlength="150" required>
                             </div>
                             <div class="campo campo-completo">
                                 <label for="resumen-comunicado">Resumen *</label>
-                                <textarea id="resumen-comunicado" minlength="10" maxlength="300" required></textarea>
+                                <textarea class="form-control" id="resumen-comunicado" minlength="10" maxlength="300" required></textarea>
                             </div>
                             <div class="campo campo-completo">
                                 <label for="contenido-comunicado">Contenido *</label>
-                                <textarea id="contenido-comunicado" minlength="20" maxlength="3000" required></textarea>
+                                <textarea class="form-control" id="contenido-comunicado" minlength="20" maxlength="3000" required></textarea>
                             </div>
                             <div class="campo">
                                 <label for="publico-comunicado">Público objetivo *</label>
-                                <select id="publico-comunicado" required>
+                                <select class="form-select" id="publico-comunicado" required>
                                     <option value="">Seleccione el público</option>
                                     <option value="Todos los egresados">Todos los egresados</option>
                                     <option value="Personas mentoras">Personas mentoras</option>
@@ -243,15 +243,15 @@
                             </div>
                             <div class="campo">
                                 <label for="autor-comunicado">Autor *</label>
-                                <input type="text" id="autor-comunicado" minlength="3" maxlength="100" required>
+                                <input class="form-control" type="text" id="autor-comunicado" minlength="3" maxlength="100" required>
                             </div>
                             <div class="campo">
                                 <label for="fecha-comunicado">Fecha de publicación</label>
-                                <input type="date" id="fecha-comunicado">
+                                <input class="form-control" type="date" id="fecha-comunicado">
                             </div>
                             <div class="campo">
                                 <label for="estado-comunicado">Estado *</label>
-                                <select id="estado-comunicado" required>
+                                <select class="form-select" id="estado-comunicado" required>
                                     <option value="">Seleccione un estado</option>
                                     <option value="Borrador">Borrador</option>
                                     <option value="Publicado">Publicado</option>
@@ -260,16 +260,16 @@
                             </div>
                             <fieldset class="grupo-opciones campo-completo">
                                 <legend>Opciones de publicación</legend>
-                                <label class="opcion-casilla"><input type="checkbox" id="destacado-comunicado"> Mostrar como comunicado destacado</label>
-                                <label class="opcion-casilla"><input type="checkbox" id="pagina-publica-comunicado"> Mostrar en la página pública</label>
+                                <label class="opcion-casilla"><input class="form-check-input" type="checkbox" id="destacado-comunicado"> Mostrar como comunicado destacado</label>
+                                <label class="opcion-casilla"><input class="form-check-input" type="checkbox" id="pagina-publica-comunicado"> Mostrar en la página pública</label>
                             </fieldset>
                             <div class="campo campo-completo">
                                 <label for="enlace-comunicado">Enlace de información adicional</label>
-                                <input type="url" id="enlace-comunicado" placeholder="https://ejemplo.com/informacion">
+                                <input class="form-control" type="url" id="enlace-comunicado" placeholder="https://ejemplo.com/informacion">
                             </div>
-                            <div class="acciones-formulario">
-                                <button type="button" id="boton-limpiar-comunicado" class="boton boton-secundario">Limpiar formulario</button>
-                                <button type="submit" id="boton-guardar-comunicado" class="boton boton-primario">Guardar comunicado</button>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="button" id="boton-limpiar-comunicado" class="boton boton-secundario btn btn-outline-primary">Limpiar formulario</button>
+                                <button type="submit" id="boton-guardar-comunicado" class="boton boton-primario btn btn-primary">Guardar comunicado</button>
                             </div>
                         </div>
                     </form>
@@ -281,7 +281,7 @@
                         <h2>Vista previa</h2>
                         <p>Representación básica del comunicado mientras se completa el formulario.</p>
                     </div>
-                    <article class="tarjeta comunicado-destacado">
+                    <article class="tarjeta comunicado-destacado card">
                         <p id="vista-previa-fecha-comunicado" class="texto-secundario">Sin fecha de publicación</p>
                         <h3 id="vista-previa-titulo-comunicado">Título del comunicado</h3>
                         <p id="vista-previa-resumen-comunicado">El resumen aparecerá en esta sección.</p>

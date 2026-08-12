@@ -73,7 +73,7 @@
                 </div>
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
                 <section class="seccion-bienvenida">
                     <div class="encabezado-seccion">
                         <h2>Comunidades profesionales</h2>
@@ -84,7 +84,7 @@
                         </p>
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
                         <h2>Información del módulo</h2>
                         <p>
                             Los datos se almacenan de forma persistente en MongoDB.
@@ -93,19 +93,19 @@
                 </section>
 
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de comunidades"
                 >
-                    <a href="#consultar-comunidades" class="boton boton-secundario">
+                    <a href="#consultar-comunidades" class="boton boton-secundario btn btn-outline-primary">
                         Consultar comunidades
                     </a>
-                    <a href="#registrar-comunidad" class="boton boton-primario">
+                    <a href="#registrar-comunidad" class="boton boton-primario btn btn-primary">
                         Registrar comunidad
                     </a>
-                    <a href="#detalle-comunidad" class="boton boton-secundario">
+                    <a href="#detalle-comunidad" class="boton boton-secundario btn btn-outline-primary">
                         Ver detalle
                     </a>
-                    <a href="#integrantes-comunidad" class="boton boton-secundario">
+                    <a href="#integrantes-comunidad" class="boton boton-secundario btn btn-outline-primary">
                         Ver integrantes
                     </a>
                 </nav>
@@ -117,19 +117,19 @@
                     </div>
 
                     <div class="cuadricula-resumen">
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Total registradas</p>
                             <strong id="resumen-total-comunidades">0</strong>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Comunidades activas</p>
                             <strong id="resumen-activas-comunidades">0</strong>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">En revisión</p>
                             <strong id="resumen-revision-comunidades">0</strong>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Integrantes</p>
                             <strong id="resumen-integrantes-comunidades">0</strong>
                         </article>
@@ -151,7 +151,7 @@
                         <div class="cuadricula-formulario">
                             <div class="campo">
                                 <label for="filtro-nombre-comunidad">Nombre</label>
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-nombre-comunidad"
                                     name="nombre"
@@ -161,7 +161,7 @@
 
                             <div class="campo">
                                 <label for="filtro-area-comunidad">Área profesional</label>
-                                <select id="filtro-area-comunidad" name="areaProfesional">
+                                <select class="form-select" id="filtro-area-comunidad" name="areaProfesional">
                                     <option value="">Todas las áreas</option>
                                     <option value="Desarrollo de software">Desarrollo de software</option>
                                     <option value="Ciberseguridad">Ciberseguridad</option>
@@ -174,7 +174,7 @@
 
                             <div class="campo">
                                 <label for="filtro-modalidad-comunidad">Modalidad</label>
-                                <select id="filtro-modalidad-comunidad" name="modalidad">
+                                <select class="form-select" id="filtro-modalidad-comunidad" name="modalidad">
                                     <option value="">Todas las modalidades</option>
                                     <option value="Virtual">Virtual</option>
                                     <option value="Presencial">Presencial</option>
@@ -184,7 +184,7 @@
 
                             <div class="campo">
                                 <label for="filtro-estado-comunidad">Estado</label>
-                                <select id="filtro-estado-comunidad" name="estado">
+                                <select class="form-select" id="filtro-estado-comunidad" name="estado">
                                     <option value="">Todos los estados</option>
                                     <option value="Activa">Activa</option>
                                     <option value="Inactiva">Inactiva</option>
@@ -192,11 +192,11 @@
                                 </select>
                             </div>
 
-                            <div class="acciones-formulario">
-                                <button type="reset" class="boton boton-secundario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="reset" class="boton boton-secundario btn btn-outline-primary">
                                     Limpiar filtros
                                 </button>
-                                <button type="submit" class="boton boton-primario">
+                                <button type="submit" class="boton boton-primario btn btn-primary">
                                     Buscar comunidades
                                 </button>
                             </div>
@@ -205,18 +205,18 @@
                 </section>
 
                 <section class="seccion">
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div>
                             <h2>Comunidades registradas</h2>
                             <p>Lista general de comunidades profesionales.</p>
                         </div>
-                        <a href="#registrar-comunidad" class="boton boton-primario">
+                        <a href="#registrar-comunidad" class="boton boton-primario btn btn-primary">
                             Registrar comunidad
                         </a>
                     </div>
 
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Comunidades profesionales registradas</caption>
                             <thead>
                                 <tr>
@@ -235,7 +235,7 @@
 
                     <div
                         id="mensaje-comunidades"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     ></div>
@@ -247,7 +247,7 @@
                         <p>Información completa de la comunidad seleccionada.</p>
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="encabezado-perfil-academico">
                             <div>
                                 <h3 id="detalle-nombre-comunidad">Seleccione una comunidad</h3>
@@ -258,7 +258,7 @@
                                     Sin persona responsable seleccionada
                                 </p>
                             </div>
-                            <span id="detalle-estado-comunidad" class="estado">
+                            <span id="detalle-estado-comunidad" class="estado badge rounded-pill">
                                 Sin seleccionar
                             </span>
                         </div>
@@ -327,7 +327,7 @@
                         <div class="cuadricula-formulario">
                             <div class="campo campo-completo">
                                 <label for="nombre-comunidad">Nombre de la comunidad *</label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="nombre-comunidad"
                                     name="nombre"
@@ -339,7 +339,7 @@
 
                             <div class="campo">
                                 <label for="area-comunidad">Área profesional *</label>
-                                <select id="area-comunidad" name="areaProfesional" required>
+                                <select class="form-select" id="area-comunidad" name="areaProfesional" required>
                                     <option value="">Seleccione un área</option>
                                     <option value="Desarrollo de software">Desarrollo de software</option>
                                     <option value="Ciberseguridad">Ciberseguridad</option>
@@ -352,7 +352,7 @@
 
                             <div class="campo">
                                 <label for="responsable-comunidad">Persona responsable *</label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="responsable-comunidad"
                                     name="responsable"
@@ -364,7 +364,7 @@
 
                             <div class="campo">
                                 <label for="correo-comunidad">Correo de contacto *</label>
-                                <input
+                                <input class="form-control"
                                     type="email"
                                     id="correo-comunidad"
                                     name="correo"
@@ -374,7 +374,7 @@
 
                             <div class="campo">
                                 <label for="modalidad-comunidad">Modalidad *</label>
-                                <select id="modalidad-comunidad" name="modalidad" required>
+                                <select class="form-select" id="modalidad-comunidad" name="modalidad" required>
                                     <option value="">Seleccione una modalidad</option>
                                     <option value="Virtual">Virtual</option>
                                     <option value="Presencial">Presencial</option>
@@ -384,7 +384,7 @@
 
                             <div class="campo">
                                 <label for="tipo-acceso-comunidad">Tipo de acceso *</label>
-                                <select id="tipo-acceso-comunidad" name="tipoAcceso" required>
+                                <select class="form-select" id="tipo-acceso-comunidad" name="tipoAcceso" required>
                                     <option value="">Seleccione el tipo de acceso</option>
                                     <option value="Abierto para egresados">Abierto para egresados</option>
                                     <option value="Requiere solicitud">Requiere solicitud</option>
@@ -394,7 +394,7 @@
 
                             <div class="campo">
                                 <label for="cupo-comunidad">Cantidad máxima de integrantes *</label>
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="cupo-comunidad"
                                     name="cupoMaximo"
@@ -406,7 +406,7 @@
 
                             <div class="campo">
                                 <label for="cantidad-integrantes-comunidad">Integrantes actuales *</label>
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="cantidad-integrantes-comunidad"
                                     name="cantidadIntegrantes"
@@ -418,7 +418,7 @@
 
                             <div class="campo">
                                 <label for="fecha-creacion-comunidad">Fecha de creación *</label>
-                                <input
+                                <input class="form-control"
                                     type="date"
                                     id="fecha-creacion-comunidad"
                                     name="fechaCreacion"
@@ -428,7 +428,7 @@
 
                             <div class="campo">
                                 <label for="estado-comunidad">Estado *</label>
-                                <select id="estado-comunidad" name="estado" required>
+                                <select class="form-select" id="estado-comunidad" name="estado" required>
                                     <option value="">Seleccione un estado</option>
                                     <option value="Activa">Activa</option>
                                     <option value="Inactiva">Inactiva</option>
@@ -438,7 +438,7 @@
 
                             <div class="campo campo-completo">
                                 <label for="descripcion-comunidad">Descripción *</label>
-                                <textarea
+                                <textarea class="form-control"
                                     id="descripcion-comunidad"
                                     name="descripcion"
                                     minlength="10"
@@ -449,7 +449,7 @@
 
                             <div class="campo campo-completo">
                                 <label for="enlace-comunidad">Enlace de acceso</label>
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="enlace-comunidad"
                                     name="enlace"
@@ -457,18 +457,18 @@
                                 >
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="button"
                                     id="boton-limpiar-comunidad"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar formulario
                                 </button>
                                 <button
                                     type="submit"
                                     id="boton-guardar-comunidad"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar comunidad
                                 </button>
@@ -483,7 +483,7 @@
                 </section>
 
                 <section id="integrantes-comunidad" class="seccion">
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div>
                             <h2 id="titulo-integrantes-comunidad">
                                 Integrantes de la comunidad
@@ -492,13 +492,13 @@
                                 Seleccione una comunidad para consultar una muestra de integrantes.
                             </p>
                         </div>
-                        <span id="cantidad-integrantes-detalle" class="estado">
+                        <span id="cantidad-integrantes-detalle" class="estado badge rounded-pill">
                             0 integrantes
                         </span>
                     </div>
 
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Integrantes de la comunidad seleccionada</caption>
                             <thead>
                                 <tr>

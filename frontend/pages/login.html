@@ -29,7 +29,7 @@
 
 <body class="pagina-login">
     <header class="encabezado-publico">
-        <div class="contenedor navegacion-publica">
+        <div class="contenedor navegacion-publica container">
             <a href="../index.html" class="marca">
                 Egresados CENFOTEC
             </a>
@@ -47,7 +47,7 @@
     </header>
 
     <main class="contenido-login">
-        <section class="contenedor contenedor-login">
+        <section class="contenedor contenedor-login container">
             <div class="panel-login">
                 <div class="encabezado-seccion">
                     <p>Acceso a la plataforma</p>
@@ -66,7 +66,7 @@
                 >
                     <div class="campo">
                         <label for="correo">Correo electrónico</label>
-                        <input
+                        <input class="form-control"
                             type="email"
                             id="correo"
                             name="correo"
@@ -78,7 +78,7 @@
 
                     <div class="campo">
                         <label for="contrasena">Contraseña</label>
-                        <input
+                        <input class="form-control"
                             type="password"
                             id="contrasena"
                             name="contrasena"
@@ -91,7 +91,7 @@
 
                     <div class="campo">
                         <label for="rol">Tipo de usuario</label>
-                        <select id="rol" name="rol" required>
+                        <select class="form-select" id="rol" name="rol" required>
                             <option value="">Seleccione un rol</option>
                             <option value="registro">Personal de Registro</option>
                             <option value="bienestar">Bienestar Estudiantil</option>
@@ -101,7 +101,7 @@
 
                     <div class="opciones-login">
                         <label class="opcion-recordar">
-                            <input
+                            <input class="form-check-input"
                                 type="checkbox"
                                 id="recordar"
                                 name="recordar"
@@ -117,7 +117,7 @@
                     <button
                         type="submit"
                         id="boton-login"
-                        class="boton boton-primario boton-completo"
+                        class="boton boton-primario boton-completo btn btn-primary"
                     >
                         Iniciar sesión
                     </button>
@@ -125,22 +125,22 @@
 
                 <div
                     id="mensaje-login"
-                    class="mensaje-informativo"
+                    class="mensaje-informativo alert alert-info"
                     aria-live="polite"
                     hidden
                 ></div>
 
                 <aside
                     id="credenciales-prueba"
-                    class="mensaje-informativo"
+                    class="mensaje-informativo alert alert-info"
                 >
                     <h2>Credenciales de prueba</h2>
                     <p><strong>Registro:</strong> registro@cenfotec.ac.cr / Registro2026</p>
                     <p><strong>Bienestar:</strong> bienestar@cenfotec.ac.cr / Bienestar2026</p>
                     <p><strong>Egresado:</strong> ana.martinez@correo.com / Egresado2026</p>
                     <p>
-                        Estas cuentas son temporales y se utilizan únicamente
-                        para demostrar el Avance 2.
+                        Estas cuentas se utilizan únicamente con fines
+                        de demostración y prueba del sistema.
                     </p>
                 </aside>
             </div>
@@ -148,7 +148,7 @@
     </main>
 
     <footer class="pie-pagina">
-        <div class="contenedor">
+        <div class="contenedor container">
             <p>Sistema de Gestión de Egresados</p>
             <p>Universidad CENFOTEC</p>
         </div>

@@ -134,7 +134,7 @@ function renderizarTabla(comunicados) {
 
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
-        estado.className = `estado ${obtenerClaseEstado(comunicado.estado)}`;
+        estado.className = `estado badge rounded-pill ${obtenerClaseEstado(comunicado.estado)}`;
         estado.textContent = comunicado.estado;
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);
@@ -161,7 +161,7 @@ function crearCelda(contenido) {
 function crearBotonAccion(texto, accion, id, peligro = false) {
     const boton = document.createElement("button");
     boton.type = "button";
-    boton.className = peligro ? "boton-tabla boton-tabla-peligro" : "boton-tabla";
+    boton.className = peligro ? "boton-tabla boton-tabla-peligro btn btn-sm btn-outline-danger" : "boton-tabla btn btn-sm btn-outline-primary";
     boton.dataset.accion = accion;
     boton.dataset.id = id;
     boton.textContent = texto;
@@ -190,7 +190,7 @@ function manejarAccionesTabla(evento) {
 function mostrarDetalle(comunicado) {
     detalleTitulo.textContent = comunicado.titulo;
     detalleEstado.textContent = comunicado.estado;
-    detalleEstado.className = `estado ${obtenerClaseEstado(comunicado.estado)}`;
+    detalleEstado.className = `estado badge rounded-pill ${obtenerClaseEstado(comunicado.estado)}`;
     detalleAutor.textContent = comunicado.autor;
     detalleFecha.textContent = formatearFecha(comunicado.fechaPublicacion);
     detallePublico.textContent = comunicado.publicoObjetivo;

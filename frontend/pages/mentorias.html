@@ -54,7 +54,7 @@
                 </div>
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
                 <section class="seccion-bienvenida">
                     <div class="encabezado-seccion">
                         <h2>Programa de mentorías</h2>
@@ -62,32 +62,32 @@
                     </div>
                 </section>
 
-                <nav class="navegacion-interna" aria-label="Secciones de mentorías">
-                    <a href="#consultar-mentorias" class="boton boton-secundario">Mentorías</a>
-                    <a href="#mentores-registrados" class="boton boton-secundario">Mentores</a>
-                    <a href="#solicitudes-mentoria" class="boton boton-secundario">Solicitudes</a>
-                    <a href="#registrar-mentoria" class="boton boton-primario">Registrar mentoría</a>
+                <nav class="navegacion-interna d-flex flex-wrap gap-2" aria-label="Secciones de mentorías">
+                    <a href="#consultar-mentorias" class="boton boton-secundario btn btn-outline-primary">Mentorías</a>
+                    <a href="#mentores-registrados" class="boton boton-secundario btn btn-outline-primary">Mentores</a>
+                    <a href="#solicitudes-mentoria" class="boton boton-secundario btn btn-outline-primary">Solicitudes</a>
+                    <a href="#registrar-mentoria" class="boton boton-primario btn btn-primary">Registrar mentoría</a>
                 </nav>
 
                 <section class="seccion">
                     <div class="encabezado-seccion"><h2>Resumen del programa</h2></div>
                     <div class="cuadricula-resumen">
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Mentores disponibles</p>
                             <p id="resumen-mentores-disponibles" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Solicitudes pendientes</p>
                             <p id="resumen-solicitudes-pendientes" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Mentorías activas</p>
                             <p id="resumen-mentorias-activas" class="numero-resumen">0</p>
                         </article>
                     </div>
                 </section>
 
-                <div id="mensaje-mentorias" class="mensaje-informativo" aria-live="polite" hidden></div>
+                <div id="mensaje-mentorias" class="mensaje-informativo alert alert-info" aria-live="polite" hidden></div>
 
                 <section id="consultar-mentorias" class="seccion">
                     <div class="encabezado-seccion">
@@ -98,15 +98,15 @@
                         <div class="cuadricula-formulario">
                             <div class="campo">
                                 <label for="filtro-participante-mentoria">Egresado o mentor</label>
-                                <input type="search" id="filtro-participante-mentoria" placeholder="Nombre o identificación">
+                                <input class="form-control" type="search" id="filtro-participante-mentoria" placeholder="Nombre o identificación">
                             </div>
                             <div class="campo">
                                 <label for="filtro-area-mentoria">Área profesional</label>
-                                <input type="search" id="filtro-area-mentoria" placeholder="Ejemplo: Software">
+                                <input class="form-control" type="search" id="filtro-area-mentoria" placeholder="Ejemplo: Software">
                             </div>
                             <div class="campo">
                                 <label for="filtro-estado-mentoria">Estado</label>
-                                <select id="filtro-estado-mentoria">
+                                <select class="form-select" id="filtro-estado-mentoria">
                                     <option value="">Todos los estados</option>
                                     <option value="Pendiente">Pendiente</option>
                                     <option value="Activa">Activa</option>
@@ -116,23 +116,23 @@
                             </div>
                             <div class="campo">
                                 <label for="filtro-fecha-inicio">Fecha de inicio</label>
-                                <input type="date" id="filtro-fecha-inicio">
+                                <input class="form-control" type="date" id="filtro-fecha-inicio">
                             </div>
-                            <div class="acciones-formulario">
-                                <button type="reset" class="boton boton-secundario">Limpiar filtros</button>
-                                <button type="submit" class="boton boton-primario">Buscar mentorías</button>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="reset" class="boton boton-secundario btn btn-outline-primary">Limpiar filtros</button>
+                                <button type="submit" class="boton boton-primario btn btn-primary">Buscar mentorías</button>
                             </div>
                         </div>
                     </form>
                 </section>
 
                 <section class="seccion">
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div><h2>Mentorías registradas</h2><p>Lista general del programa.</p></div>
-                        <a href="#registrar-mentoria" class="boton boton-primario">Registrar mentoría</a>
+                        <a href="#registrar-mentoria" class="boton boton-primario btn btn-primary">Registrar mentoría</a>
                     </div>
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Mentorías registradas en el sistema</caption>
                             <thead><tr><th>Egresado</th><th>Mentor</th><th>Área</th><th>Inicio</th><th>Finalización</th><th>Estado</th><th>Acciones</th></tr></thead>
                             <tbody id="cuerpo-tabla-mentorias"></tbody>
@@ -142,7 +142,7 @@
 
                 <section id="detalle-mentoria" class="seccion">
                     <div class="encabezado-seccion"><h2>Detalle de la mentoría</h2></div>
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="cuadricula-detalle">
                             <div><span class="etiqueta-detalle">Persona egresada</span><p id="detalle-egresado-mentoria">Seleccione una mentoría</p></div>
                             <div><span class="etiqueta-detalle">Persona mentora</span><p id="detalle-mentor-mentoria">Seleccione una mentoría</p></div>
@@ -150,7 +150,7 @@
                             <div><span class="etiqueta-detalle">Modalidad</span><p id="detalle-modalidad-mentoria">Seleccione una mentoría</p></div>
                             <div><span class="etiqueta-detalle">Fecha de inicio</span><p id="detalle-inicio-mentoria">Seleccione una mentoría</p></div>
                             <div><span class="etiqueta-detalle">Fecha de finalización</span><p id="detalle-finalizacion-mentoria">Seleccione una mentoría</p></div>
-                            <div><span class="etiqueta-detalle">Estado</span><p><span id="detalle-estado-mentoria" class="estado">Sin seleccionar</span></p></div>
+                            <div><span class="etiqueta-detalle">Estado</span><p><span id="detalle-estado-mentoria" class="estado badge rounded-pill">Sin seleccionar</span></p></div>
                             <div class="detalle-completo"><span class="etiqueta-detalle">Objetivo</span><p id="detalle-objetivo-mentoria">Seleccione una mentoría</p></div>
                             <div class="detalle-completo"><span class="etiqueta-detalle">Observaciones</span><p id="detalle-observaciones-mentoria">Seleccione una mentoría</p></div>
                         </div>
@@ -165,19 +165,19 @@
                     <form id="formulario-mentoria" class="formulario" action="#" method="post">
                         <input type="hidden" id="id-mentoria">
                         <div class="cuadricula-formulario">
-                            <div class="campo"><label for="solicitud-mentoria">Solicitud relacionada</label><select id="solicitud-mentoria"><option value="">Sin solicitud relacionada</option></select></div>
-                            <div class="campo"><label for="egresado-mentoria">Persona egresada *</label><select id="egresado-mentoria" required><option value="">Seleccione una persona</option></select></div>
-                            <div class="campo"><label for="mentor-mentoria">Persona mentora *</label><select id="mentor-mentoria" required><option value="">Seleccione una persona mentora</option></select></div>
-                            <div class="campo"><label for="area-profesional-mentoria">Área profesional *</label><input type="text" id="area-profesional-mentoria" minlength="3" required></div>
-                            <div class="campo"><label for="modalidad-mentoria">Modalidad *</label><select id="modalidad-mentoria" required><option value="">Seleccione</option><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option><option value="Híbrida">Híbrida</option></select></div>
-                            <div class="campo"><label for="estado-mentoria">Estado *</label><select id="estado-mentoria" required><option value="Pendiente">Pendiente</option><option value="Activa">Activa</option><option value="Finalizada">Finalizada</option><option value="Cancelada">Cancelada</option></select></div>
-                            <div class="campo"><label for="fecha-inicio-mentoria">Fecha de inicio *</label><input type="date" id="fecha-inicio-mentoria" required></div>
-                            <div class="campo"><label for="fecha-finalizacion-mentoria">Fecha de finalización *</label><input type="date" id="fecha-finalizacion-mentoria" required></div>
-                            <div class="campo campo-completo"><label for="objetivo-mentoria">Objetivo *</label><textarea id="objetivo-mentoria" minlength="10" maxlength="700" rows="4" required></textarea></div>
-                            <div class="campo campo-completo"><label for="observaciones-mentoria">Observaciones</label><textarea id="observaciones-mentoria" maxlength="700" rows="4"></textarea></div>
-                            <div class="acciones-formulario">
-                                <button type="button" id="boton-limpiar-mentoria" class="boton boton-secundario">Limpiar</button>
-                                <button type="submit" id="boton-guardar-mentoria" class="boton boton-primario">Guardar mentoría</button>
+                            <div class="campo"><label for="solicitud-mentoria">Solicitud relacionada</label><select class="form-select" id="solicitud-mentoria"><option value="">Sin solicitud relacionada</option></select></div>
+                            <div class="campo"><label for="egresado-mentoria">Persona egresada *</label><select class="form-select" id="egresado-mentoria" required><option value="">Seleccione una persona</option></select></div>
+                            <div class="campo"><label for="mentor-mentoria">Persona mentora *</label><select class="form-select" id="mentor-mentoria" required><option value="">Seleccione una persona mentora</option></select></div>
+                            <div class="campo"><label for="area-profesional-mentoria">Área profesional *</label><input class="form-control" type="text" id="area-profesional-mentoria" minlength="3" required></div>
+                            <div class="campo"><label for="modalidad-mentoria">Modalidad *</label><select class="form-select" id="modalidad-mentoria" required><option value="">Seleccione</option><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option><option value="Híbrida">Híbrida</option></select></div>
+                            <div class="campo"><label for="estado-mentoria">Estado *</label><select class="form-select" id="estado-mentoria" required><option value="Pendiente">Pendiente</option><option value="Activa">Activa</option><option value="Finalizada">Finalizada</option><option value="Cancelada">Cancelada</option></select></div>
+                            <div class="campo"><label for="fecha-inicio-mentoria">Fecha de inicio *</label><input class="form-control" type="date" id="fecha-inicio-mentoria" required></div>
+                            <div class="campo"><label for="fecha-finalizacion-mentoria">Fecha de finalización *</label><input class="form-control" type="date" id="fecha-finalizacion-mentoria" required></div>
+                            <div class="campo campo-completo"><label for="objetivo-mentoria">Objetivo *</label><textarea class="form-control" id="objetivo-mentoria" minlength="10" maxlength="700" rows="4" required></textarea></div>
+                            <div class="campo campo-completo"><label for="observaciones-mentoria">Observaciones</label><textarea class="form-control" id="observaciones-mentoria" maxlength="700" rows="4"></textarea></div>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="button" id="boton-limpiar-mentoria" class="boton boton-secundario btn btn-outline-primary">Limpiar</button>
+                                <button type="submit" id="boton-guardar-mentoria" class="boton boton-primario btn btn-primary">Guardar mentoría</button>
                             </div>
                         </div>
                     </form>
@@ -185,8 +185,8 @@
 
                 <section id="mentores-registrados" class="seccion">
                     <div class="encabezado-seccion"><h2>Personas mentoras registradas</h2></div>
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Personas mentoras disponibles</caption>
                             <thead><tr><th>Nombre</th><th>Área</th><th>Especialidades</th><th>Experiencia</th><th>Modalidad</th><th>Estado</th><th>Acciones</th></tr></thead>
                             <tbody id="cuerpo-tabla-mentores"></tbody>
@@ -199,16 +199,16 @@
                     <form id="formulario-mentor" class="formulario" action="#" method="post">
                         <input type="hidden" id="id-mentor">
                         <div class="cuadricula-formulario">
-                            <div class="campo"><label for="egresado-mentor">Persona egresada *</label><select id="egresado-mentor" required><option value="">Seleccione una persona</option></select></div>
-                            <div class="campo"><label for="area-experiencia-mentor">Área de experiencia *</label><input type="text" id="area-experiencia-mentor" minlength="3" required></div>
-                            <div class="campo campo-completo"><label for="especialidades-mentor">Especialidades *</label><textarea id="especialidades-mentor" minlength="10" rows="3" required></textarea></div>
-                            <div class="campo"><label for="anios-experiencia-mentor">Años de experiencia *</label><input type="number" id="anios-experiencia-mentor" min="1" max="60" required></div>
-                            <div class="campo"><label for="disponibilidad-mentor">Disponibilidad *</label><input type="text" id="disponibilidad-mentor" minlength="3" required></div>
-                            <div class="campo"><label for="modalidad-mentor">Modalidad *</label><select id="modalidad-mentor" required><option value="">Seleccione</option><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option><option value="Híbrida">Híbrida</option></select></div>
-                            <div class="campo"><label for="estado-mentor">Estado *</label><select id="estado-mentor" required><option value="Disponible">Disponible</option><option value="Asignado">Asignado</option><option value="Inactivo">Inactivo</option></select></div>
-                            <div class="acciones-formulario">
-                                <button type="button" id="boton-limpiar-mentor" class="boton boton-secundario">Limpiar</button>
-                                <button type="submit" id="boton-guardar-mentor" class="boton boton-primario">Guardar mentor</button>
+                            <div class="campo"><label for="egresado-mentor">Persona egresada *</label><select class="form-select" id="egresado-mentor" required><option value="">Seleccione una persona</option></select></div>
+                            <div class="campo"><label for="area-experiencia-mentor">Área de experiencia *</label><input class="form-control" type="text" id="area-experiencia-mentor" minlength="3" required></div>
+                            <div class="campo campo-completo"><label for="especialidades-mentor">Especialidades *</label><textarea class="form-control" id="especialidades-mentor" minlength="10" rows="3" required></textarea></div>
+                            <div class="campo"><label for="anios-experiencia-mentor">Años de experiencia *</label><input class="form-control" type="number" id="anios-experiencia-mentor" min="1" max="60" required></div>
+                            <div class="campo"><label for="disponibilidad-mentor">Disponibilidad *</label><input class="form-control" type="text" id="disponibilidad-mentor" minlength="3" required></div>
+                            <div class="campo"><label for="modalidad-mentor">Modalidad *</label><select class="form-select" id="modalidad-mentor" required><option value="">Seleccione</option><option value="Virtual">Virtual</option><option value="Presencial">Presencial</option><option value="Híbrida">Híbrida</option></select></div>
+                            <div class="campo"><label for="estado-mentor">Estado *</label><select class="form-select" id="estado-mentor" required><option value="Disponible">Disponible</option><option value="Asignado">Asignado</option><option value="Inactivo">Inactivo</option></select></div>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="button" id="boton-limpiar-mentor" class="boton boton-secundario btn btn-outline-primary">Limpiar</button>
+                                <button type="submit" id="boton-guardar-mentor" class="boton boton-primario btn btn-primary">Guardar mentor</button>
                             </div>
                         </div>
                     </form>
@@ -216,8 +216,8 @@
 
                 <section id="solicitudes-mentoria" class="seccion">
                     <div class="encabezado-seccion"><h2>Solicitudes de mentoría</h2></div>
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Solicitudes registradas</caption>
                             <thead><tr><th>Egresado</th><th>Oportunidad</th><th>Fecha</th><th>Mentor</th><th>Estado</th><th>Acciones</th></tr></thead>
                             <tbody id="cuerpo-tabla-solicitudes"></tbody>
@@ -230,15 +230,15 @@
                     <form id="formulario-solicitud" class="formulario" action="#" method="post">
                         <input type="hidden" id="id-solicitud">
                         <div class="cuadricula-formulario">
-                            <div class="campo"><label for="egresado-solicitud">Persona egresada *</label><select id="egresado-solicitud" required><option value="">Seleccione una persona</option></select></div>
-                            <div class="campo"><label for="oportunidad-solicitud">Oportunidad o área *</label><input type="text" id="oportunidad-solicitud" minlength="3" required></div>
-                            <div class="campo"><label for="fecha-solicitud">Fecha de solicitud</label><input type="date" id="fecha-solicitud"></div>
-                            <div class="campo"><label for="estado-solicitud">Estado</label><select id="estado-solicitud"><option value="Pendiente">Pendiente</option><option value="Asignada">Asignada</option><option value="Rechazada">Rechazada</option><option value="Cancelada">Cancelada</option></select></div>
-                            <div class="campo campo-completo"><label for="objetivo-solicitud">Objetivo *</label><textarea id="objetivo-solicitud" minlength="10" maxlength="600" rows="4" required></textarea></div>
-                            <div class="campo campo-completo"><label for="comentarios-solicitud">Comentarios</label><textarea id="comentarios-solicitud" maxlength="500" rows="3"></textarea></div>
-                            <div class="acciones-formulario">
-                                <button type="button" id="boton-limpiar-solicitud" class="boton boton-secundario">Limpiar</button>
-                                <button type="submit" id="boton-guardar-solicitud" class="boton boton-primario">Guardar solicitud</button>
+                            <div class="campo"><label for="egresado-solicitud">Persona egresada *</label><select class="form-select" id="egresado-solicitud" required><option value="">Seleccione una persona</option></select></div>
+                            <div class="campo"><label for="oportunidad-solicitud">Oportunidad o área *</label><input class="form-control" type="text" id="oportunidad-solicitud" minlength="3" required></div>
+                            <div class="campo"><label for="fecha-solicitud">Fecha de solicitud</label><input class="form-control" type="date" id="fecha-solicitud"></div>
+                            <div class="campo"><label for="estado-solicitud">Estado</label><select class="form-select" id="estado-solicitud"><option value="Pendiente">Pendiente</option><option value="Asignada">Asignada</option><option value="Rechazada">Rechazada</option><option value="Cancelada">Cancelada</option></select></div>
+                            <div class="campo campo-completo"><label for="objetivo-solicitud">Objetivo *</label><textarea class="form-control" id="objetivo-solicitud" minlength="10" maxlength="600" rows="4" required></textarea></div>
+                            <div class="campo campo-completo"><label for="comentarios-solicitud">Comentarios</label><textarea class="form-control" id="comentarios-solicitud" maxlength="500" rows="3"></textarea></div>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="button" id="boton-limpiar-solicitud" class="boton boton-secundario btn btn-outline-primary">Limpiar</button>
+                                <button type="submit" id="boton-guardar-solicitud" class="boton boton-primario btn btn-primary">Guardar solicitud</button>
                             </div>
                         </div>
                     </form>
@@ -249,11 +249,11 @@
                     <form id="formulario-asignacion" class="formulario" action="#" method="post">
                         <input type="hidden" id="id-solicitud-asignacion">
                         <div class="cuadricula-formulario">
-                            <div class="campo"><label for="mentor-asignacion">Persona mentora *</label><select id="mentor-asignacion" required><option value="">Seleccione una persona mentora</option></select></div>
-                            <div class="campo campo-completo"><label for="observaciones-asignacion">Observaciones</label><textarea id="observaciones-asignacion" maxlength="500" rows="3"></textarea></div>
-                            <div class="acciones-formulario">
-                                <button type="button" id="boton-cancelar-asignacion" class="boton boton-secundario">Cancelar</button>
-                                <button type="submit" class="boton boton-primario">Asignar mentor</button>
+                            <div class="campo"><label for="mentor-asignacion">Persona mentora *</label><select class="form-select" id="mentor-asignacion" required><option value="">Seleccione una persona mentora</option></select></div>
+                            <div class="campo campo-completo"><label for="observaciones-asignacion">Observaciones</label><textarea class="form-control" id="observaciones-asignacion" maxlength="500" rows="3"></textarea></div>
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
+                                <button type="button" id="boton-cancelar-asignacion" class="boton boton-secundario btn btn-outline-primary">Cancelar</button>
+                                <button type="submit" class="boton boton-primario btn btn-primary">Asignar mentor</button>
                             </div>
                         </div>
                     </form>

@@ -180,7 +180,7 @@ function renderizarActividades(idContenedor, actividades) {
 
     contenedor.innerHTML = actividades.length
         ? actividades.map((item) => `
-            <article class="tarjeta">
+            <article class="tarjeta card">
                 <p class="texto-secundario">${formatearFechaLarga(item.fecha)}</p>
                 <h3>${escapar(item.titulo)}</h3>
                 <p>${escapar(item.descripcion)}</p>
@@ -188,7 +188,7 @@ function renderizarActividades(idContenedor, actividades) {
                 ${crearEstado(item.estado)}
             </article>
         `).join("")
-        : '<article class="tarjeta"><h3>Sin actividades próximas</h3><p>No hay actividades publicadas pendientes.</p></article>';
+        : '<article class="tarjeta card"><h3>Sin actividades próximas</h3><p>No hay actividades publicadas pendientes.</p></article>';
 }
 
 function renderizarComunicadosTabla(idCuerpo, comunicados) {
@@ -236,7 +236,7 @@ function renderizarMentoriaEgresado(mentoria) {
                     <h3>No hay una mentoría activa</h3>
                     <p class="texto-secundario">Puedes registrar una solicitud desde el módulo de mentorías.</p>
                 </div>
-                <span class="estado estado-pendiente">Sin asignar</span>
+                <span class="estado badge rounded-pill estado-pendiente">Sin asignar</span>
             </div>
         `;
         return;
@@ -265,13 +265,13 @@ function renderizarComunicadosTarjetas(idContenedor, comunicados) {
 
     contenedor.innerHTML = comunicados.length
         ? comunicados.map((item, indice) => `
-            <article class="tarjeta${indice === 0 && item.destacado ? " comunicado-destacado" : ""}">
+            <article class="tarjeta card${indice === 0 && item.destacado ? " comunicado-destacado" : ""}">
                 <p class="texto-secundario">${formatearFechaLarga(item.fechaPublicacion)}</p>
                 <h3>${escapar(item.titulo)}</h3>
                 <p>${escapar(item.resumen)}</p>
             </article>
         `).join("")
-        : '<article class="tarjeta"><h3>Sin comunicados</h3><p>No hay comunicados publicados.</p></article>';
+        : '<article class="tarjeta card"><h3>Sin comunicados</h3><p>No hay comunicados publicados.</p></article>';
 }
 
 async function consultar(ruta) {
@@ -290,7 +290,7 @@ function mostrarErrorDashboard(mensaje) {
     if (!main) return;
 
     const aviso = document.createElement("div");
-    aviso.className = "mensaje-informativo";
+    aviso.className = "mensaje-informativo alert alert-info";
     aviso.setAttribute("role", "alert");
     aviso.textContent = `No fue posible actualizar el panel: ${mensaje}`;
     main.prepend(aviso);
@@ -323,7 +323,7 @@ function crearEstado(estado) {
             ? "estado-pendiente"
             : "estado-inactivo";
 
-    return `<span class="estado ${clase}">${escapar(estado || "Sin estado")}</span>`;
+    return `<span class="estado badge rounded-pill ${clase}">${escapar(estado || "Sin estado")}</span>`;
 }
 
 function filaVacia(columnas, mensaje) {

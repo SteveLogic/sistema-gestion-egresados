@@ -112,7 +112,7 @@
                 </div>
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
                 <section class="seccion-bienvenida">
                     <div class="encabezado-seccion">
                         <h2>Actividades institucionales</h2>
@@ -122,7 +122,7 @@
                         </p>
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
                         <h2>Información del módulo</h2>
                         <p>
                             Las actividades pueden realizarse de forma
@@ -132,24 +132,24 @@
                 </section>
 
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de gestión de actividades"
                 >
                     <a
                         href="#consultar-actividades"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Consultar actividades
                     </a>
                     <a
                         href="#registrar-actividad"
-                        class="boton boton-primario"
+                        class="boton boton-primario btn btn-primary"
                     >
                         Registrar actividad
                     </a>
                     <a
                         href="#detalle-actividad"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Ver detalle
                     </a>
@@ -162,19 +162,19 @@
                     </div>
 
                     <div class="cuadricula-resumen">
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Total registradas</p>
                             <p id="resumen-total-actividades" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Publicadas</p>
                             <p id="resumen-publicadas-actividades" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Próximas</p>
                             <p id="resumen-proximas-actividades" class="numero-resumen">0</p>
                         </article>
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">Personas inscritas</p>
                             <p id="resumen-inscritas-actividades" class="numero-resumen">0</p>
                         </article>
@@ -201,7 +201,7 @@
                                 <label for="filtro-titulo-actividad">
                                     Título
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-titulo-actividad"
                                     name="titulo"
@@ -213,7 +213,7 @@
                                 <label for="filtro-modalidad-actividad">
                                     Modalidad
                                 </label>
-                                <select
+                                <select class="form-select"
                                     id="filtro-modalidad-actividad"
                                     name="modalidad"
                                 >
@@ -228,7 +228,7 @@
                                 <label for="filtro-fecha-actividad">
                                     Fecha
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="date"
                                     id="filtro-fecha-actividad"
                                     name="fecha"
@@ -239,7 +239,7 @@
                                 <label for="filtro-publico-actividad">
                                     Público objetivo
                                 </label>
-                                <select
+                                <select class="form-select"
                                     id="filtro-publico-actividad"
                                     name="publicoObjetivo"
                                 >
@@ -256,7 +256,7 @@
                                 <label for="filtro-estado-actividad">
                                     Estado
                                 </label>
-                                <select
+                                <select class="form-select"
                                     id="filtro-estado-actividad"
                                     name="estado"
                                 >
@@ -268,16 +268,16 @@
                                 </select>
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="reset"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar filtros
                                 </button>
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Buscar actividades
                                 </button>
@@ -287,18 +287,18 @@
                 </section>
 
                 <section class="seccion">
-                    <div class="encabezado-con-accion">
+                    <div class="encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div class="encabezado-seccion">
                             <h2>Actividades registradas</h2>
                             <p>Lista general de actividades institucionales.</p>
                         </div>
-                        <a href="#registrar-actividad" class="boton boton-primario">
+                        <a href="#registrar-actividad" class="boton boton-primario btn btn-primary">
                             Registrar actividad
                         </a>
                     </div>
 
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption>Actividades registradas en el sistema</caption>
                             <thead>
                                 <tr>
@@ -318,7 +318,7 @@
 
                     <div
                         id="mensaje-actividades"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     ></div>
@@ -332,7 +332,7 @@
                         </p>
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="encabezado-perfil-academico">
                             <div>
                                 <h3 id="detalle-titulo-actividad">
@@ -347,7 +347,7 @@
                             </div>
                             <span
                                 id="detalle-estado-actividad"
-                                class="estado"
+                                class="estado badge rounded-pill"
                             >
                                 Sin seleccionar
                             </span>
@@ -423,7 +423,7 @@
                                 <label for="titulo-actividad">
                                     Título de la actividad *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="titulo-actividad"
                                     name="titulo"
@@ -437,7 +437,7 @@
                                 <label for="responsable-actividad">
                                     Persona responsable *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="responsable-actividad"
                                     name="responsable"
@@ -451,7 +451,7 @@
                                 <label for="descripcion-actividad">
                                     Descripción *
                                 </label>
-                                <textarea
+                                <textarea class="form-control"
                                     id="descripcion-actividad"
                                     name="descripcion"
                                     minlength="10"
@@ -463,7 +463,7 @@
 
                             <div class="campo">
                                 <label for="fecha-actividad">Fecha *</label>
-                                <input
+                                <input class="form-control"
                                     type="date"
                                     id="fecha-actividad"
                                     name="fecha"
@@ -473,7 +473,7 @@
 
                             <div class="campo">
                                 <label for="hora-actividad">Hora *</label>
-                                <input
+                                <input class="form-control"
                                     type="time"
                                     id="hora-actividad"
                                     name="hora"
@@ -483,7 +483,7 @@
 
                             <div class="campo">
                                 <label for="modalidad-actividad">Modalidad *</label>
-                                <select
+                                <select class="form-select"
                                     id="modalidad-actividad"
                                     name="modalidad"
                                     required
@@ -499,7 +499,7 @@
                                 <label for="ubicacion-actividad">
                                     Ubicación o plataforma *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="ubicacion-actividad"
                                     name="ubicacion"
@@ -511,7 +511,7 @@
 
                             <div class="campo">
                                 <label for="publico-actividad">Público objetivo *</label>
-                                <select
+                                <select class="form-select"
                                     id="publico-actividad"
                                     name="publicoObjetivo"
                                     required
@@ -527,7 +527,7 @@
 
                             <div class="campo">
                                 <label for="estado-actividad">Estado *</label>
-                                <select
+                                <select class="form-select"
                                     id="estado-actividad"
                                     name="estado"
                                     required
@@ -542,7 +542,7 @@
 
                             <div class="campo">
                                 <label for="cupo-actividad">Cupo máximo *</label>
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="cupo-actividad"
                                     name="cupoMaximo"
@@ -555,7 +555,7 @@
 
                             <div class="campo">
                                 <label for="inscritas-actividad">Personas inscritas *</label>
-                                <input
+                                <input class="form-control"
                                     type="number"
                                     id="inscritas-actividad"
                                     name="personasInscritas"
@@ -570,7 +570,7 @@
                                 <label for="enlace-actividad">
                                     Enlace de acceso o información
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="enlace-actividad"
                                     name="enlace"
@@ -578,18 +578,18 @@
                                 >
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="button"
                                     id="boton-limpiar-actividad"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar formulario
                                 </button>
                                 <button
                                     type="submit"
                                     id="boton-guardar-actividad"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar actividad
                                 </button>

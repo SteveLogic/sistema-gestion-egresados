@@ -191,7 +191,7 @@
         if (!main) return;
 
         const aviso = document.createElement("div");
-        aviso.className = "mensaje-informativo";
+        aviso.className = "mensaje-informativo alert alert-info";
         aviso.setAttribute("role", "status");
         aviso.textContent = mensaje;
         main.prepend(aviso);

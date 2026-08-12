@@ -161,7 +161,7 @@ function renderizarTabla(actividades) {
 
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
-        estado.className = `estado ${obtenerClaseEstado(actividad.estado)}`;
+        estado.className = `estado badge rounded-pill ${obtenerClaseEstado(actividad.estado)}`;
         estado.textContent = actividad.estado;
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);
@@ -196,8 +196,8 @@ function crearBotonAccion(texto, accion, id, peligro = false) {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.className = peligro
-        ? "boton-tabla boton-tabla-peligro"
-        : "boton-tabla";
+        ? "boton-tabla boton-tabla-peligro btn btn-sm btn-outline-danger"
+        : "boton-tabla btn btn-sm btn-outline-primary";
     boton.dataset.accion = accion;
     boton.dataset.id = id;
     boton.textContent = texto;
@@ -236,7 +236,7 @@ function mostrarDetalle(actividad) {
     detalleTitulo.textContent = actividad.titulo;
     detalleResponsable.textContent = `Responsable: ${actividad.responsable}`;
     detalleEstado.textContent = actividad.estado;
-    detalleEstado.className = `estado ${obtenerClaseEstado(actividad.estado)}`;
+    detalleEstado.className = `estado badge rounded-pill ${obtenerClaseEstado(actividad.estado)}`;
     detalleFecha.textContent = formatearFechaLarga(actividad.fecha);
     detalleHora.textContent = formatearHora(actividad.hora);
     detalleModalidad.textContent = actividad.modalidad;
@@ -269,7 +269,7 @@ function limpiarDetalle() {
     detalleTitulo.textContent = "Seleccione una actividad";
     detalleResponsable.textContent = "Sin persona responsable seleccionada";
     detalleEstado.textContent = "Sin seleccionar";
-    detalleEstado.className = "estado";
+    detalleEstado.className = "estado badge rounded-pill";
 
     [
         detalleFecha,

@@ -173,7 +173,7 @@ function renderizarTabla(comunidades) {
 
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
-        estado.className = `estado ${obtenerClaseEstado(comunidad.estado)}`;
+        estado.className = `estado badge rounded-pill ${obtenerClaseEstado(comunidad.estado)}`;
         estado.textContent = comunidad.estado;
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);
@@ -209,8 +209,8 @@ function crearBotonAccion(texto, accion, id, peligro = false) {
     const boton = document.createElement("button");
     boton.type = "button";
     boton.className = peligro
-        ? "boton-tabla boton-tabla-peligro"
-        : "boton-tabla";
+        ? "boton-tabla boton-tabla-peligro btn btn-sm btn-outline-danger"
+        : "boton-tabla btn btn-sm btn-outline-primary";
     boton.dataset.accion = accion;
     boton.dataset.id = id;
     boton.textContent = texto;
@@ -252,7 +252,7 @@ function mostrarDetalle(comunidad) {
     detalleNombre.textContent = comunidad.nombre;
     detalleResponsable.textContent = `Responsable: ${comunidad.responsable}`;
     detalleEstado.textContent = comunidad.estado;
-    detalleEstado.className = `estado ${obtenerClaseEstado(comunidad.estado)}`;
+    detalleEstado.className = `estado badge rounded-pill ${obtenerClaseEstado(comunidad.estado)}`;
     detalleArea.textContent = comunidad.areaProfesional;
     detalleCorreo.textContent = comunidad.correo;
     detalleModalidad.textContent = comunidad.modalidad;
@@ -416,7 +416,7 @@ function renderizarIntegrantes(datos) {
         "Muestra de personas que participan en la comunidad seleccionada.";
     cantidadIntegrantesDetalle.textContent =
         `${datos.cantidadIntegrantes} integrantes`;
-    cantidadIntegrantesDetalle.className = "estado estado-activo";
+    cantidadIntegrantesDetalle.className = "estado badge rounded-pill estado-activo";
     cuerpoTablaIntegrantes.innerHTML = "";
 
     if (datos.integrantes.length === 0) {
@@ -440,8 +440,8 @@ function renderizarIntegrantes(datos) {
         const celdaEstado = document.createElement("td");
         const estado = document.createElement("span");
         estado.className = integrante.participacion === "Activa"
-            ? "estado estado-activo"
-            : "estado estado-pendiente";
+            ? "estado badge rounded-pill estado-activo"
+            : "estado badge rounded-pill estado-pendiente";
         estado.textContent = integrante.participacion;
         celdaEstado.appendChild(estado);
         fila.appendChild(celdaEstado);

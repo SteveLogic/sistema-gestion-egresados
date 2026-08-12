@@ -618,7 +618,7 @@ function crearFilaTitulo(
         document.createElement("span");
 
     estado.className =
-        `estado ${obtenerClaseEstadoTitulo(
+        `estado badge rounded-pill ${obtenerClaseEstadoTitulo(
             titulo.estado
         )}`;
 
@@ -645,7 +645,7 @@ function crearFilaTitulo(
         "button";
 
     botonConsultar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonConsultar.dataset.accion =
         "consultar";
@@ -667,7 +667,7 @@ function crearFilaTitulo(
         "button";
 
     botonEditar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonEditar.dataset.accion =
         "editar";
@@ -689,7 +689,7 @@ function crearFilaTitulo(
         "button";
 
     botonEliminar.className =
-        "boton-tabla";
+        "boton-tabla btn btn-sm btn-outline-primary";
 
     botonEliminar.dataset.accion =
         "eliminar";
@@ -823,7 +823,7 @@ function mostrarDetalleTitulo(
         titulo.estado;
 
     detalleEstadoTitulo.className =
-        `estado ${obtenerClaseEstadoTitulo(
+        `estado badge rounded-pill ${obtenerClaseEstadoTitulo(
             titulo.estado
         )}`;
 

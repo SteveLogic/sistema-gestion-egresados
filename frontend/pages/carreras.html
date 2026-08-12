@@ -144,7 +144,7 @@
 
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
 
                 <!-- Introducción -->
                 <section class="seccion-bienvenida">
@@ -160,7 +160,7 @@
 
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
 
                         <h2>Relación académica</h2>
 
@@ -175,20 +175,20 @@
 
                 <!-- Navegación interna -->
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones de gestión de carreras"
                 >
 
                     <a
                         href="#consultar-carreras"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Consultar carreras
                     </a>
 
                     <a
                         href="#registrar-carrera"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Registrar carrera
                     </a>
@@ -224,7 +224,7 @@
                                     Nombre de la carrera
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-nombre-carrera"
                                     name="nombreCarrera"
@@ -239,7 +239,7 @@
                                     Código
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="search"
                                     id="filtro-codigo-carrera"
                                     name="codigoCarrera"
@@ -254,7 +254,7 @@
                                     Escuela académica
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-escuela-carrera"
                                     name="escuela"
                                 >
@@ -285,7 +285,7 @@
                                     Estado
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="filtro-estado-carrera"
                                     name="estado"
                                 >
@@ -306,18 +306,18 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
 
                                 <button
                                     type="reset"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar filtros
                                 </button>
 
                                 <button
                                     type="submit"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Buscar carreras
                                 </button>
@@ -333,7 +333,7 @@
                 <!-- Tabla de carreras -->
                 <section class="seccion">
 
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
 
                         <div>
 
@@ -347,16 +347,16 @@
 
                         <a
                             href="#registrar-carrera"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Registrar carrera
                         </a>
 
                     </div>
 
-                    <div class="contenedor-tabla">
+                    <div class="contenedor-tabla table-responsive">
 
-                        <table class="tabla">
+                        <table class="tabla table table-hover align-middle mb-0">
 
                             <caption>
                                 Carreras académicas registradas
@@ -388,7 +388,7 @@
 
                     <div
                         id="mensaje-carreras"
-                        class="mensaje-informativo"
+                        class="mensaje-informativo alert alert-info"
                         aria-live="polite"
                         hidden
                     >
@@ -413,7 +413,7 @@
 
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
 
                         <div class="cuadricula-detalle">
                             <div>
@@ -444,7 +444,7 @@
                                 <p>
                                     <span
                                         id="detalle-estado-carrera"
-                                        class="estado"
+                                        class="estado badge rounded-pill"
                                     >
                                         Sin seleccionar
                                     </span>
@@ -503,7 +503,7 @@
                                     Código de la carrera *
                                 </label>
 
-                                    <input
+                                    <input class="form-control"
                                         type="text"
                                         id="codigo-carrera"
                                         name="codigo"
@@ -523,7 +523,7 @@
                                     Nombre de la carrera *
                                 </label>
 
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="nombre-carrera"
                                     name="nombre"
@@ -541,7 +541,7 @@
                                     Escuela académica *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="escuela-carrera"
                                     name="escuela"
                                     required
@@ -573,7 +573,7 @@
                                     Estado *
                                 </label>
 
-                                <select
+                                <select class="form-select"
                                     id="estado-carrera"
                                     name="estado"
                                     required
@@ -600,7 +600,7 @@
                                     Descripción *
                                 </label>
 
-                                <textarea
+                                <textarea class="form-control"
                                     id="descripcion-carrera"
                                     name="descripcion"
                                     minlength="10"
@@ -611,11 +611,11 @@
 
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="button"
                                     id="boton-limpiar-carrera"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Limpiar formulario
                                 </button>
@@ -623,7 +623,7 @@
                                 <button
                                     type="submit"
                                     id="boton-guardar-carrera"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar carrera
                                 </button>

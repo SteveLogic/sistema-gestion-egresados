@@ -117,7 +117,7 @@
 
         const mensaje = document.createElement("div");
         mensaje.id = "mensaje-egresados";
-        mensaje.className = "mensaje-informativo";
+        mensaje.className = "mensaje-informativo alert alert-info";
         mensaje.setAttribute("aria-live", "polite");
         mensaje.hidden = true;
 
@@ -373,7 +373,7 @@
         const estado = document.createElement("span");
 
         estado.className =
-            `estado ${obtenerClaseEstado(egresado.estado)}`;
+            `estado badge rounded-pill ${obtenerClaseEstado(egresado.estado)}`;
         estado.textContent = egresado.estado;
 
         celdaEstado.appendChild(estado);
@@ -424,8 +424,8 @@
 
         boton.type = "button";
         boton.className = peligro
-            ? "boton-tabla boton-tabla-peligro"
-            : "boton-tabla";
+            ? "boton-tabla boton-tabla-peligro btn btn-sm btn-outline-danger"
+            : "boton-tabla btn btn-sm btn-outline-primary";
         boton.dataset.accion = accion;
         boton.dataset.id = id;
         boton.textContent = texto;

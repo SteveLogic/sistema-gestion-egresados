@@ -339,7 +339,7 @@ function crearFilaEscuela(escuela) {
         </td>
 
         <td>
-            <span class="estado ${claseEstado}">
+            <span class="estado badge rounded-pill ${claseEstado}">
                 ${escuela.estado}
             </span>
         </td>
@@ -349,7 +349,7 @@ function crearFilaEscuela(escuela) {
 
         <button
             type="button"
-            class="boton boton-secundario"
+            class="boton boton-secundario btn btn-outline-primary"
             data-accion="consultar"
             data-id="${escuela.id}"
         >
@@ -358,7 +358,7 @@ function crearFilaEscuela(escuela) {
 
         <button
             type="button"
-            class="boton boton-secundario"
+            class="boton boton-secundario btn btn-outline-primary"
             data-accion="editar"
             data-id="${escuela.id}"
         >
@@ -367,7 +367,7 @@ function crearFilaEscuela(escuela) {
 
         <button
             type="button"
-            class="boton boton-secundario"
+            class="boton boton-secundario btn btn-outline-primary"
             data-accion="eliminar"
             data-id="${escuela.id}"
         >
@@ -623,8 +623,8 @@ function mostrarDetalleEscuela(
 
     detalleEstadoEscuela.className =
         escuela.estado === "Activa"
-            ? "estado estado-activo"
-            : "estado estado-inactivo";
+            ? "estado badge rounded-pill estado-activo"
+            : "estado badge rounded-pill estado-inactivo";
 
     const carrerasAsociadas =
         obtenerCarrerasDeEscuela(
@@ -687,7 +687,7 @@ function mostrarCarrerasDeEscuela(
             </td>
 
             <td>
-                <span class="estado ${claseEstado}">
+                <span class="estado badge rounded-pill ${claseEstado}">
                     ${carrera.estado}
                 </span>
             </td>
@@ -988,7 +988,7 @@ function mostrarMensajeEscuelas(
     mensajeEscuelas.hidden = false;
 
     mensajeEscuelas.className =
-        `mensaje-informativo mensaje-${tipo}`;
+        `mensaje-informativo alert alert-info mensaje-${tipo}`;
 }
 
 function ocultarMensajeEscuelas() {

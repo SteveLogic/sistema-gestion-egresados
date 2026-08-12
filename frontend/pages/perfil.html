@@ -126,9 +126,9 @@
                 </div>
             </header>
 
-            <main class="contenido-sistema">
+            <main class="contenido-sistema container-fluid">
                 <section class="seccion-bienvenida">
-                    <article class="tarjeta encabezado-perfil">
+                    <article class="tarjeta encabezado-perfil card">
                         <div
                             id="avatar-perfil"
                             class="avatar avatar-perfil"
@@ -154,7 +154,7 @@
 
                         <a
                             href="#actualizar-informacion"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Actualizar información
                         </a>
@@ -162,30 +162,30 @@
                 </section>
 
                 <nav
-                    class="navegacion-interna"
+                    class="navegacion-interna d-flex flex-wrap gap-2"
                     aria-label="Secciones del perfil"
                 >
                     <a
                         href="#informacion-personal"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Información personal
                     </a>
                     <a
                         href="#informacion-profesional"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Información profesional
                     </a>
                     <a
                         href="#titulos-academicos"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Títulos académicos
                     </a>
                     <a
                         href="#actualizar-informacion"
-                        class="boton boton-secundario"
+                        class="boton boton-secundario btn btn-outline-primary"
                     >
                         Actualizar perfil
                     </a>
@@ -193,7 +193,7 @@
 
                 <div
                     id="mensaje-perfil"
-                    class="mensaje-informativo"
+                    class="mensaje-informativo alert alert-info"
                     aria-live="polite"
                     hidden
                 ></div>
@@ -208,7 +208,7 @@
                     </div>
 
                     <div class="cuadricula-resumen">
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Títulos registrados
                             </p>
@@ -223,7 +223,7 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Carreras asociadas
                             </p>
@@ -238,7 +238,7 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Escuelas asociadas
                             </p>
@@ -253,14 +253,14 @@
                             </a>
                         </article>
 
-                        <article class="tarjeta tarjeta-resumen">
+                        <article class="tarjeta tarjeta-resumen card">
                             <p class="etiqueta-resumen">
                                 Estado del perfil
                             </p>
                             <p>
                                 <span
                                     id="resumen-estado-perfil"
-                                    class="estado"
+                                    class="estado badge rounded-pill"
                                 >
                                     Cargando
                                 </span>
@@ -281,7 +281,7 @@
                         </p>
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="cuadricula-detalle">
                             <div>
                                 <span class="etiqueta-detalle">
@@ -325,7 +325,7 @@
                                 <p>
                                     <span
                                         id="perfil-estado"
-                                        class="estado"
+                                        class="estado badge rounded-pill"
                                     >
                                         Cargando
                                     </span>
@@ -344,7 +344,7 @@
                     id="informacion-profesional"
                     class="seccion"
                 >
-                    <div class="encabezado-seccion encabezado-con-accion">
+                    <div class="encabezado-seccion encabezado-con-accion d-flex align-items-center justify-content-between gap-3">
                         <div>
                             <h2>Información profesional</h2>
                             <p>
@@ -354,13 +354,13 @@
                         </div>
                         <a
                             href="#actualizar-informacion"
-                            class="boton boton-primario"
+                            class="boton boton-primario btn btn-primary"
                         >
                             Editar información
                         </a>
                     </div>
 
-                    <article class="tarjeta">
+                    <article class="tarjeta card">
                         <div class="cuadricula-detalle">
                             <div>
                                 <span class="etiqueta-detalle">
@@ -412,8 +412,8 @@
                         </p>
                     </div>
 
-                    <div class="contenedor-tabla">
-                        <table class="tabla">
+                    <div class="contenedor-tabla table-responsive">
+                        <table class="tabla table table-hover align-middle mb-0">
                             <caption id="caption-titulos-perfil">
                                 Títulos académicos registrados
                             </caption>
@@ -430,7 +430,7 @@
                         </table>
                     </div>
 
-                    <aside class="mensaje-informativo">
+                    <aside class="mensaje-informativo alert alert-info">
                         <h2>Modificación de títulos</h2>
                         <p>
                             Los títulos académicos solamente pueden ser
@@ -451,7 +451,7 @@
                     <div class="cuadricula">
                         <article
                             id="carreras-asociadas"
-                            class="tarjeta"
+                            class="tarjeta card"
                         >
                             <h3>Carreras asociadas</h3>
                             <div id="lista-carreras-perfil">
@@ -461,7 +461,7 @@
 
                         <article
                             id="escuelas-asociadas"
-                            class="tarjeta"
+                            class="tarjeta card"
                         >
                             <h3>Escuelas asociadas</h3>
                             <div id="lista-escuelas-perfil">
@@ -494,7 +494,7 @@
                                 <label for="correo-personal">
                                     Correo personal *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="email"
                                     id="correo-personal"
                                     name="correoPersonal"
@@ -506,7 +506,7 @@
                                 <label for="telefono-personal">
                                     Teléfono *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="tel"
                                     id="telefono-personal"
                                     name="telefono"
@@ -520,7 +520,7 @@
                                 <label for="empresa-actual">
                                     Empresa o lugar de trabajo *
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="empresa-actual"
                                     name="empresaActual"
@@ -533,7 +533,7 @@
                                 <label for="puesto-actual">
                                     Puesto actual
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="puesto-actual"
                                     name="puestoActual"
@@ -545,7 +545,7 @@
                                 <label for="area-profesional">
                                     Área profesional
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="text"
                                     id="area-profesional"
                                     name="areaProfesional"
@@ -558,7 +558,7 @@
                                 <label for="linkedin-perfil">
                                     Perfil de LinkedIn
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="linkedin-perfil"
                                     name="linkedin"
@@ -570,7 +570,7 @@
                                 <label for="portafolio-perfil">
                                     Portafolio profesional
                                 </label>
-                                <input
+                                <input class="form-control"
                                     type="url"
                                     id="portafolio-perfil"
                                     name="portafolio"
@@ -578,18 +578,18 @@
                                 >
                             </div>
 
-                            <div class="acciones-formulario">
+                            <div class="acciones-formulario d-flex flex-wrap gap-2">
                                 <button
                                     type="button"
                                     id="boton-restablecer-perfil"
-                                    class="boton boton-secundario"
+                                    class="boton boton-secundario btn btn-outline-primary"
                                 >
                                     Restablecer información
                                 </button>
                                 <button
                                     type="submit"
                                     id="boton-guardar-perfil"
-                                    class="boton boton-primario"
+                                    class="boton boton-primario btn btn-primary"
                                 >
                                     Guardar cambios
                                 </button>
