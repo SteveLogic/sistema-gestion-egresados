@@ -25,7 +25,7 @@ function validarDatosInicioSesion(datos) {
     return errores;
 }
 
-function iniciarSesion(solicitud, respuesta) {
+async function iniciarSesion(solicitud, respuesta) {
     const errores = validarDatosInicioSesion(solicitud.body || {});
 
     if (errores.length > 0) {
@@ -36,21 +36,31 @@ function iniciarSesion(solicitud, respuesta) {
         });
     }
 
-    const usuario = authService.autenticarUsuario(solicitud.body);
+    try {
+        const usuario = await authService.autenticarUsuario(solicitud.body);
 
-    if (!usuario) {
-        return respuesta.status(401).json({
+        if (!usuario) {
+            return respuesta.status(401).json({
+                exito: false,
+                mensaje: "El correo, la contraseña o el rol no coinciden.",
+                errores: []
+            });
+        }
+
+        return respuesta.status(200).json({
+            exito: true,
+            mensaje: "Inicio de sesión correcto.",
+            datos: usuario
+        });
+    } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+
+        return respuesta.status(500).json({
             exito: false,
-            mensaje: "El correo, la contraseña o el rol no coinciden.",
+            mensaje: "No fue posible consultar los usuarios en MongoDB.",
             errores: []
         });
     }
-
-    return respuesta.status(200).json({
-        exito: true,
-        mensaje: "Inicio de sesión correcto.",
-        datos: usuario
-    });
 }
 
 module.exports = {

@@ -1,4 +1,7 @@
-const usuarios = require("../data/usuarios.data");
+const Usuario = require("../models/usuario.model");
+const {
+    verificarContrasena
+} = require("../utils/password.util");
 
 function limpiarTexto(valor) {
     return String(valor ?? "").trim();
@@ -12,19 +15,27 @@ function normalizarRol(rol) {
     return limpiarTexto(rol).toLowerCase();
 }
 
-function autenticarUsuario({ correo, contrasena, rol }) {
+async function autenticarUsuario({ correo, contrasena, rol }) {
     const correoNormalizado = normalizarCorreo(correo);
     const rolNormalizado = normalizarRol(rol);
-    const contrasenaRecibida = String(contrasena ?? "");
 
-    const usuario = usuarios.find(
-        (elemento) =>
-            normalizarCorreo(elemento.correo) === correoNormalizado &&
-            elemento.contrasena === contrasenaRecibida &&
-            normalizarRol(elemento.rol) === rolNormalizado
-    );
+    const usuario = await Usuario.findOne({
+        correo: correoNormalizado,
+        rol: rolNormalizado,
+        activo: true
+    }).lean();
 
     if (!usuario) {
+        return null;
+    }
+
+    const contrasenaValida = verificarContrasena(
+        contrasena,
+        usuario.contrasenaSalt,
+        usuario.contrasenaHash
+    );
+
+    if (!contrasenaValida) {
         return null;
     }
 
@@ -35,7 +46,7 @@ function autenticarUsuario({ correo, contrasena, rol }) {
         rol: usuario.rol,
         nombreRol: usuario.nombreRol,
         dashboard: usuario.dashboard,
-        egresadoId: usuario.egresadoId
+        egresadoId: usuario.egresadoId ?? null
     };
 }
 
