@@ -9,7 +9,7 @@
 
     const sesion = obtenerJsonSeguro(sessionStorage.getItem(CLAVE_SESION));
 
-    if (!sesion?.rol || !sesion?.dashboard) {
+    if (!sesion?.rol || !sesion?.dashboard || !sesion?.token) {
         limpiarSesion();
         window.location.replace("login.html");
         return;
@@ -66,6 +66,8 @@
         sessionStorage.setItem("egresadoId", sesion.egresadoId);
     }
 
+    configurarFetchAutenticado(sesion);
+
     window.SesionEgresados = {
         obtener() {
             return { ...sesion };
@@ -86,6 +88,45 @@
         mostrarMensajeAcceso();
         aplicarPermisosVisuales(sesion, paginaActual);
     });
+
+    function configurarFetchAutenticado(usuario) {
+        const fetchOriginal = window.fetch.bind(window);
+
+        window.fetch = async function fetchConSesion(recurso, opciones = {}) {
+            const url = typeof recurso === "string"
+                ? recurso
+                : recurso?.url || "";
+
+            const esApiBackend = /^https?:\/\/(localhost|127\.0\.0\.1):3000\/api(?:\/|$)/i
+                .test(url);
+
+            if (!esApiBackend) {
+                return fetchOriginal(recurso, opciones);
+            }
+
+            const headers = new Headers(
+                opciones.headers ||
+                (recurso instanceof Request ? recurso.headers : undefined)
+            );
+
+            headers.set(
+                "Authorization",
+                `Bearer ${usuario.token}`
+            );
+
+            const respuesta = await fetchOriginal(recurso, {
+                ...opciones,
+                headers
+            });
+
+            if (respuesta.status === 401) {
+                limpiarSesion();
+                window.location.replace("login.html");
+            }
+
+            return respuesta;
+        };
+    }
 
     function actualizarEncabezado(usuario) {
         const nombre = usuario.nombre || "Usuario del sistema";

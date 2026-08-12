@@ -43,13 +43,28 @@ function iniciar() {
 
 async function cargarTodo() {
     try {
+        const sesion = window.SesionEgresados?.obtener();
+        const esEgresado =
+            sesion?.rol === "egresado" && sesion?.egresadoId;
+
+        const urlEgresados = esEgresado
+            ? `${URL_EGRESADOS}/${sesion.egresadoId}`
+            : URL_EGRESADOS;
+
         const [rMentorias, rMentores, rSolicitudes, rEgresados] = await Promise.all([
-            solicitar(URL_MENTORIAS), solicitar(URL_MENTORES), solicitar(URL_SOLICITUDES), solicitar(URL_EGRESADOS)
+            solicitar(URL_MENTORIAS),
+            solicitar(URL_MENTORES),
+            solicitar(URL_SOLICITUDES),
+            solicitar(urlEgresados)
         ]);
+
         mentorias = rMentorias.datos || [];
         mentores = rMentores.datos || [];
         solicitudes = rSolicitudes.datos || [];
-        egresados = rEgresados.datos || [];
+        egresados = esEgresado
+            ? [rEgresados.datos].filter(Boolean)
+            : (rEgresados.datos || []);
+
         cargarSelects();
         renderTodo();
     } catch (error) {

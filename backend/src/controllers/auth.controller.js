@@ -1,4 +1,5 @@
 const authService = require("../services/auth.service");
+const { generarToken } = require("../utils/token.util");
 
 const ROLES_PERMITIDOS = ["registro", "bienestar", "egresado"];
 
@@ -47,10 +48,15 @@ async function iniciarSesion(solicitud, respuesta) {
             });
         }
 
+        const token = generarToken(usuario);
+
         return respuesta.status(200).json({
             exito: true,
             mensaje: "Inicio de sesión correcto.",
-            datos: usuario
+            datos: {
+                ...usuario,
+                token
+            }
         });
     } catch (error) {
         console.error("Error al iniciar sesión:", error);
